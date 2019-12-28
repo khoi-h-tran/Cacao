@@ -2,6 +2,9 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /* 
 	File Name: Game.java
@@ -25,13 +28,25 @@ public class Game extends Canvas implements Runnable
 	//sets aspect ratio
 	public static final int HEIGHT = WIDTH / 4*3;
 	
+	//side length of tile (they are squares)
 	protected final int TILE_DIM = 123;
+	
+	//offset from title bar
+	private final int TITLE_BAR = 40;
 	
 	//creating instance of thread class
 	private Thread thread;
 	
 	//initializing variable used in game loop
 	private boolean running = false;
+	
+	//creating buffered image
+	private BufferedImage spriteSheetTiles = null;
+	private BufferedImage spriteSheetRes = null;
+	
+	//creating objects to store sprite sheets
+	public SpriteSheet sst;
+	public SpriteSheet ssr;
 	
 	//initializing the number of players
 	private int numPlayers = 3;
@@ -45,6 +60,9 @@ public class Game extends Canvas implements Runnable
 		//sets the Window constructor for the window sizing
 		//note "this" keyword refers to the Game classes game instance
 		new Window(WIDTH, HEIGHT, "Cacao", this);
+		
+		//initialize sprite sheets
+		init();
 	
 		//initializing constructor
 		handler = new Handler();
@@ -75,7 +93,7 @@ public class Game extends Canvas implements Runnable
 		
 		for(int i = 0; i < max; i++)
 		{
-			handler.addObject(IDJungle.GoldMinex2 + String.valueOf(i),new JungleTiles((HEIGHT - TILE_DIM), (HEIGHT -  TILE_DIM - 20), ID.JungleTile, IDJungle.GoldMinex2, TILE_DIM));
+			handler.addObject(IDJungle.GoldMinex2 + String.valueOf(i),new JungleTiles((HEIGHT + TILE_DIM), (HEIGHT -  TILE_DIM - TITLE_BAR), ID.JungleTile, IDJungle.GoldMinex2, TILE_DIM, sst));
 			handler.addKey(IDJungle.GoldMinex2 + String.valueOf(i));
 		}
 		
@@ -86,19 +104,19 @@ public class Game extends Canvas implements Runnable
 		for(int i = 0; i < max; i++)
 		{
 			
-			handler.addObject(IDJungle.Plantationx2 + String.valueOf(i),new JungleTiles((HEIGHT - TILE_DIM), (HEIGHT - TILE_DIM - 20), ID.JungleTile, IDJungle.Plantationx2, TILE_DIM));
+			handler.addObject(IDJungle.Plantationx2 + String.valueOf(i),new JungleTiles((HEIGHT + TILE_DIM), (HEIGHT - TILE_DIM - TITLE_BAR), ID.JungleTile, IDJungle.Plantationx2, TILE_DIM, sst));
 			handler.addKey(IDJungle.Plantationx2 + String.valueOf(i));
 			
 			//place the first one in the middle
 			if(i == 0)
 			{
-				handler.addObject(IDJungle.SellingPricex2 + String.valueOf(i),new JungleTiles((HEIGHT/2 + TILE_DIM/2), (HEIGHT/2 + TILE_DIM/2 - 20), ID.JungleTile, IDJungle.SellingPricex2, TILE_DIM));
+				handler.addObject(IDJungle.SellingPricex2 + String.valueOf(i),new JungleTiles((HEIGHT/2 + TILE_DIM/2), (HEIGHT/2 + TILE_DIM/2 - TITLE_BAR), ID.JungleTile, IDJungle.SellingPricex2, TILE_DIM, sst));
 				handler.addKey(IDJungle.SellingPricex2 + String.valueOf(i));
 			}
 			
 			else
 			{
-				handler.addObject(IDJungle.SellingPricex2 + String.valueOf(i),new JungleTiles((HEIGHT - TILE_DIM), (HEIGHT - TILE_DIM - 20), ID.JungleTile, IDJungle.SellingPricex2, TILE_DIM));
+				handler.addObject(IDJungle.SellingPricex2 + String.valueOf(i),new JungleTiles((HEIGHT + TILE_DIM), (HEIGHT - TILE_DIM - TITLE_BAR), ID.JungleTile, IDJungle.SellingPricex2, TILE_DIM, sst));
 				handler.addKey(IDJungle.SellingPricex2 + String.valueOf(i));
 			}
 			
@@ -108,10 +126,10 @@ public class Game extends Canvas implements Runnable
 				continue;
 			}
 			
-			handler.addObject(IDJungle.SunWorshippingSite + String.valueOf(i),new JungleTiles((HEIGHT - TILE_DIM), (HEIGHT - TILE_DIM - 20), ID.JungleTile, IDJungle.SunWorshippingSite, TILE_DIM));
+			handler.addObject(IDJungle.SunWorshippingSite + String.valueOf(i),new JungleTiles((HEIGHT + TILE_DIM), (HEIGHT - TILE_DIM - TITLE_BAR), ID.JungleTile, IDJungle.SunWorshippingSite, TILE_DIM, sst));
 			handler.addKey(IDJungle.SunWorshippingSite + String.valueOf(i));
 			
-			handler.addObject(IDJungle.GoldMinex1 + String.valueOf(i),new JungleTiles((HEIGHT - TILE_DIM), (HEIGHT - TILE_DIM - 20), ID.JungleTile, IDJungle.GoldMinex1, TILE_DIM));
+			handler.addObject(IDJungle.GoldMinex1 + String.valueOf(i),new JungleTiles((HEIGHT + TILE_DIM), (HEIGHT - TILE_DIM - TITLE_BAR), ID.JungleTile, IDJungle.GoldMinex1, TILE_DIM, sst));
 			handler.addKey(IDJungle.GoldMinex1 + String.valueOf(i));
 			
 		}
@@ -127,10 +145,10 @@ public class Game extends Canvas implements Runnable
 			{
 				continue;
 			}
-			handler.addObject(IDJungle.SellingPricex3 + String.valueOf(i),new JungleTiles((HEIGHT - TILE_DIM), (HEIGHT - TILE_DIM - 20 - 20), ID.JungleTile, IDJungle.SellingPricex3, TILE_DIM));
+			handler.addObject(IDJungle.SellingPricex3 + String.valueOf(i),new JungleTiles((HEIGHT + TILE_DIM), (HEIGHT - TILE_DIM - TITLE_BAR), ID.JungleTile, IDJungle.SellingPricex3, TILE_DIM, sst));
 			handler.addKey(IDJungle.SellingPricex3 + String.valueOf(i));
 			
-			handler.addObject(IDJungle.Water + String.valueOf(i),new JungleTiles((HEIGHT - TILE_DIM), (HEIGHT - TILE_DIM - 20), ID.JungleTile, IDJungle.Water, TILE_DIM));
+			handler.addObject(IDJungle.Water + String.valueOf(i),new JungleTiles((HEIGHT + TILE_DIM), (HEIGHT - TILE_DIM - TITLE_BAR), ID.JungleTile, IDJungle.Water, TILE_DIM, sst));
 			handler.addKey(IDJungle.Water + String.valueOf(i));
 		}
 		
@@ -140,7 +158,7 @@ public class Game extends Canvas implements Runnable
 		//tiles with 4 count
 		for(int i = 0; i < max; i++)
 		{
-			handler.addObject(IDJungle.SellingPricex4 + String.valueOf(i),new JungleTiles((HEIGHT - TILE_DIM), (HEIGHT - TILE_DIM - 20), ID.JungleTile, IDJungle.SellingPricex4, TILE_DIM));
+			handler.addObject(IDJungle.SellingPricex4 + String.valueOf(i),new JungleTiles((HEIGHT + TILE_DIM), (HEIGHT - TILE_DIM - TITLE_BAR), ID.JungleTile, IDJungle.SellingPricex4, TILE_DIM, sst));
 			handler.addKey(IDJungle.SellingPricex4 + String.valueOf(i));
 		}
 		
@@ -155,7 +173,7 @@ public class Game extends Canvas implements Runnable
 			{
 				continue;
 			}
-			handler.addObject(IDJungle.Temple + String.valueOf(i),new JungleTiles((HEIGHT - TILE_DIM), (HEIGHT - TILE_DIM - 20), ID.JungleTile, IDJungle.Temple, TILE_DIM));
+			handler.addObject(IDJungle.Temple + String.valueOf(i),new JungleTiles((HEIGHT + TILE_DIM), (HEIGHT - TILE_DIM - TITLE_BAR), ID.JungleTile, IDJungle.Temple, TILE_DIM, sst));
 			handler.addKey(IDJungle.Temple + String.valueOf(i));
 		}
 		
@@ -174,17 +192,38 @@ public class Game extends Canvas implements Runnable
 			//place the first one in the middle
 			if(i == 0)
 			{
-				handler.addObject(IDJungle.Plantationx1 + String.valueOf(i),new JungleTiles((HEIGHT/2 - TILE_DIM/2), (HEIGHT/2 - TILE_DIM/2 - 20), ID.JungleTile, IDJungle.Plantationx1, TILE_DIM));
+				handler.addObject(IDJungle.Plantationx1 + String.valueOf(i),new JungleTiles((HEIGHT/2 - TILE_DIM/2), (HEIGHT/2 - TILE_DIM/2 - TITLE_BAR), ID.JungleTile, IDJungle.Plantationx1, TILE_DIM, sst));
 				handler.addKey(IDJungle.Plantationx1 + String.valueOf(i));
 			}
 			
 			else
 			{
-				handler.addObject(IDJungle.Plantationx1 + String.valueOf(i),new JungleTiles((HEIGHT - TILE_DIM), (HEIGHT - TILE_DIM - 20), ID.JungleTile, IDJungle.Plantationx1, TILE_DIM));
+				handler.addObject(IDJungle.Plantationx1 + String.valueOf(i),new JungleTiles((HEIGHT + TILE_DIM), (HEIGHT - TILE_DIM - TITLE_BAR), ID.JungleTile, IDJungle.Plantationx1, TILE_DIM, sst));
 				handler.addKey(IDJungle.Plantationx1 + String.valueOf(i));
 			}
 		}
 		
+	}
+	
+	//initializing method for sprites
+	public void init()
+	{
+		BufferedImageLoader loader = new BufferedImageLoader();
+		
+		File file = new File(".");
+		
+		try
+		{
+			spriteSheetTiles = loader.loadImage("res/Tiles.png");
+			spriteSheetRes = loader.loadImage("res/Ressources.png");
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+		
+		sst = new SpriteSheet(spriteSheetTiles);
+		ssr = new SpriteSheet(spriteSheetRes);
 	}
 	
 	//synchronized key word is used for threads
@@ -220,6 +259,8 @@ public class Game extends Canvas implements Runnable
 	//game loop
 	public void run()
 	{
+		//initializing sprites
+		init();
 		//don't have to click on window to start playing, it selects automatically
 		this.requestFocus();
 		//record time starting loop in nano seconds (most accurate we can have)
