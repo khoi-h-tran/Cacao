@@ -1,12 +1,13 @@
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 /* 
 	File Name: handler.java
 	   Author: Khoi Tran
 		 Date: Dec. 27, 2019 11:43:24 a.m.
-  Description: MAintains, updates, renders all objects (i.e. players, game pieces, etc) in game
+  Description: Maintains, updates, renders all objects (i.e. players, game pieces, etc) in game
 */
 public class Handler
 {
@@ -16,6 +17,9 @@ public class Handler
 
 	//create array list to hold keys
 	ArrayList<String> hashMapKeys = new ArrayList<String>();
+	
+	//create array list to hold key for jungle tiles in deck
+	ArrayList<String> deckKeys = new ArrayList<String>();
 	
 	//create game loop for objects
 	
@@ -63,6 +67,60 @@ public class Handler
 	{
 		//adds an object to the linked list
 		this.object.remove(key, object);
+	}
+	
+	/*
+	  public static List<Dog> cloneList(List<Dog> list) {
+    List<Dog> clone = new ArrayList<Dog>(list.size());
+    for (Dog item : list) clone.add(item.clone());
+    return clone;
+}
+	 */
+	
+	//clones the key array list. This will be used to shuffle the deck.
+	public void cloneKey(ArrayList<String> hashMapKeys, ArrayList<String> deckKeys, String remove1, String remove2)
+	{
+		 
+		 
+		 for(String key: hashMapKeys)
+		 {
+			 //(used for debugging only)
+			 //System.out.println(key);
+			 if(key.equals(remove1) || key.equals(remove2))
+			 {
+				 continue;
+			 }
+			 else
+			 {
+				 deckKeys.add(key);
+			 }
+		 }
+		 
+		 //(used for debugging only)
+		 //System.out.println(hashMapKeys.size());
+		 //System.out.println(deckKeys.size());
+		 
+		 //prints out keys in deck (used for debugging only)
+		 /*
+		 for(String key: deckKeys)
+		 {
+			 System.out.println(key);
+		 }
+		 */
+	}
+	
+	//shuffles the deck using the keys
+	public void shuffleDeck(ArrayList<String> deckKeys)
+	{
+		Collections.shuffle(deckKeys);
+		
+		//prints out keys in deck (used for debugging only)
+		 /*
+		for(String key: deckKeys)
+		 {
+			 System.out.println(key);
+		 }
+		*/
 	}
 	
 }

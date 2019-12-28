@@ -32,7 +32,7 @@ public class Game extends Canvas implements Runnable
 	protected final int TILE_DIM = 123;
 	
 	//offset from title bar
-	private final int TITLE_BAR = 40;
+	protected final int TITLE_BAR = 40;
 	
 	//creating instance of thread class
 	private Thread thread;
@@ -49,10 +49,13 @@ public class Game extends Canvas implements Runnable
 	public SpriteSheet ssr;
 	
 	//initializing the number of players
-	private int numPlayers = 3;
+	private int numPlayers = 4;
 	
 	//create instance of handler class
 	private Handler handler;
+	
+	//create instance of heads up display class
+	private HUD hud;
 	
 	//Game constructor class
 	public Game()
@@ -61,32 +64,39 @@ public class Game extends Canvas implements Runnable
 		//note "this" keyword refers to the Game classes game instance
 		new Window(WIDTH, HEIGHT, "Cacao", this);
 		
+		hud = new HUD();
+		
 		//initialize sprite sheets
 		init();
 	
 		//initializing constructor
 		handler = new Handler();
 		
+		//create variable to skip the jungle tiles on the board, when creating the deck
+		String remove1 = " ";
+		String remove2 = " ";
+		
 		//populates hash map for all jungle tiles and worker tiles for the game
 		/*
 		  GoldMinex2(),//total: 1
+		  SellingPricex4(),//total: 1*********************
 		  
 			Plantationx2(),//total: 2
 			SellingPricex2(),//total: 2
 			SunWorshippingSite(),//total: 2, if 2 players - 1
 			GoldMinex1(),//total: 2, if 2 players - 1
 			
-			SellingPricex3(),//total: 3, if 2 players - 1
+			
 			Water(),//total: 3, if 2 players - 1
 			
-			SellingPricex4(),//total: 4
+			SellingPricex3(),//total: 4, if 2 players - 1***************
 			
 			Temple(),//total: 5, if 2 players - 1
 			
 			Plantationx1(),//total: 6, if 2 players - 2
 		 */
 		
-		//populating Gold Mine with value = 2
+		//populating Gold Mine, SellingPricex4
 		//tiles with only 1 count
 		
 		int max = 1;
@@ -95,6 +105,9 @@ public class Game extends Canvas implements Runnable
 		{
 			handler.addObject(IDJungle.GoldMinex2 + String.valueOf(i),new JungleTiles((HEIGHT + TILE_DIM), (HEIGHT -  TILE_DIM - TITLE_BAR), ID.JungleTile, IDJungle.GoldMinex2, TILE_DIM, sst));
 			handler.addKey(IDJungle.GoldMinex2 + String.valueOf(i));
+			
+			handler.addObject(IDJungle.SellingPricex4 + String.valueOf(i),new JungleTiles((HEIGHT + TILE_DIM), (HEIGHT - TILE_DIM - TITLE_BAR), ID.JungleTile, IDJungle.SellingPricex4, TILE_DIM, sst));
+			handler.addKey(IDJungle.SellingPricex4 + String.valueOf(i));
 		}
 		
 		max++;
@@ -112,6 +125,7 @@ public class Game extends Canvas implements Runnable
 			{
 				handler.addObject(IDJungle.SellingPricex2 + String.valueOf(i),new JungleTiles((HEIGHT/2 + TILE_DIM/2), (HEIGHT/2 + TILE_DIM/2 - TITLE_BAR), ID.JungleTile, IDJungle.SellingPricex2, TILE_DIM, sst));
 				handler.addKey(IDJungle.SellingPricex2 + String.valueOf(i));
+				remove1 = IDJungle.SellingPricex2 + String.valueOf(i);
 			}
 			
 			else
@@ -136,8 +150,18 @@ public class Game extends Canvas implements Runnable
 		
 		max++;
 		
-		//populating SellingPricex3, Water() 
+		//populating  Water() 
 		//tiles with 3 count
+		for(int i = 0; i < max; i++)
+		{
+			handler.addObject(IDJungle.Water + String.valueOf(i),new JungleTiles((HEIGHT + TILE_DIM), (HEIGHT - TILE_DIM - TITLE_BAR), ID.JungleTile, IDJungle.Water, TILE_DIM, sst));
+			handler.addKey(IDJungle.Water + String.valueOf(i));
+		}
+		
+		max++;
+		
+		//populating SellingPricex3
+		//tiles with 4 count
 		for(int i = 0; i < max; i++)
 		{
 			//takes out 1 of each jungle tile below if only 2 players (as per the instructions)
@@ -147,19 +171,6 @@ public class Game extends Canvas implements Runnable
 			}
 			handler.addObject(IDJungle.SellingPricex3 + String.valueOf(i),new JungleTiles((HEIGHT + TILE_DIM), (HEIGHT - TILE_DIM - TITLE_BAR), ID.JungleTile, IDJungle.SellingPricex3, TILE_DIM, sst));
 			handler.addKey(IDJungle.SellingPricex3 + String.valueOf(i));
-			
-			handler.addObject(IDJungle.Water + String.valueOf(i),new JungleTiles((HEIGHT + TILE_DIM), (HEIGHT - TILE_DIM - TITLE_BAR), ID.JungleTile, IDJungle.Water, TILE_DIM, sst));
-			handler.addKey(IDJungle.Water + String.valueOf(i));
-		}
-		
-		max++;
-		
-		//populating SellingPricex4
-		//tiles with 4 count
-		for(int i = 0; i < max; i++)
-		{
-			handler.addObject(IDJungle.SellingPricex4 + String.valueOf(i),new JungleTiles((HEIGHT + TILE_DIM), (HEIGHT - TILE_DIM - TITLE_BAR), ID.JungleTile, IDJungle.SellingPricex4, TILE_DIM, sst));
-			handler.addKey(IDJungle.SellingPricex4 + String.valueOf(i));
 		}
 		
 		max++;
@@ -194,6 +205,7 @@ public class Game extends Canvas implements Runnable
 			{
 				handler.addObject(IDJungle.Plantationx1 + String.valueOf(i),new JungleTiles((HEIGHT/2 - TILE_DIM/2), (HEIGHT/2 - TILE_DIM/2 - TITLE_BAR), ID.JungleTile, IDJungle.Plantationx1, TILE_DIM, sst));
 				handler.addKey(IDJungle.Plantationx1 + String.valueOf(i));
+				remove2 = IDJungle.Plantationx1 + String.valueOf(i);
 			}
 			
 			else
@@ -202,7 +214,13 @@ public class Game extends Canvas implements Runnable
 				handler.addKey(IDJungle.Plantationx1 + String.valueOf(i));
 			}
 		}
+	
+		//creates an arrayList of the keys for all the jungle tiles in the deck
+		handler.cloneKey(handler.hashMapKeys, handler.deckKeys, remove1, remove2);
 		
+		//shuffles the deck
+		handler.shuffleDeck(handler.deckKeys);
+	
 	}
 	
 	//initializing method for sprites
@@ -322,6 +340,7 @@ public class Game extends Canvas implements Runnable
 	private void tick()
 	{
 		handler.tick();
+		//hud.tick();
 	}
 	
 	//this code is basically the graphics creator
@@ -360,6 +379,8 @@ public class Game extends Canvas implements Runnable
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
 		handler.render(g);
+		
+		hud.render(g, this);
 		
 		//disposes of previously rendered graphics no longer needed
 		//i.e. garbage collector

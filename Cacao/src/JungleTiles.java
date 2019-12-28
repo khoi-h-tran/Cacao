@@ -94,6 +94,8 @@ public class JungleTiles extends GameObject
 	public void render(Graphics g)
 	{
 		g.drawImage(tile_image, x, y, null);
+		g.setColor(Color.black);
+		g.drawRect(x, y, TILE_DIM, TILE_DIM);
 		//g.setColor(Color.green);
 		//g.fillRect(x, y, TILE_DIM, TILE_DIM);
 	}
