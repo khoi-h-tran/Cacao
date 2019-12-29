@@ -57,6 +57,9 @@ public class Game extends Canvas implements Runnable
 	//create instance of heads up display class
 	private HUD hud;
 	
+	//create instance of grid class
+	private Grid grid;
+	
 	//Game constructor class
 	public Game()
 	{
@@ -64,6 +67,7 @@ public class Game extends Canvas implements Runnable
 		//note "this" keyword refers to the Game classes game instance
 		new Window(WIDTH, HEIGHT, "Cacao", this);
 		
+		grid = new Grid();
 		hud = new HUD();
 		
 		//initialize sprite sheets
@@ -80,6 +84,17 @@ public class Game extends Canvas implements Runnable
 		Boolean turnEnd = false;
 		Boolean draw1 = false;
 		Boolean draw2 = false;
+		
+		//create constant for draw location
+		int draw1LocX = (HEIGHT + TILE_DIM/4);
+		int draw1LocY = (HEIGHT - 2*TILE_DIM - TITLE_BAR*2);
+		int draw2LocX = (HEIGHT + TILE_DIM/2 + TILE_DIM);
+		int draw2LocY = (HEIGHT - 2*TILE_DIM - TITLE_BAR*2);
+		int deckLocX = (HEIGHT + TILE_DIM);
+		int deckLocY = (HEIGHT -  TILE_DIM - TITLE_BAR);
+		
+		//populate the coordinate of the game grid
+		grid.popGridCoord(this);
 		
 		//populates hash map for all jungle tiles and worker tiles for the game
 		/*
@@ -108,10 +123,10 @@ public class Game extends Canvas implements Runnable
 		
 		for(int i = 0; i < max; i++)
 		{
-			handler.addObject(IDJungle.GoldMinex2 + String.valueOf(i),new JungleTiles((HEIGHT + TILE_DIM), (HEIGHT -  TILE_DIM - TITLE_BAR), ID.JungleTile, IDJungle.GoldMinex2, TILE_DIM, sst));
+			handler.addObject(IDJungle.GoldMinex2 + String.valueOf(i),new JungleTiles(deckLocX, deckLocY, ID.JungleTile, IDJungle.GoldMinex2, TILE_DIM, sst));
 			handler.addKey(IDJungle.GoldMinex2 + String.valueOf(i));
 			
-			handler.addObject(IDJungle.SellingPricex4 + String.valueOf(i),new JungleTiles((HEIGHT + TILE_DIM), (HEIGHT - TILE_DIM - TITLE_BAR), ID.JungleTile, IDJungle.SellingPricex4, TILE_DIM, sst));
+			handler.addObject(IDJungle.SellingPricex4 + String.valueOf(i),new JungleTiles(deckLocX, deckLocY, ID.JungleTile, IDJungle.SellingPricex4, TILE_DIM, sst));
 			handler.addKey(IDJungle.SellingPricex4 + String.valueOf(i));
 		}
 		
@@ -122,20 +137,20 @@ public class Game extends Canvas implements Runnable
 		for(int i = 0; i < max; i++)
 		{
 			
-			handler.addObject(IDJungle.Plantationx2 + String.valueOf(i),new JungleTiles((HEIGHT + TILE_DIM), (HEIGHT - TILE_DIM - TITLE_BAR), ID.JungleTile, IDJungle.Plantationx2, TILE_DIM, sst));
+			handler.addObject(IDJungle.Plantationx2 + String.valueOf(i),new JungleTiles(deckLocX, deckLocY, ID.JungleTile, IDJungle.Plantationx2, TILE_DIM, sst));
 			handler.addKey(IDJungle.Plantationx2 + String.valueOf(i));
 			
 			//place the first one in the middle
 			if(i == 0)
 			{
-				handler.addObject(IDJungle.SellingPricex2 + String.valueOf(i),new JungleTiles((HEIGHT/2 + TILE_DIM/2), (HEIGHT/2 + TILE_DIM/2 - TITLE_BAR), ID.JungleTile, IDJungle.SellingPricex2, TILE_DIM, sst));
+				handler.addObject(IDJungle.SellingPricex2 + String.valueOf(i),new JungleTiles(grid.gridCoord.get("E"), grid.gridCoord.get("5"), ID.JungleTile, IDJungle.SellingPricex2, TILE_DIM, sst));
 				handler.addKey(IDJungle.SellingPricex2 + String.valueOf(i));
 				remove1 = IDJungle.SellingPricex2 + String.valueOf(i);
 			}
 			
 			else
 			{
-				handler.addObject(IDJungle.SellingPricex2 + String.valueOf(i),new JungleTiles((HEIGHT + TILE_DIM), (HEIGHT - TILE_DIM - TITLE_BAR), ID.JungleTile, IDJungle.SellingPricex2, TILE_DIM, sst));
+				handler.addObject(IDJungle.SellingPricex2 + String.valueOf(i),new JungleTiles(deckLocX, deckLocY, ID.JungleTile, IDJungle.SellingPricex2, TILE_DIM, sst));
 				handler.addKey(IDJungle.SellingPricex2 + String.valueOf(i));
 			}
 			
@@ -145,10 +160,10 @@ public class Game extends Canvas implements Runnable
 				continue;
 			}
 			
-			handler.addObject(IDJungle.SunWorshippingSite + String.valueOf(i),new JungleTiles((HEIGHT + TILE_DIM), (HEIGHT - TILE_DIM - TITLE_BAR), ID.JungleTile, IDJungle.SunWorshippingSite, TILE_DIM, sst));
+			handler.addObject(IDJungle.SunWorshippingSite + String.valueOf(i),new JungleTiles(deckLocX, deckLocY, ID.JungleTile, IDJungle.SunWorshippingSite, TILE_DIM, sst));
 			handler.addKey(IDJungle.SunWorshippingSite + String.valueOf(i));
 			
-			handler.addObject(IDJungle.GoldMinex1 + String.valueOf(i),new JungleTiles((HEIGHT + TILE_DIM), (HEIGHT - TILE_DIM - TITLE_BAR), ID.JungleTile, IDJungle.GoldMinex1, TILE_DIM, sst));
+			handler.addObject(IDJungle.GoldMinex1 + String.valueOf(i),new JungleTiles(deckLocX, deckLocY, ID.JungleTile, IDJungle.GoldMinex1, TILE_DIM, sst));
 			handler.addKey(IDJungle.GoldMinex1 + String.valueOf(i));
 			
 		}
@@ -159,7 +174,7 @@ public class Game extends Canvas implements Runnable
 		//tiles with 3 count
 		for(int i = 0; i < max; i++)
 		{
-			handler.addObject(IDJungle.Water + String.valueOf(i),new JungleTiles((HEIGHT + TILE_DIM), (HEIGHT - TILE_DIM - TITLE_BAR), ID.JungleTile, IDJungle.Water, TILE_DIM, sst));
+			handler.addObject(IDJungle.Water + String.valueOf(i),new JungleTiles(deckLocX, deckLocY, ID.JungleTile, IDJungle.Water, TILE_DIM, sst));
 			handler.addKey(IDJungle.Water + String.valueOf(i));
 		}
 		
@@ -174,7 +189,7 @@ public class Game extends Canvas implements Runnable
 			{
 				continue;
 			}
-			handler.addObject(IDJungle.SellingPricex3 + String.valueOf(i),new JungleTiles((HEIGHT + TILE_DIM), (HEIGHT - TILE_DIM - TITLE_BAR), ID.JungleTile, IDJungle.SellingPricex3, TILE_DIM, sst));
+			handler.addObject(IDJungle.SellingPricex3 + String.valueOf(i),new JungleTiles(deckLocX, deckLocY, ID.JungleTile, IDJungle.SellingPricex3, TILE_DIM, sst));
 			handler.addKey(IDJungle.SellingPricex3 + String.valueOf(i));
 		}
 		
@@ -189,7 +204,7 @@ public class Game extends Canvas implements Runnable
 			{
 				continue;
 			}
-			handler.addObject(IDJungle.Temple + String.valueOf(i),new JungleTiles((HEIGHT + TILE_DIM), (HEIGHT - TILE_DIM - TITLE_BAR), ID.JungleTile, IDJungle.Temple, TILE_DIM, sst));
+			handler.addObject(IDJungle.Temple + String.valueOf(i),new JungleTiles(deckLocX, deckLocY, ID.JungleTile, IDJungle.Temple, TILE_DIM, sst));
 			handler.addKey(IDJungle.Temple + String.valueOf(i));
 		}
 		
@@ -208,14 +223,15 @@ public class Game extends Canvas implements Runnable
 			//place the first one in the middle
 			if(i == 0)
 			{
-				handler.addObject(IDJungle.Plantationx1 + String.valueOf(i),new JungleTiles((HEIGHT/2 - TILE_DIM/2), (HEIGHT/2 - TILE_DIM/2 - TITLE_BAR), ID.JungleTile, IDJungle.Plantationx1, TILE_DIM, sst));
+				//
+				handler.addObject(IDJungle.Plantationx1 + String.valueOf(i),new JungleTiles(grid.gridCoord.get("D"), grid.gridCoord.get("4"), ID.JungleTile, IDJungle.Plantationx1, TILE_DIM, sst));
 				handler.addKey(IDJungle.Plantationx1 + String.valueOf(i));
 				remove2 = IDJungle.Plantationx1 + String.valueOf(i);
 			}
 			
 			else
 			{
-				handler.addObject(IDJungle.Plantationx1 + String.valueOf(i),new JungleTiles((HEIGHT + TILE_DIM), (HEIGHT - TILE_DIM - TITLE_BAR), ID.JungleTile, IDJungle.Plantationx1, TILE_DIM, sst));
+				handler.addObject(IDJungle.Plantationx1 + String.valueOf(i),new JungleTiles(deckLocX, deckLocY, ID.JungleTile, IDJungle.Plantationx1, TILE_DIM, sst));
 				handler.addKey(IDJungle.Plantationx1 + String.valueOf(i));
 			}
 		}
@@ -236,12 +252,12 @@ public class Game extends Canvas implements Runnable
 		{
 			if(draw1 == true)
 			{
-				handler.drawFromDeck(handler.deckKeys, handler.object, (HEIGHT + TILE_DIM/4), (HEIGHT - 2*TILE_DIM - TITLE_BAR*2));
+				handler.drawFromDeck(handler.deckKeys, handler.object, draw1LocX, draw1LocY);
 				handler.removeFromDeck(handler.deckKeys);
 			}
 			if(draw2 == true)
 			{
-				handler.drawFromDeck(handler.deckKeys, handler.object, (HEIGHT + TILE_DIM/2 + TILE_DIM), (HEIGHT - 2*TILE_DIM - TITLE_BAR*2));
+				handler.drawFromDeck(handler.deckKeys, handler.object, draw2LocX, draw2LocY);
 				handler.removeFromDeck(handler.deckKeys);
 			}
 		}
@@ -367,6 +383,7 @@ public class Game extends Canvas implements Runnable
 	private void tick()
 	{
 		handler.tick();
+		grid.tick();
 		//hud.tick();
 	}
 	
@@ -404,6 +421,8 @@ public class Game extends Canvas implements Runnable
 		
 		g.setColor(Color.lightGray);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
+		
+		grid.render(g, this);
 		
 		handler.render(g);
 		

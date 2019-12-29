@@ -12,7 +12,7 @@ import java.util.HashMap;
 public class Handler
 {
 	
-	//create a linked list for all objects
+	//create a hash map for all objects
 	HashMap<String, GameObject> object = new HashMap<String, GameObject>();
 
 	//create array list to hold keys
