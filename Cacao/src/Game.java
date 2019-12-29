@@ -60,6 +60,39 @@ public class Game extends Canvas implements Runnable
 	//create instance of grid class
 	private Grid grid;
 	
+	//create instance of ID enumeration
+	private ID id;
+	
+	//create constant for draw location
+	
+	//where jungle deck is drawn to
+	public final int draw1LocX = (HEIGHT + TILE_DIM/4);
+	public final int draw1LocY = (HEIGHT - 2*TILE_DIM - TITLE_BAR*2);
+	
+	//Second place where jungle deck is drawn to
+	public final int draw2LocX = (HEIGHT + TILE_DIM/2 + TILE_DIM);
+	public final int draw2LocY = (HEIGHT - 2*TILE_DIM - TITLE_BAR*2);
+	
+	//First place where worker deck is drawn to
+	public final int draw1WorkerLocX = (HEIGHT + TILE_DIM/4);
+	public final int draw1WorkerLocY = (HEIGHT - 4*TILE_DIM - TITLE_BAR*5/2 - (TILE_DIM/3)); // - (draw1LocY - TILE_DIM/3) is to line it up to the "drawn jungle tiles" label
+	
+	//Second place where worker deck is drawn to
+	public final int draw2WorkerLocX = (HEIGHT + TILE_DIM/2 + TILE_DIM);
+	public final int draw2WorkerLocY = (HEIGHT - 4*TILE_DIM - TITLE_BAR*5/2 - (TILE_DIM/3));
+	
+	//Third place where worker deck is drawn to
+	public final int draw3WorkerLocX = (HEIGHT + (WIDTH - HEIGHT)/2 - TILE_DIM/2);
+	public final int draw3WorkerLocY = (HEIGHT - 3*TILE_DIM - TITLE_BAR*2 - (TILE_DIM/3));
+	
+	//Where the jungle tile deck location is stored
+	public final int deckLocJungleX = (HEIGHT + TILE_DIM/4);
+	public final int deckLocJungleY = (HEIGHT -  TILE_DIM - TITLE_BAR);
+	
+	//Where the worker tile deck location is stored
+	public final int deckLocWorkerX = (HEIGHT + TILE_DIM*6/4);
+	public final int deckLocWorkerY = (HEIGHT -  TILE_DIM - TITLE_BAR);
+	
 	//Game constructor class
 	public Game()
 	{
@@ -82,52 +115,64 @@ public class Game extends Canvas implements Runnable
 		
 		//create variable to determine if a jungle tile should be drawn
 		Boolean turnEnd = false;
-		Boolean draw1 = false;
-		Boolean draw2 = false;
-		
-		//create constant for draw location
-		int draw1LocX = (HEIGHT + TILE_DIM/4);
-		int draw1LocY = (HEIGHT - 2*TILE_DIM - TITLE_BAR*2);
-		int draw2LocX = (HEIGHT + TILE_DIM/2 + TILE_DIM);
-		int draw2LocY = (HEIGHT - 2*TILE_DIM - TITLE_BAR*2);
-		int deckLocX = (HEIGHT + TILE_DIM);
-		int deckLocY = (HEIGHT -  TILE_DIM - TITLE_BAR);
+		Boolean drawJungle1 = false;
+		Boolean drawJungle2 = false;
+		Boolean drawWorker1 = false;
+		Boolean drawWorker2 = false;
+		Boolean drawWorker3 = false;
+
 		
 		//populate the coordinate of the game grid
 		grid.popGridCoord(this);
 		
 		//populates hash map for all jungle tiles and worker tiles for the game
 		/*
-		  GoldMinex2(),//total: 1
-		  SellingPricex4(),//total: 1*********************
-		  
-			Plantationx2(),//total: 2
-			SellingPricex2(),//total: 2
-			SunWorshippingSite(),//total: 2, if 2 players - 1
-			GoldMinex1(),//total: 2, if 2 players - 1
-			
-			
-			Water(),//total: 3, if 2 players - 1
-			
-			SellingPricex3(),//total: 4, if 2 players - 1***************
-			
-			Temple(),//total: 5, if 2 players - 1
-			
-			Plantationx1(),//total: 6, if 2 players - 2
+		 						***************Jungle Tiles***********
+							  GoldMinex2(),//total: 1
+							  SellingPricex4(),//total: 1*********************
+							  
+								Plantationx2(),//total: 2
+								SellingPricex2(),//total: 2
+								SunWorshippingSite(),//total: 2, if 2 players - 1
+								GoldMinex1(),//total: 2, if 2 players - 1
+								
+								
+								Water(),//total: 3, if 2 players - 1
+								
+								SellingPricex3(),//total: 4, if 2 players - 1***************
+								
+								Temple(),//total: 5, if 2 players - 1
+								
+								Plantationx1(),//total: 6, if 2 players - 2
+								
+								***************Worker Tiles***********
+								
+								ThreeZeroZeroOne(),//total: 1
+								ThreeOneZeroZero();//total: 1
+								OneOneOneOne(),//total: 4, if 3 or 4 players minus 1 tile
+								TwoOneZeroOne(),//total: 5,  if 4 players minus 1 tile
+								
 		 */
 		
-		//populating Gold Mine, SellingPricex4
+		//populating Gold Mine, SellingPricex4 jungle tiles
+		//populating ThreeZeroZeroOne, ThreeOneZeroZero worker tiles
 		//tiles with only 1 count
 		
 		int max = 1;
 		
 		for(int i = 0; i < max; i++)
 		{
-			handler.addObject(IDJungle.GoldMinex2 + String.valueOf(i),new JungleTiles(deckLocX, deckLocY, ID.JungleTile, IDJungle.GoldMinex2, TILE_DIM, sst));
-			handler.addKey(IDJungle.GoldMinex2 + String.valueOf(i));
+			handler.addObject(IDJungle.GoldMinex2 + String.valueOf(i),new JungleTiles(deckLocJungleX, deckLocJungleY, ID.JungleTile, IDJungle.GoldMinex2, TILE_DIM, sst), ID.JungleTile);
+			handler.addKey(IDJungle.GoldMinex2 + String.valueOf(i), ID.JungleTile);
 			
-			handler.addObject(IDJungle.SellingPricex4 + String.valueOf(i),new JungleTiles(deckLocX, deckLocY, ID.JungleTile, IDJungle.SellingPricex4, TILE_DIM, sst));
-			handler.addKey(IDJungle.SellingPricex4 + String.valueOf(i));
+			handler.addObject(IDJungle.SellingPricex4 + String.valueOf(i),new JungleTiles(deckLocJungleX, deckLocJungleY, ID.JungleTile, IDJungle.SellingPricex4, TILE_DIM, sst), ID.JungleTile);
+			handler.addKey(IDJungle.SellingPricex4 + String.valueOf(i), ID.JungleTile);
+			
+			handler.addObject(IDWorker.ThreeZeroZeroOne + String.valueOf(i),new WorkerTiles(deckLocWorkerX, deckLocWorkerY, ID.WorkerTile, IDWorker.ThreeZeroZeroOne, TILE_DIM, sst), ID.WorkerTile);
+			handler.addKey(IDWorker.ThreeZeroZeroOne + String.valueOf(i), ID.WorkerTile);
+			
+			handler.addObject(IDWorker.ThreeOneZeroZero + String.valueOf(i),new WorkerTiles(deckLocWorkerX, deckLocWorkerY, ID.WorkerTile, IDWorker.ThreeOneZeroZero, TILE_DIM, sst), ID.WorkerTile);
+			handler.addKey(IDWorker.ThreeOneZeroZero + String.valueOf(i), ID.WorkerTile);
 		}
 		
 		max++;
@@ -137,21 +182,21 @@ public class Game extends Canvas implements Runnable
 		for(int i = 0; i < max; i++)
 		{
 			
-			handler.addObject(IDJungle.Plantationx2 + String.valueOf(i),new JungleTiles(deckLocX, deckLocY, ID.JungleTile, IDJungle.Plantationx2, TILE_DIM, sst));
-			handler.addKey(IDJungle.Plantationx2 + String.valueOf(i));
+			handler.addObject(IDJungle.Plantationx2 + String.valueOf(i),new JungleTiles(deckLocJungleX, deckLocJungleY, ID.JungleTile, IDJungle.Plantationx2, TILE_DIM, sst), ID.JungleTile);
+			handler.addKey(IDJungle.Plantationx2 + String.valueOf(i), ID.JungleTile);
 			
 			//place the first one in the middle
 			if(i == 0)
 			{
-				handler.addObject(IDJungle.SellingPricex2 + String.valueOf(i),new JungleTiles(grid.gridCoord.get("E"), grid.gridCoord.get("5"), ID.JungleTile, IDJungle.SellingPricex2, TILE_DIM, sst));
-				handler.addKey(IDJungle.SellingPricex2 + String.valueOf(i));
+				handler.addObject(IDJungle.SellingPricex2 + String.valueOf(i),new JungleTiles(grid.gridCoord.get("E"), grid.gridCoord.get("5"), ID.JungleTile, IDJungle.SellingPricex2, TILE_DIM, sst), ID.JungleTile);
+				handler.addKey(IDJungle.SellingPricex2 + String.valueOf(i), ID.JungleTile);
 				remove1 = IDJungle.SellingPricex2 + String.valueOf(i);
 			}
 			
 			else
 			{
-				handler.addObject(IDJungle.SellingPricex2 + String.valueOf(i),new JungleTiles(deckLocX, deckLocY, ID.JungleTile, IDJungle.SellingPricex2, TILE_DIM, sst));
-				handler.addKey(IDJungle.SellingPricex2 + String.valueOf(i));
+				handler.addObject(IDJungle.SellingPricex2 + String.valueOf(i),new JungleTiles(deckLocJungleX, deckLocJungleY, ID.JungleTile, IDJungle.SellingPricex2, TILE_DIM, sst), ID.JungleTile);
+				handler.addKey(IDJungle.SellingPricex2 + String.valueOf(i), ID.JungleTile);
 			}
 			
 			//takes out 1 of each jungle tile below if only 2 players (as per the instructions)
@@ -159,12 +204,14 @@ public class Game extends Canvas implements Runnable
 			{
 				continue;
 			}
-			
-			handler.addObject(IDJungle.SunWorshippingSite + String.valueOf(i),new JungleTiles(deckLocX, deckLocY, ID.JungleTile, IDJungle.SunWorshippingSite, TILE_DIM, sst));
-			handler.addKey(IDJungle.SunWorshippingSite + String.valueOf(i));
-			
-			handler.addObject(IDJungle.GoldMinex1 + String.valueOf(i),new JungleTiles(deckLocX, deckLocY, ID.JungleTile, IDJungle.GoldMinex1, TILE_DIM, sst));
-			handler.addKey(IDJungle.GoldMinex1 + String.valueOf(i));
+			else 
+			{
+				handler.addObject(IDJungle.SunWorshippingSite + String.valueOf(i),new JungleTiles(deckLocJungleX, deckLocJungleY, ID.JungleTile, IDJungle.SunWorshippingSite, TILE_DIM, sst), ID.JungleTile);
+				handler.addKey(IDJungle.SunWorshippingSite + String.valueOf(i), ID.JungleTile);
+				
+				handler.addObject(IDJungle.GoldMinex1 + String.valueOf(i),new JungleTiles(deckLocJungleX, deckLocJungleY, ID.JungleTile, IDJungle.GoldMinex1, TILE_DIM, sst), ID.JungleTile);
+				handler.addKey(IDJungle.GoldMinex1 + String.valueOf(i), ID.JungleTile);
+			}
 			
 		}
 		
@@ -174,8 +221,8 @@ public class Game extends Canvas implements Runnable
 		//tiles with 3 count
 		for(int i = 0; i < max; i++)
 		{
-			handler.addObject(IDJungle.Water + String.valueOf(i),new JungleTiles(deckLocX, deckLocY, ID.JungleTile, IDJungle.Water, TILE_DIM, sst));
-			handler.addKey(IDJungle.Water + String.valueOf(i));
+			handler.addObject(IDJungle.Water + String.valueOf(i),new JungleTiles(deckLocJungleX, deckLocJungleY, ID.JungleTile, IDJungle.Water, TILE_DIM, sst), ID.JungleTile);
+			handler.addKey(IDJungle.Water + String.valueOf(i), ID.JungleTile);
 		}
 		
 		max++;
@@ -189,13 +236,28 @@ public class Game extends Canvas implements Runnable
 			{
 				continue;
 			}
-			handler.addObject(IDJungle.SellingPricex3 + String.valueOf(i),new JungleTiles(deckLocX, deckLocY, ID.JungleTile, IDJungle.SellingPricex3, TILE_DIM, sst));
-			handler.addKey(IDJungle.SellingPricex3 + String.valueOf(i));
+			else
+			{
+				handler.addObject(IDJungle.SellingPricex3 + String.valueOf(i),new JungleTiles(deckLocJungleX, deckLocJungleY, ID.JungleTile, IDJungle.SellingPricex3, TILE_DIM, sst), ID.JungleTile);
+				handler.addKey(IDJungle.SellingPricex3 + String.valueOf(i), ID.JungleTile);
+			}
+			
+			//takes out 1 of each worker tile below if 3 or 4 players (as per the instructions)
+			if((numPlayers == 3 || numPlayers == 4) && i == (max - 1))
+			{
+				continue;
+			}
+			else 
+			{
+				handler.addObject(IDWorker.OneOneOneOne + String.valueOf(i),new WorkerTiles(deckLocWorkerX, deckLocWorkerY, ID.WorkerTile, IDWorker.OneOneOneOne, TILE_DIM, sst), ID.WorkerTile);
+				handler.addKey(IDWorker.OneOneOneOne + String.valueOf(i), ID.WorkerTile);
+			}
 		}
 		
 		max++;
 		
 		//populating Temple
+		//Populating TwoOneZeroOne Worker Tile
 		//tiles with 5 count
 		for(int i = 0; i < max; i++)
 		{
@@ -204,8 +266,22 @@ public class Game extends Canvas implements Runnable
 			{
 				continue;
 			}
-			handler.addObject(IDJungle.Temple + String.valueOf(i),new JungleTiles(deckLocX, deckLocY, ID.JungleTile, IDJungle.Temple, TILE_DIM, sst));
-			handler.addKey(IDJungle.Temple + String.valueOf(i));
+			else
+			{
+				handler.addObject(IDJungle.Temple + String.valueOf(i),new JungleTiles(deckLocJungleX, deckLocJungleY, ID.JungleTile, IDJungle.Temple, TILE_DIM, sst), ID.JungleTile);
+				handler.addKey(IDJungle.Temple + String.valueOf(i), ID.JungleTile);
+			}
+			
+			//takes out 1 of each worker tile below if 3 or 4 players (as per the instructions)
+			if((numPlayers == 3 || numPlayers == 4) && i == (max - 1))
+			{
+				continue;
+			}
+			else 
+			{
+				handler.addObject(IDWorker.TwoOneZeroOne + String.valueOf(i),new WorkerTiles(deckLocWorkerX, deckLocWorkerY, ID.WorkerTile, IDWorker.TwoOneZeroOne, TILE_DIM, sst), ID.WorkerTile);
+				handler.addKey(IDWorker.TwoOneZeroOne + String.valueOf(i), ID.WorkerTile);
+			}
 		}
 		
 		max++;
@@ -219,46 +295,73 @@ public class Game extends Canvas implements Runnable
 			{
 				continue;
 			}
-			
-			//place the first one in the middle
-			if(i == 0)
-			{
-				//
-				handler.addObject(IDJungle.Plantationx1 + String.valueOf(i),new JungleTiles(grid.gridCoord.get("D"), grid.gridCoord.get("4"), ID.JungleTile, IDJungle.Plantationx1, TILE_DIM, sst));
-				handler.addKey(IDJungle.Plantationx1 + String.valueOf(i));
-				remove2 = IDJungle.Plantationx1 + String.valueOf(i);
-			}
-			
 			else
 			{
-				handler.addObject(IDJungle.Plantationx1 + String.valueOf(i),new JungleTiles(deckLocX, deckLocY, ID.JungleTile, IDJungle.Plantationx1, TILE_DIM, sst));
-				handler.addKey(IDJungle.Plantationx1 + String.valueOf(i));
+				//place the first one in the middle
+				if(i == 0)
+				{
+					//
+					handler.addObject(IDJungle.Plantationx1 + String.valueOf(i),new JungleTiles(grid.gridCoord.get("D"), grid.gridCoord.get("4"), ID.JungleTile, IDJungle.Plantationx1, TILE_DIM, sst), ID.JungleTile);
+					handler.addKey(IDJungle.Plantationx1 + String.valueOf(i), ID.JungleTile);
+					remove2 = IDJungle.Plantationx1 + String.valueOf(i);
+				}
+				
+				else
+				{
+					handler.addObject(IDJungle.Plantationx1 + String.valueOf(i),new JungleTiles(deckLocJungleX, deckLocJungleY, ID.JungleTile, IDJungle.Plantationx1, TILE_DIM, sst), ID.JungleTile);
+					handler.addKey(IDJungle.Plantationx1 + String.valueOf(i), ID.JungleTile);
+				}
 			}
 		}
 	
 		//creates an arrayList of the keys for all the jungle tiles in the deck
-		handler.cloneKey(handler.hashMapKeys, handler.deckKeys, remove1, remove2);
+		handler.cloneKey(handler.hashMapKeysJungle, handler.deckKeysJungle, remove1, remove2);
 		
-		//shuffles the deck
-		handler.shuffleDeck(handler.deckKeys);
+		//creates an arrayList of the keys for all the worker tiles in the deck
+		handler.cloneKey(handler.hashMapKeysWorker, handler.deckKeysWorker);
+		
+		//shuffles the jungle deck
+		handler.shuffleDeck(handler.deckKeysJungle);
+		
+		//shuffles the worker deck
+		handler.shuffleDeck(handler.deckKeysWorker);
 	
 		turnEnd = true;
-		draw1 = true;
-		draw2 = true;
+		drawJungle1 = true;
+		drawJungle2 = true;
+		drawWorker1 = true;
+		drawWorker2 = true;
+		drawWorker3 = true;
 		
 		//System.out.println(handler.deckKeys.size());
 		
+		//Logic to determine if any tiles should be drawn from the decks
 		if(turnEnd == true)
 		{
-			if(draw1 == true)
+			if(drawJungle1 == true)
 			{
-				handler.drawFromDeck(handler.deckKeys, handler.object, draw1LocX, draw1LocY);
-				handler.removeFromDeck(handler.deckKeys);
+				handler.drawFromDeck(handler.deckKeysJungle, handler.objectJungle, draw1LocX, draw1LocY);
+				handler.removeFromDeck(handler.deckKeysJungle);
 			}
-			if(draw2 == true)
+			if(drawJungle2 == true)
 			{
-				handler.drawFromDeck(handler.deckKeys, handler.object, draw2LocX, draw2LocY);
-				handler.removeFromDeck(handler.deckKeys);
+				handler.drawFromDeck(handler.deckKeysJungle, handler.objectJungle, draw2LocX, draw2LocY);
+				handler.removeFromDeck(handler.deckKeysJungle);
+			}
+			if(drawWorker1 == true)
+			{
+				handler.drawFromDeck(handler.deckKeysWorker, handler.objectWorker, draw1WorkerLocX, draw1WorkerLocY);
+				handler.removeFromDeck(handler.deckKeysWorker);
+			}
+			if(drawWorker2 == true)
+			{
+				handler.drawFromDeck(handler.deckKeysWorker, handler.objectWorker, draw2WorkerLocX, draw2WorkerLocY);
+				handler.removeFromDeck(handler.deckKeysWorker);
+			}
+			if(drawWorker3 == true)
+			{
+				handler.drawFromDeck(handler.deckKeysWorker, handler.objectWorker, draw3WorkerLocX, draw3WorkerLocY);
+				handler.removeFromDeck(handler.deckKeysWorker);
 			}
 		}
 		
