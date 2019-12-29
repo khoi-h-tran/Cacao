@@ -53,7 +53,7 @@ public class Handler
 	//create method to add objects
 	public void addObject(String key, GameObject object)
 	{
-		//adds an object to the linked list
+		//adds an object to the hash map
 		this.object.put(key, object);
 	}
 	
@@ -62,11 +62,27 @@ public class Handler
 		this.hashMapKeys.add(key);
 	}
 
-	//create method to remove objects
+	//create method to remove jungle tiles from game
 	public void removeObject(String key, GameObject object)
 	{
-		//adds an object to the linked list
+		//removes an object to the hash map
 		this.object.remove(key, object);
+	}
+	
+	//create method to remove jungle tiles from deck
+	public void removeFromDeck(ArrayList<String> deckKeys)
+	{
+	//removes an object from the draw deck array list (to indicate it no longer can be drawn)
+	deckKeys.remove(0);
+	}
+	
+	//create method to draw jungle tiles from deck
+	public void drawFromDeck(ArrayList<String> deckKeys, HashMap<String, GameObject> object, int x, int y)
+	{
+		//pulls the object from the hash map because this is where the object is actually stored and moved around
+		//the deckKeys at 0 index is just the top most card in the deck
+		object.get(deckKeys.get(0)).setX(x);
+		object.get(deckKeys.get(0)).setY(y);
 	}
 	
 	/*
@@ -80,7 +96,6 @@ public class Handler
 	//clones the key array list. This will be used to shuffle the deck.
 	public void cloneKey(ArrayList<String> hashMapKeys, ArrayList<String> deckKeys, String remove1, String remove2)
 	{
-		 
 		 
 		 for(String key: hashMapKeys)
 		 {
@@ -121,6 +136,12 @@ public class Handler
 			 System.out.println(key);
 		 }
 		*/
+	}
+	
+	//draw card from jungle tile deck
+	public void drawDeck(ArrayList<String> deckKeys)
+	{
+		
 	}
 	
 }

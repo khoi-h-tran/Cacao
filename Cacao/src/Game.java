@@ -76,6 +76,11 @@ public class Game extends Canvas implements Runnable
 		String remove1 = " ";
 		String remove2 = " ";
 		
+		//create variable to determine if a jungle tile should be drawn
+		Boolean turnEnd = false;
+		Boolean draw1 = false;
+		Boolean draw2 = false;
+		
 		//populates hash map for all jungle tiles and worker tiles for the game
 		/*
 		  GoldMinex2(),//total: 1
@@ -221,6 +226,28 @@ public class Game extends Canvas implements Runnable
 		//shuffles the deck
 		handler.shuffleDeck(handler.deckKeys);
 	
+		turnEnd = true;
+		draw1 = true;
+		draw2 = true;
+		
+		//System.out.println(handler.deckKeys.size());
+		
+		if(turnEnd == true)
+		{
+			if(draw1 == true)
+			{
+				handler.drawFromDeck(handler.deckKeys, handler.object, (HEIGHT + TILE_DIM/4), (HEIGHT - 2*TILE_DIM - TITLE_BAR*2));
+				handler.removeFromDeck(handler.deckKeys);
+			}
+			if(draw2 == true)
+			{
+				handler.drawFromDeck(handler.deckKeys, handler.object, (HEIGHT + TILE_DIM/2 + TILE_DIM), (HEIGHT - 2*TILE_DIM - TITLE_BAR*2));
+				handler.removeFromDeck(handler.deckKeys);
+			}
+		}
+		
+		//System.out.println(handler.deckKeys.size());
+		
 	}
 	
 	//initializing method for sprites

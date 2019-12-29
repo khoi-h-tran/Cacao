@@ -18,6 +18,7 @@ public abstract class GameObject
 	
 	//create instance of enumeration
 	protected ID id;
+	protected IDJungle idjungle;
 	
 	protected int velX, velY;
 	

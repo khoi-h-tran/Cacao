@@ -29,13 +29,13 @@ public class HUD
 		g.drawString("Deck", (Game.HEIGHT + game.TILE_DIM + game.TILE_DIM/3), (Game.HEIGHT - game.TILE_DIM/2 - game.TITLE_BAR));
 		g.setColor(Color.black);
 		g.drawRect(Game.HEIGHT, 0, Game.WIDTH - Game.HEIGHT, Game.HEIGHT - game.TITLE_BAR);
-		for(int i = 1; i <= game.getNumPlayers(); i++)
+		for(int i = 0; i < game.getNumPlayers(); i++)
 		{
 			g.setColor(Color.black);
 			g.drawRect(Game.HEIGHT, game.TITLE_BAR*i, Game.WIDTH - Game.HEIGHT, game.TITLE_BAR);
-			g.setColor(Color.black);
-			g.drawString("Player " + i + ":", (Game.HEIGHT + 10), ((game.TITLE_BAR)*i - 10));
 			
+			g.setColor(Color.black);
+			g.drawString("Player " + (i+1) + ":", (Game.HEIGHT + 10), ((game.TITLE_BAR)*(i + 1) - 10));
 		}
 		
 	}

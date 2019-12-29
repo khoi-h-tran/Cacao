@@ -20,7 +20,7 @@ public class JungleTiles extends GameObject
 	//constructor method for jungle tiles
 	public JungleTiles(int x, int y, ID id, IDJungle idjungle, int TILE_DIM, SpriteSheet ss)
 	{
-		super(x, y, id, TILE_DIM);
+		super(x, y, id,TILE_DIM);
 		this.TILE_DIM = TILE_DIM;
 		this.idjungle = idjungle;
 		
