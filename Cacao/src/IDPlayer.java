@@ -5,9 +5,11 @@
 		 Date: Dec. 27, 2019 12:06:37 p.m.
   Description: Holds the constant variables for game
 */
-public enum ID
+public enum IDPlayer
 {
-	//create ID's for tiles
-	WorkerTile(),
-	JungleTile();
+	//only maximum of 4 players allowed
+	Player1(),
+	Player2(),
+	Player3(),
+	Player4(),
 }

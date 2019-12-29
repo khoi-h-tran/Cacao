@@ -11,25 +11,38 @@ import java.util.HashMap;
 */
 public class Handler
 {
+	private Game game;
 	
 	//create a hash map for all jungle tiles
 	HashMap<String, GameObject> objectJungle = new HashMap<String, GameObject>();
-	
-	//create a hash map for all worker tiles
-	HashMap<String, GameObject> objectWorker = new HashMap<String, GameObject>();
 
 	//create array list to hold keys for jungle tiles
 	ArrayList<String> hashMapKeysJungle = new ArrayList<String>();
 	
-	//create array list to hold keys for worker tiles
-	ArrayList<String> hashMapKeysWorker = new ArrayList<String>();
-	
 	//create array list to hold key for jungle tiles in deck
 	ArrayList<String> deckKeysJungle = new ArrayList<String>();
 	
-	//create array list to hold key for worker tiles in deck
-	ArrayList<String> deckKeysWorker = new ArrayList<String>();
+	//create a hash map for all worker tiles
+	//One for each player
+	HashMap<String, GameObject> objectWorkerP1 = new HashMap<String, GameObject>();
+	HashMap<String, GameObject> objectWorkerP2 = new HashMap<String, GameObject>();
+	HashMap<String, GameObject> objectWorkerP3 = new HashMap<String, GameObject>();
+	HashMap<String, GameObject> objectWorkerP4 = new HashMap<String, GameObject>();
 	
+	//create array list to hold keys for worker tiles
+	//One for each player
+	ArrayList<String> hashMapKeysWorkerP1 = new ArrayList<String>();
+	ArrayList<String> hashMapKeysWorkerP2 = new ArrayList<String>();
+	ArrayList<String> hashMapKeysWorkerP3 = new ArrayList<String>();
+	ArrayList<String> hashMapKeysWorkerP4 = new ArrayList<String>();
+	
+	//create array list to hold key for worker tiles in deck
+	//One for each player
+	ArrayList<String> deckKeysWorkerP1 = new ArrayList<String>();
+	ArrayList<String> deckKeysWorkerP2 = new ArrayList<String>();
+	ArrayList<String> deckKeysWorkerP3 = new ArrayList<String>();
+	ArrayList<String> deckKeysWorkerP4 = new ArrayList<String>();
+
 	//create game loop for objects
 	
 	public void tick()
@@ -43,10 +56,10 @@ public class Handler
 			tempObject.tick();
 		}
 		
-		//loops through each object in jungle tile hash map
-		for(int i = 0; i < objectWorker.size(); i++) 
+		//loops through each object in worker tile hash map
+		for(int i = 0; i < objectWorkerP1.size(); i++) 
 		{
-			GameObject tempObject = objectWorker.get(hashMapKeysWorker.get(i));
+			GameObject tempObject = objectWorkerP1.get(hashMapKeysWorkerP1.get(i));
 		
 			//this is an abstract class that is called in the player or tile classes
 			tempObject.tick();
@@ -67,9 +80,9 @@ public class Handler
 			tempObject.render(g);
 		}
 		
-		for(int i = 0; i < objectWorker.size(); i++)
+		for(int i = 0; i < objectWorkerP1.size(); i++)
 		{
-			GameObject tempObject = objectWorker.get(hashMapKeysWorker.get(i));
+			GameObject tempObject = objectWorkerP1.get(hashMapKeysWorkerP1.get(i));
 			
 			//Code to check if keys and hash map are generating properly
 			//System.out.println(hashMapKeys.get(i));
@@ -91,7 +104,7 @@ public class Handler
 		else if(id == ID.WorkerTile)
 		{
 			//adds an object to the jungle tile hash map
-			this.objectWorker.put(key, object);
+			this.objectWorkerP1.put(key, object);
 		}
 		
 	}
@@ -106,7 +119,7 @@ public class Handler
 		else if(id == ID.WorkerTile)
 		{
 			//adds an object to the jungle tile hash map
-			this.hashMapKeysWorker.add(key);
+			this.hashMapKeysWorkerP1.add(key);
 		}
 		
 	}

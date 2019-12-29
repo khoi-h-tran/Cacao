@@ -318,13 +318,13 @@ public class Game extends Canvas implements Runnable
 		handler.cloneKey(handler.hashMapKeysJungle, handler.deckKeysJungle, remove1, remove2);
 		
 		//creates an arrayList of the keys for all the worker tiles in the deck
-		handler.cloneKey(handler.hashMapKeysWorker, handler.deckKeysWorker);
+		handler.cloneKey(handler.hashMapKeysWorkerP1, handler.deckKeysWorkerP1);
 		
 		//shuffles the jungle deck
 		handler.shuffleDeck(handler.deckKeysJungle);
 		
 		//shuffles the worker deck
-		handler.shuffleDeck(handler.deckKeysWorker);
+		handler.shuffleDeck(handler.deckKeysWorkerP1);
 	
 		turnEnd = true;
 		drawJungle1 = true;
@@ -350,18 +350,18 @@ public class Game extends Canvas implements Runnable
 			}
 			if(drawWorker1 == true)
 			{
-				handler.drawFromDeck(handler.deckKeysWorker, handler.objectWorker, draw1WorkerLocX, draw1WorkerLocY);
-				handler.removeFromDeck(handler.deckKeysWorker);
+				handler.drawFromDeck(handler.deckKeysWorkerP1, handler.objectWorkerP1, draw1WorkerLocX, draw1WorkerLocY);
+				handler.removeFromDeck(handler.deckKeysWorkerP1);
 			}
 			if(drawWorker2 == true)
 			{
-				handler.drawFromDeck(handler.deckKeysWorker, handler.objectWorker, draw2WorkerLocX, draw2WorkerLocY);
-				handler.removeFromDeck(handler.deckKeysWorker);
+				handler.drawFromDeck(handler.deckKeysWorkerP1, handler.objectWorkerP1, draw2WorkerLocX, draw2WorkerLocY);
+				handler.removeFromDeck(handler.deckKeysWorkerP1);
 			}
 			if(drawWorker3 == true)
 			{
-				handler.drawFromDeck(handler.deckKeysWorker, handler.objectWorker, draw3WorkerLocX, draw3WorkerLocY);
-				handler.removeFromDeck(handler.deckKeysWorker);
+				handler.drawFromDeck(handler.deckKeysWorkerP1, handler.objectWorkerP1, draw3WorkerLocX, draw3WorkerLocY);
+				handler.removeFromDeck(handler.deckKeysWorkerP1);
 			}
 		}
 		
