@@ -115,7 +115,7 @@ public class Grid
 		//split up the column and row  value and store it in a hash map
 		for(String key: listOfKeys)
 		{
-			yellowCoords.put((int)(key.charAt(0)), Character.getNumericValue(key.charAt(1)));
+			yellowCoords.put(((int)(key.charAt(0))-64), Character.getNumericValue(key.charAt(1)));
 		}
 		
 		//prints out grid usage
@@ -143,14 +143,36 @@ public class Grid
 	
 	public void render(Graphics g, Game game)
 	{
+		boolean colorYellow = false;
 		//Font f1 = new Font(Font.SERIF, Font.PLAIN, 30);
 		//populates the grid display in the game
 		for(int i = 0; i < Game.HEIGHT/game.TILE_DIM; i++)
 		{
 			for(int j = 0; j < Game.HEIGHT/game.TILE_DIM; j++)
 			{
-				g.setColor(Color.black);
-				g.drawRect((game.TILE_DIM*i), (game.TILE_DIM*j), game.TILE_DIM, game.TILE_DIM);
+				colorYellow = false;
+				
+				for (HashMap.Entry<Integer, Integer> entry : yellowCoords.entrySet()) 
+				{
+			    if(((i+1) == entry.getKey() && ((j+1) == entry.getValue() - 1 || (j+1) == entry.getValue() +1)) || ((j+1) == entry.getKey() && ((i+1) == entry.getValue() - 1 || (i+1) == entry.getValue() +1)))
+			    {
+			    	colorYellow = true;
+			    }
+				}
+				
+				if(colorYellow == true)
+				{
+					g.setColor(Color.yellow);
+					g.fillRect((game.TILE_DIM*i), (game.TILE_DIM*j), game.TILE_DIM, game.TILE_DIM);
+				}
+				else
+				{
+					g.setColor(Color.black);
+					g.drawRect((game.TILE_DIM*i), (game.TILE_DIM*j), game.TILE_DIM, game.TILE_DIM);
+				}
+	    	
+	    	
+	    	
 			}
 		}
 	}
