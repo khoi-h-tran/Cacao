@@ -18,7 +18,7 @@ public class WorkerTiles extends GameObject
 	private BufferedImage tile_image;
 	
 	//constructor method for jungle tiles
-	public WorkerTiles(int x, int y, ID id, IDWorker idworker, int TILE_DIM, SpriteSheet ss)
+	public WorkerTiles(int x, int y, ID id, IDWorker idworker, int TILE_DIM, SpriteSheet ss, IDPlayer idplayer)
 	{
 		super(x, y, id,TILE_DIM);
 		this.TILE_DIM = TILE_DIM;
@@ -30,21 +30,43 @@ public class WorkerTiles extends GameObject
 		ThreeZeroZeroOne(),//total: 1
 		ThreeOneZeroZero();//total: 1
 	 */
+		int rowNum = 0;
+		
+		switch(idplayer)
+		{
+			case Player1:
+				idplayer = IDPlayer.Player1;
+				rowNum = 7;
+				break;
+			case Player2:
+				idplayer = IDPlayer.Player2;
+				rowNum = 8;
+				break;
+			case Player3:
+				idplayer = IDPlayer.Player3;
+				rowNum = 9;
+				break;
+			case Player4:
+				idplayer = IDPlayer.Player4;
+				rowNum = 10;
+				break;
+		}
+		
 		switch(idworker)
 		{
 			//total 1
 			case OneOneOneOne:
-				tile_image = ss.grabImage(1, 7, TILE_DIM, TILE_DIM, TILE_DIM);
+				tile_image = ss.grabImage(1, rowNum, TILE_DIM, TILE_DIM, TILE_DIM);
 				break;
 			//total 2
 			case TwoOneZeroOne:
-				tile_image = ss.grabImage(2, 7, TILE_DIM, TILE_DIM, TILE_DIM);
+				tile_image = ss.grabImage(2, rowNum, TILE_DIM, TILE_DIM, TILE_DIM);
 				break;
 			case ThreeZeroZeroOne:
-				tile_image = ss.grabImage(3, 7, TILE_DIM, TILE_DIM, TILE_DIM);
+				tile_image = ss.grabImage(3, rowNum, TILE_DIM, TILE_DIM, TILE_DIM);
 				break;
 			case ThreeOneZeroZero:
-				tile_image = ss.grabImage(4, 7, TILE_DIM, TILE_DIM, TILE_DIM);
+				tile_image = ss.grabImage(4, rowNum, TILE_DIM, TILE_DIM, TILE_DIM);
 				break;
 		}
 		

@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
+
 /* 
 	File Name: handler.java
 	   Author: Khoi Tran
@@ -45,7 +46,7 @@ public class Handler
 
 	//create game loop for objects
 	
-	public void tick()
+	public void tick(Game game)
 	{
 		//loops through each object in jungle tile hash map
 		for(int i = 0; i < objectJungle.size(); i++) 
@@ -56,17 +57,55 @@ public class Handler
 			tempObject.tick();
 		}
 		
-		//loops through each object in worker tile hash map
-		for(int i = 0; i < objectWorkerP1.size(); i++) 
+		if(game.numPlayers >= 1)
 		{
-			GameObject tempObject = objectWorkerP1.get(hashMapKeysWorkerP1.get(i));
-		
-			//this is an abstract class that is called in the player or tile classes
-			tempObject.tick();
+			//loops through each object in worker tile hash map
+			for(int i = 0; i < objectWorkerP1.size(); i++) 
+			{
+				GameObject tempObject = objectWorkerP1.get(hashMapKeysWorkerP1.get(i));
+			
+				//this is an abstract class that is called in the player or tile classes
+				tempObject.tick();
+			}
 		}
+		
+		if(game.numPlayers >= 2)
+		{
+			for(int i = 0; i < objectWorkerP2.size(); i++) 
+			{
+				GameObject tempObject = objectWorkerP2.get(hashMapKeysWorkerP2.get(i));
+			
+				//this is an abstract class that is called in the player or tile classes
+				tempObject.tick();
+			}
+		}
+		
+		if(game.numPlayers >= 3)
+		{
+			for(int i = 0; i < objectWorkerP3.size(); i++) 
+			{
+				GameObject tempObject = objectWorkerP3.get(hashMapKeysWorkerP3.get(i));
+			
+				//this is an abstract class that is called in the player or tile classes
+				tempObject.tick();
+			}
+		}
+		
+		if(game.numPlayers >= 4)
+		{
+			for(int i = 0; i < objectWorkerP4.size(); i++) 
+			{
+				GameObject tempObject = objectWorkerP4.get(hashMapKeysWorkerP4.get(i));
+			
+				//this is an abstract class that is called in the player or tile classes
+				tempObject.tick();
+			}
+		}
+			
+		drawCard(game);
 	}
 	
-	public void render(Graphics g)
+	public void render(Graphics g, Game game)
 	{
 		for(int i = 0; i < objectJungle.size(); i++)
 		{
@@ -80,21 +119,54 @@ public class Handler
 			tempObject.render(g);
 		}
 		
-		for(int i = 0; i < objectWorkerP1.size(); i++)
+		if(game.gameState == Game.STATE.Player1)
 		{
-			GameObject tempObject = objectWorkerP1.get(hashMapKeysWorkerP1.get(i));
+			//loops through each object in worker tile hash map
+			for(int i = 0; i < objectWorkerP1.size(); i++) 
+			{
+				GameObject tempObject = objectWorkerP1.get(hashMapKeysWorkerP1.get(i));
 			
-			//Code to check if keys and hash map are generating properly
-			//System.out.println(hashMapKeys.get(i));
-			//System.out.println(object.get(hashMapKeys.get(i)));
+				//this is an abstract class that is called in the player or tile classes
+				tempObject.render(g);
+			}
+		}
+		
+		if(game.gameState == Game.STATE.Player2)
+		{
+			for(int i = 0; i < objectWorkerP2.size(); i++) 
+			{
+				GameObject tempObject = objectWorkerP2.get(hashMapKeysWorkerP2.get(i));
 			
-			//this is an abstract class that is called in the player or tile classes
-			tempObject.render(g);
+				//this is an abstract class that is called in the player or tile classes
+				tempObject.render(g);
+			}
+		}
+		
+		if(game.gameState == Game.STATE.Player3)
+		{
+			for(int i = 0; i < objectWorkerP3.size(); i++) 
+			{
+				GameObject tempObject = objectWorkerP3.get(hashMapKeysWorkerP3.get(i));
+			
+				//this is an abstract class that is called in the player or tile classes
+				tempObject.render(g);
+			}
+		}
+		
+		if(game.gameState == Game.STATE.Player4)
+		{
+			for(int i = 0; i < objectWorkerP4.size(); i++) 
+			{
+				GameObject tempObject = objectWorkerP4.get(hashMapKeysWorkerP4.get(i));
+			
+				//this is an abstract class that is called in the player or tile classes
+				tempObject.render(g);
+			}
 		}
 	}
 	
 	//create method to add objects
-	public void addObject(String key, GameObject object, ID id)
+	public void addObject(String key, GameObject object, ID id, IDPlayer idplayer)
 	{
 		if(id == ID.JungleTile)
 		{
@@ -103,13 +175,29 @@ public class Handler
 		}
 		else if(id == ID.WorkerTile)
 		{
-			//adds an object to the jungle tile hash map
-			this.objectWorkerP1.put(key, object);
+			//adds an object to the worker tile hash map for all players
+			if(idplayer == IDPlayer.Player1)
+			{
+				this.objectWorkerP1.put(key, object);
+			}
+			else if(idplayer == IDPlayer.Player2)
+			{
+				this.objectWorkerP2.put(key, object);
+			}
+			else if(idplayer == IDPlayer.Player3)
+			{
+				this.objectWorkerP3.put(key, object);
+			}
+			else if(idplayer == IDPlayer.Player4)
+			{
+				this.objectWorkerP4.put(key, object);
+			}
+			
 		}
 		
 	}
 	
-	public void addKey(String key, ID id)
+	public void addKey(String key, ID id, IDPlayer idplayer)
 	{
 		if(id == ID.JungleTile)
 		{
@@ -118,8 +206,24 @@ public class Handler
 		}
 		else if(id == ID.WorkerTile)
 		{
-			//adds an object to the jungle tile hash map
-			this.hashMapKeysWorkerP1.add(key);
+			//adds an object to the worker tile hash map for all players
+			if(idplayer == IDPlayer.Player1)
+			{
+				this.hashMapKeysWorkerP1.add(key);
+			}
+			else if(idplayer == IDPlayer.Player2)
+			{
+				this.hashMapKeysWorkerP2.add(key);
+			}
+			else if(idplayer == IDPlayer.Player3)
+			{
+				this.hashMapKeysWorkerP3.add(key);
+			}
+			else if(idplayer == IDPlayer.Player4)
+			{
+				this.hashMapKeysWorkerP4.add(key);
+			}
+
 		}
 		
 	}
@@ -226,6 +330,128 @@ public class Handler
 		 }
 		*/
 	}
+	
+	//reset end turn to true to initialize draw
+	public void endTurnTrue(Game game)
+	{
+		game.turnEnd = true;
+	}
+	
+	//reset drawing  to true to initialize draw
+	public void drawWorkerTrue(Game game)
+	{
+		game.drawWorker1 = true;
+		game.drawWorker2 = true;
+		game.drawWorker3 = true;
+	}
 
+	//draws a card from the deck
+	public void drawCard(Game game)
+	{
+		//System.out.println(handler.deckKeys.size());
+		
+		//Logic to determine if any tiles should be drawn from the decks
+		if(game.turnEnd == true)
+		{
+			if(game.drawJungle1 == true)
+			{
+				drawFromDeck(deckKeysJungle, objectJungle, game.draw1LocX, game.draw1LocY);
+				removeFromDeck(deckKeysJungle);
+				System.out.println("Jungle Drawn");
+				game.drawJungle1 = false;
+			}
+			if(game.drawJungle2 == true)
+			{
+				drawFromDeck(deckKeysJungle, objectJungle, game.draw2LocX, game.draw2LocY);
+				removeFromDeck(deckKeysJungle);
+				System.out.println("Jungle Drawn");
+				game.drawJungle2 = false;
+			}
+			
+			if(game.drawWorker1 == true)
+			{
+				if(game.gameState == Game.STATE.Player1)
+				{
+					drawFromDeck(deckKeysWorkerP1, objectWorkerP1, game.draw1WorkerLocX, game.draw1WorkerLocY);
+					removeFromDeck(deckKeysWorkerP1);
+					System.out.println("Worker 1");
+					System.out.println(game.gameState);
+				}
+				else if(game.gameState == Game.STATE.Player2)
+				{
+					drawFromDeck(deckKeysWorkerP2, objectWorkerP2, game.draw1WorkerLocX, game.draw1WorkerLocY);
+					removeFromDeck(deckKeysWorkerP2);
+					System.out.println("Worker 2");
+				}
+				else if(game.gameState == Game.STATE.Player3)
+				{
+					drawFromDeck(deckKeysWorkerP3, objectWorkerP3, game.draw1WorkerLocX, game.draw1WorkerLocY);
+					removeFromDeck(deckKeysWorkerP3);
+					System.out.println("Worker 3");
+				}
+				else if(game.gameState == Game.STATE.Player4)
+				{
+					drawFromDeck(deckKeysWorkerP4, objectWorkerP4, game.draw1WorkerLocX, game.draw1WorkerLocY);
+					removeFromDeck(deckKeysWorkerP4);
+				}
+
+				game.drawWorker1 = false;
+			}
+			if(game.drawWorker2 == true)
+			{
+				if(game.gameState == Game.STATE.Player1)
+				{
+					drawFromDeck(deckKeysWorkerP1, objectWorkerP1, game.draw2WorkerLocX, game.draw2WorkerLocY);
+					removeFromDeck(deckKeysWorkerP1);
+				}
+				else if(game.gameState == Game.STATE.Player2)
+				{
+					drawFromDeck(deckKeysWorkerP2, objectWorkerP2, game.draw2WorkerLocX, game.draw2WorkerLocY);
+					removeFromDeck(deckKeysWorkerP2);
+				}
+				else if(game.gameState == Game.STATE.Player3)
+				{
+					drawFromDeck(deckKeysWorkerP3, objectWorkerP3, game.draw2WorkerLocX, game.draw2WorkerLocY);
+					removeFromDeck(deckKeysWorkerP3);
+				}
+				else if(game.gameState == Game.STATE.Player4)
+				{
+					drawFromDeck(deckKeysWorkerP4, objectWorkerP4, game.draw2WorkerLocX, game.draw2WorkerLocY);
+					removeFromDeck(deckKeysWorkerP4);
+				}
+				
+				game.drawWorker2 = false;
+			}
+			if(game.drawWorker3 == true)
+			{
+				if(game.gameState == Game.STATE.Player1)
+				{
+					drawFromDeck(deckKeysWorkerP1, objectWorkerP1, game.draw3WorkerLocX, game.draw3WorkerLocY);
+					removeFromDeck(deckKeysWorkerP1);
+				}
+				else if(game.gameState == Game.STATE.Player2)
+				{
+					drawFromDeck(deckKeysWorkerP2, objectWorkerP2, game.draw3WorkerLocX, game.draw3WorkerLocY);
+					removeFromDeck(deckKeysWorkerP2);
+				}
+				else if(game.gameState == Game.STATE.Player3)
+				{
+					drawFromDeck(deckKeysWorkerP3, objectWorkerP3, game.draw3WorkerLocX, game.draw3WorkerLocY);
+					removeFromDeck(deckKeysWorkerP3);
+				}
+				else if(game.gameState == Game.STATE.Player4)
+				{
+					drawFromDeck(deckKeysWorkerP4, objectWorkerP4, game.draw3WorkerLocX, game.draw3WorkerLocY);
+					removeFromDeck(deckKeysWorkerP4);
+				}
+
+				game.drawWorker3 = false;
+			}
+			
+			game.turnEnd = false;
+		}
+		
+		//System.out.println(handler.deckKeys.size());
+	}
 	
 }
