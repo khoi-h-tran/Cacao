@@ -31,9 +31,14 @@ public class Game extends Canvas implements Runnable
 	
 	//side length of tile (they are squares)
 	protected final int TILE_DIM = 123;
+	//side length of ressource image
+	protected final int RES_DIM = 31;
 	
 	//offset from title bar
 	protected final int TITLE_BAR = 40;
+	
+	//offset for each ressource icon
+	protected final int iconOffset = 40;
 	
 	//creating instance of thread class
 	private Thread thread;
@@ -50,7 +55,7 @@ public class Game extends Canvas implements Runnable
 	public SpriteSheet ssr;
 	
 	//initializing the number of players
-	protected int numPlayers = 2;
+	protected int numPlayers = 4;
 	
 	//create instance of handler class
 	private Handler handler;
@@ -154,9 +159,35 @@ public class Game extends Canvas implements Runnable
 					break;
 			}
 			
+			//creating a score card for each player
 			handler.addObject("Player" + String.valueOf(i), new playerScore(), ID.ScoreCard, idplayer);
+			if(idplayer == IDPlayer.Player1)
+			{
+				handler.popScoresToZero(handler.scoreCountP1);
+			}
+			else if(idplayer == IDPlayer.Player2)
+			{
+				handler.popScoresToZero(handler.scoreCountP2);
+			}
+			else if(idplayer == IDPlayer.Player3)
+			{
+				handler.popScoresToZero(handler.scoreCountP3);
+			}
+			else if(idplayer == IDPlayer.Player4)
+			{
+				handler.popScoresToZero(handler.scoreCountP4);
+			}
+			
+			//creating the resource icon for each player
+			handler.addObject("Cacao", new Ressources((Game.HEIGHT + 5), ((TITLE_BAR)*((i-1)*2 + 1) + RES_DIM/5), ID.Ressource, IDRessources.Cacao, idplayer, RES_DIM, ssr), ID.Ressource, idplayer);
+			handler.addObject("SunToken", new Ressources((Game.HEIGHT + 5) + iconOffset * 2, ((TITLE_BAR)*((i-1)*2 + 1) + RES_DIM/5), ID.Ressource, IDRessources.SunToken, idplayer, RES_DIM, ssr), ID.Ressource, idplayer);
+			handler.addObject("Water", new Ressources((Game.HEIGHT + 5) + iconOffset * 4, ((TITLE_BAR)*((i-1)*2 + 1) + RES_DIM/5), ID.Ressource, IDRessources.Water, idplayer, RES_DIM, ssr), ID.Ressource, idplayer);
+			handler.addObject("Temple", new Ressources((Game.HEIGHT + 5) + iconOffset * 6, ((TITLE_BAR)*((i-1)*2 + 1) + RES_DIM/5), ID.Ressource, IDRessources.Temple, idplayer, RES_DIM, ssr), ID.Ressource, idplayer);
+			
+			handler.addObject("Meeple", new Ressources((Game.HEIGHT + RES_DIM * 4), ((TITLE_BAR)*((i-1)*2 + 1) - RES_DIM - 5), ID.Ressource, IDRessources.Meeple, idplayer, RES_DIM, ssr), ID.Ressource, idplayer);
+			handler.addObject("Gold", new Ressources((Game.HEIGHT + RES_DIM * 5), ((TITLE_BAR)*((i-1)*2 + 1) - RES_DIM - 5), ID.Ressource, IDRessources.Gold, idplayer, RES_DIM, ssr), ID.Ressource, idplayer);
 		}
-		
+
 		//populates hash map for all jungle tiles and worker tiles for the game
 		/*
 		 						***************Jungle Tiles***********

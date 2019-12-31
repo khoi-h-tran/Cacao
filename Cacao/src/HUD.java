@@ -14,7 +14,7 @@ public class HUD
 {
 	private Game game;
 	private Handler handler;
-
+	
 	public void tick()
 	{
 		
@@ -127,14 +127,52 @@ public class HUD
 		//Drawing the rectangle to separate play space and hand space
 		g.setColor(Color.black);
 		g.drawRect(Game.HEIGHT, 0, Game.WIDTH - Game.HEIGHT, Game.HEIGHT - game.TITLE_BAR);
+		
 		//Drawing the Player info section
 		for(int i = 0; i < game.getNumPlayers(); i++)
 		{
+			//drawing the rectangle for each player
 			g.setColor(Color.black);
-			g.drawRect(Game.HEIGHT, game.TITLE_BAR*i, Game.WIDTH - Game.HEIGHT, game.TITLE_BAR);
+			g.drawRect(Game.HEIGHT, game.TITLE_BAR*i*2, Game.WIDTH - Game.HEIGHT, game.TITLE_BAR*2);
 			
+			//Writing out the player number
+			//code if you want to change the "player#" text
+			/*
+			switch(i)
+			{
+				case 0:
+					g.setColor(Color.red);
+					break;
+				case 1:
+					g.setColor(Color.magenta);
+					break;
+				case 2:
+					g.setColor(Color.white);
+					break;
+				case 3:
+					g.setColor(Color.yellow);
+					break;
+			}
+			*/
+			
+			//Writing out the player number
 			g.setColor(Color.black);
-			g.drawString("Player " + (i+1) + ":", (Game.HEIGHT + 10), ((game.TITLE_BAR)*(i + 1) - 10));
+			g.drawString("Player " + (i+1) + ":", (Game.HEIGHT + 10), ((game.TITLE_BAR)*(i*2 + 1) - 10));
+			
+			//Writing out the score count
+			//Gold Score
+			g.drawString(String.valueOf(handler.scoreCountP1.get("Gold")), (Game.HEIGHT + 10 + game.RES_DIM * 6), (game.TITLE_BAR)*(i*2 + 1) - 15);
+			
+			//Cacao count
+			g.drawString(String.valueOf(handler.scoreCountP1.get("Cacao")), Game.HEIGHT + 3 + game.RES_DIM*3/2, ((game.TITLE_BAR)*((i)*2 + 1) + game.RES_DIM));
+			//Sun worshiping token count
+			g.drawString(String.valueOf(handler.scoreCountP1.get("Sun Tokens")), Game.HEIGHT + 3 + game.RES_DIM*3/2 + game.iconOffset * 2, ((game.TITLE_BAR)*((i)*2 + 1) + game.RES_DIM));
+			//Water count
+			g.drawString(String.valueOf(handler.scoreCountP1.get("Water")), Game.HEIGHT + 3 + game.RES_DIM*3/2 + game.iconOffset * 4, ((game.TITLE_BAR)*((i)*2 + 1) + game.RES_DIM));
+			//Temple Count
+			g.drawString(String.valueOf(handler.scoreCountP1.get("Temple")), Game.HEIGHT + 3 + game.RES_DIM*3/2 + game.iconOffset * 6, ((game.TITLE_BAR)*((i)*2 + 1) + game.RES_DIM));
+			
+			
 		}
 		
 	}

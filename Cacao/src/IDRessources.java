@@ -9,7 +9,9 @@ public enum IDRessources
 {
 	Cacao(),//total: 20
 	SunToken(),//total: 12
-	Goldx1(),//total: 24
-	Goldx5(),//total: 12
-	Goldx10();//total: 12
+	Water(),
+	Temple(),
+	Gold(),
+	Meeple();
+
 }

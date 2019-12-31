@@ -45,13 +45,36 @@ public class Handler
 	ArrayList<String> deckKeysWorkerP3 = new ArrayList<String>();
 	ArrayList<String> deckKeysWorkerP4 = new ArrayList<String>();
 	
-	//create a hash map for all player scores
+	//create a hash map for to correspond each player to each score hash map
 	//One for each player
 	HashMap<String, GameObject> scoreP1 = new HashMap<String, GameObject>();
 	HashMap<String, GameObject> scoreP2 = new HashMap<String, GameObject>();
 	HashMap<String, GameObject> scoreP3 = new HashMap<String, GameObject>();
 	HashMap<String, GameObject> scoreP4 = new HashMap<String, GameObject>();
+	
+	//Holds hash maps for the scores of each player
+	HashMap<String, Integer> scoreCountP1 = new HashMap<String, Integer>();
+	HashMap<String, Integer> scoreCountP2 = new HashMap<String, Integer>();
+	HashMap<String, Integer> scoreCountP3 = new HashMap<String, Integer>();
+	HashMap<String, Integer> scoreCountP4 = new HashMap<String, Integer>();
+	
+	//create a hash map for all player ressource icons
+	//One for each player
+	HashMap<String, GameObject> ressourceP1 = new HashMap<String, GameObject>();
+	HashMap<String, GameObject>  ressourceP2 = new HashMap<String, GameObject>();
+	HashMap<String, GameObject>  ressourceP3 = new HashMap<String, GameObject>();
+	HashMap<String, GameObject>  ressourceP4 = new HashMap<String, GameObject>();
 
+	/*
+	Cacao(),//total: 20
+	SunToken(),//total: 12
+	Water(),
+	Temple(),
+	Gold(),
+	*/
+	//create an array to store names of ressource so we can refer to the array in a loop for easy access
+	String [] ressourceNames = {"Cacao", "SunToken", "Water", "Temple", "Gold", "Meeple"};
+	
 	//create game loop for objects
 	
 	public void tick(Game game)
@@ -170,6 +193,68 @@ public class Handler
 				tempObject.render(g);
 			}
 		}
+		
+		//Render the resource icons
+		
+		if(game.numPlayers >= 1)
+		{
+			//render the resource tiles
+			for(int i = 0; i < ressourceP1.size(); i++) 
+			{
+				GameObject tempObject = ressourceP1.get(ressourceNames[i]);
+			
+				//this is an abstract class that is called in the player or tile classes
+				tempObject.render(g);
+			}
+		}
+	
+		if(game.numPlayers >= 2)
+		{
+			//render the resource tiles
+			for(int i = 0; i < ressourceP2.size(); i++) 
+			{
+				GameObject tempObject = ressourceP2.get(ressourceNames[i]);
+			
+				//this is an abstract class that is called in the player or tile classes
+				tempObject.render(g);
+			}
+		}
+
+		if(game.numPlayers >= 3)
+		{
+			//render the resource tiles
+			for(int i = 0; i < ressourceP3.size(); i++) 
+			{
+				GameObject tempObject = ressourceP3.get(ressourceNames[i]);
+			
+				//this is an abstract class that is called in the player or tile classes
+				tempObject.render(g);
+			}
+		}
+		
+		if(game.numPlayers >= 4)
+		{
+			//render the resource tiles
+			for(int i = 0; i < ressourceP4.size(); i++) 
+			{
+				GameObject tempObject = ressourceP4.get(ressourceNames[i]);
+			
+				//this is an abstract class that is called in the player or tile classes
+				tempObject.render(g);
+			}
+		}
+
+	}
+	
+	//populates the entire hash map to zero
+	public void popScoresToZero(HashMap<String,Integer> score)
+	{
+		// Gold, cacao beans, sun tokens, temples, water
+		score.put("Gold", 0);
+		score.put("Cacao", 0);
+		score.put("Sun Tokens", 0);
+		score.put("Water", 0);
+		score.put("Temple", 0);
 	}
 	
 	//create method to add objects such as the tiles (worker and jungle)
@@ -219,7 +304,26 @@ public class Handler
 			{
 				this.scoreP4.put(key, object);
 			}
-			
+		}
+		else if(id == ID.Ressource)
+		{
+			//adds an object to the resource icon hash map for all players
+			if(idplayer == IDPlayer.Player1)
+			{
+				this.ressourceP1.put(key, object);
+			}
+			else if(idplayer == IDPlayer.Player2)
+			{
+				this.ressourceP2.put(key, object);
+			}
+			else if(idplayer == IDPlayer.Player3)
+			{
+				this.ressourceP3.put(key, object);
+			}
+			else if(idplayer == IDPlayer.Player4)
+			{
+				this.ressourceP4.put(key, object);
+			}
 		}
 		
 	}

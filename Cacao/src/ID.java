@@ -9,6 +9,7 @@ public enum ID
 {
 	//create ID's for tiles
 	ScoreCard(),
+	Ressource(),
 	WorkerTile(),
 	JungleTile();
 }
