@@ -34,9 +34,8 @@ public abstract class GameObject
 	}
 	
 	//player constructor class
-	public GameObject(ID id)
+	public GameObject()
 	{
-		this.id = id;
 	}
 	
 	//abstract methods cannot have code in it

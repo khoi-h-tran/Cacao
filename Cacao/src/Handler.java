@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.HashMap;
 
 
+
 /* 
 	File Name: handler.java
 	   Author: Khoi Tran
@@ -43,6 +44,13 @@ public class Handler
 	ArrayList<String> deckKeysWorkerP2 = new ArrayList<String>();
 	ArrayList<String> deckKeysWorkerP3 = new ArrayList<String>();
 	ArrayList<String> deckKeysWorkerP4 = new ArrayList<String>();
+	
+	//create a hash map for all player scores
+	//One for each player
+	HashMap<String, GameObject> scoreP1 = new HashMap<String, GameObject>();
+	HashMap<String, GameObject> scoreP2 = new HashMap<String, GameObject>();
+	HashMap<String, GameObject> scoreP3 = new HashMap<String, GameObject>();
+	HashMap<String, GameObject> scoreP4 = new HashMap<String, GameObject>();
 
 	//create game loop for objects
 	
@@ -101,8 +109,7 @@ public class Handler
 				tempObject.tick();
 			}
 		}
-			
-		drawCard(game);
+	
 	}
 	
 	public void render(Graphics g, Game game)
@@ -165,7 +172,7 @@ public class Handler
 		}
 	}
 	
-	//create method to add objects
+	//create method to add objects such as the tiles (worker and jungle)
 	public void addObject(String key, GameObject object, ID id, IDPlayer idplayer)
 	{
 		if(id == ID.JungleTile)
@@ -191,6 +198,26 @@ public class Handler
 			else if(idplayer == IDPlayer.Player4)
 			{
 				this.objectWorkerP4.put(key, object);
+			}
+		}
+		else if(id == ID.ScoreCard)
+		{
+			//adds an object to the worker tile hash map for all players
+			if(idplayer == IDPlayer.Player1)
+			{
+				this.scoreP1.put(key, object);
+			}
+			else if(idplayer == IDPlayer.Player2)
+			{
+				this.scoreP2.put(key, object);
+			}
+			else if(idplayer == IDPlayer.Player3)
+			{
+				this.scoreP3.put(key, object);
+			}
+			else if(idplayer == IDPlayer.Player4)
+			{
+				this.scoreP4.put(key, object);
 			}
 			
 		}
@@ -241,8 +268,8 @@ public class Handler
 	//create method to remove jungle tiles from deck
 	public void removeFromDeck(ArrayList<String> deckKeys)
 	{
-	//removes an object from the draw deck array list (to indicate it no longer can be drawn)
-	deckKeys.remove(0);
+		//removes an object from the draw deck array list (to indicate it no longer can be drawn)
+		deckKeys.remove(0);
 	}
 	
 	//create method to draw jungle tiles from deck
@@ -250,8 +277,9 @@ public class Handler
 	{
 		//pulls the object from the hash map because this is where the object is actually stored and moved around
 		//the deckKeys at 0 index is just the top most card in the deck
-		object.get(deckKeys.get(0)).setX(x);
-		object.get(deckKeys.get(0)).setY(y);
+		GameObject tempObject = object.get(deckKeys.get(0));
+		tempObject.setX(x);
+		tempObject.setY(y);
 	}
 	
 	/*
@@ -262,7 +290,7 @@ public class Handler
 }
 	 */
 	
-	//clones the Jungle key array list. This will be used to shuffle the deck.
+	//clones the Jungle key array list. This will be used to clone the deck.
 	public void cloneKey(ArrayList<String> hashMapKeys, ArrayList<String> deckKeys, String remove1, String remove2)
 	{
 		 
@@ -293,7 +321,7 @@ public class Handler
 		 */
 	}
 	
-	//clones the Worker key array list. This will be used to shuffle the deck.
+	//clones the Worker key array list. This will be used to clone the deck.
 	public void cloneKey(ArrayList<String> hashMapKeys, ArrayList<String> deckKeys)
 	{
 		 
@@ -331,6 +359,18 @@ public class Handler
 		*/
 	}
 	
+	//rotate the tile and it's corresponding score
+	public void rotateWorkerTile(int [] score)
+	{
+		int temp = 0;
+		
+		temp = score[0];
+		score[0] = score[1];	
+		score[1] = score[2];
+		score[2] = score[3];
+		score[3] = temp;
+	}
+	
 	//reset end turn to true to initialize draw
 	public void endTurnTrue(Game game)
 	{
@@ -344,6 +384,13 @@ public class Handler
 		game.drawWorker2 = true;
 		game.drawWorker3 = true;
 	}
+	
+	//reset drawing  to true to initialize draw
+	public void drawJungleTrue(Game game)
+	{
+		game.drawJungle1 = true;
+		game.drawJungle2 = true;
+	}
 
 	//draws a card from the deck
 	public void drawCard(Game game)
@@ -353,41 +400,38 @@ public class Handler
 		//Logic to determine if any tiles should be drawn from the decks
 		if(game.turnEnd == true)
 		{
-			if(game.drawJungle1 == true)
+			if(game.gameState == Game.STATE.Play && game.typeState == Game.TYPESTATE.Jungle && game.turnState == Game.TURNSTATE.Draw)
 			{
-				drawFromDeck(deckKeysJungle, objectJungle, game.draw1LocX, game.draw1LocY);
-				removeFromDeck(deckKeysJungle);
-				System.out.println("Jungle Drawn");
-				game.drawJungle1 = false;
-			}
-			if(game.drawJungle2 == true)
-			{
-				drawFromDeck(deckKeysJungle, objectJungle, game.draw2LocX, game.draw2LocY);
-				removeFromDeck(deckKeysJungle);
-				System.out.println("Jungle Drawn");
-				game.drawJungle2 = false;
+				if(game.drawJungle1 == true)
+				{
+					drawFromDeck(deckKeysJungle, objectJungle, game.draw1LocX, game.draw1LocY);
+					removeFromDeck(deckKeysJungle);
+					game.drawJungle1 = false;
+				}
+				if(game.drawJungle2 == true)
+				{
+					drawFromDeck(deckKeysJungle, objectJungle, game.draw2LocX, game.draw2LocY);
+					removeFromDeck(deckKeysJungle);
+					game.drawJungle2 = false;
+				}
 			}
 			
-			if(game.drawWorker1 == true)
+			if(game.drawWorker1 == true && game.typeState == Game.TYPESTATE.Worker && game.turnState == Game.TURNSTATE.Draw)
 			{
 				if(game.gameState == Game.STATE.Player1)
 				{
 					drawFromDeck(deckKeysWorkerP1, objectWorkerP1, game.draw1WorkerLocX, game.draw1WorkerLocY);
 					removeFromDeck(deckKeysWorkerP1);
-					System.out.println("Worker 1");
-					System.out.println(game.gameState);
 				}
 				else if(game.gameState == Game.STATE.Player2)
 				{
 					drawFromDeck(deckKeysWorkerP2, objectWorkerP2, game.draw1WorkerLocX, game.draw1WorkerLocY);
 					removeFromDeck(deckKeysWorkerP2);
-					System.out.println("Worker 2");
 				}
 				else if(game.gameState == Game.STATE.Player3)
 				{
 					drawFromDeck(deckKeysWorkerP3, objectWorkerP3, game.draw1WorkerLocX, game.draw1WorkerLocY);
 					removeFromDeck(deckKeysWorkerP3);
-					System.out.println("Worker 3");
 				}
 				else if(game.gameState == Game.STATE.Player4)
 				{
@@ -397,7 +441,8 @@ public class Handler
 
 				game.drawWorker1 = false;
 			}
-			if(game.drawWorker2 == true)
+			
+			if(game.drawWorker2 == true && game.typeState == Game.TYPESTATE.Worker && game.turnState == Game.TURNSTATE.Draw)
 			{
 				if(game.gameState == Game.STATE.Player1)
 				{
@@ -422,7 +467,7 @@ public class Handler
 				
 				game.drawWorker2 = false;
 			}
-			if(game.drawWorker3 == true)
+			if(game.drawWorker3 == true  && game.typeState == Game.TYPESTATE.Worker && game.turnState == Game.TURNSTATE.Draw)
 			{
 				if(game.gameState == Game.STATE.Player1)
 				{

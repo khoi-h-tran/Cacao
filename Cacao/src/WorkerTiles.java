@@ -14,6 +14,7 @@ public class WorkerTiles extends GameObject
 	//pulls from main game method in constructor
 	private final int TILE_DIM;
 	private IDWorker idworker;
+	private int [] scoreScheme = new int [4];
 	
 	private BufferedImage tile_image;
 	
@@ -57,16 +58,32 @@ public class WorkerTiles extends GameObject
 			//total 1
 			case OneOneOneOne:
 				tile_image = ss.grabImage(1, rowNum, TILE_DIM, TILE_DIM, TILE_DIM);
+				scoreScheme[0] = 1;
+				scoreScheme[1] = 1;
+				scoreScheme[2] = 1;
+				scoreScheme[3] = 1;
 				break;
 			//total 2
 			case TwoOneZeroOne:
 				tile_image = ss.grabImage(2, rowNum, TILE_DIM, TILE_DIM, TILE_DIM);
+				scoreScheme[0] = 1;
+				scoreScheme[1] = 2;
+				scoreScheme[2] = 1;
+				scoreScheme[3] = 0;
 				break;
 			case ThreeZeroZeroOne:
 				tile_image = ss.grabImage(3, rowNum, TILE_DIM, TILE_DIM, TILE_DIM);
+				scoreScheme[0] = 1;
+				scoreScheme[1] = 3;
+				scoreScheme[2] = 0;
+				scoreScheme[3] = 0;
 				break;
 			case ThreeOneZeroZero:
 				tile_image = ss.grabImage(4, rowNum, TILE_DIM, TILE_DIM, TILE_DIM);
+				scoreScheme[0] = 0;
+				scoreScheme[1] = 3;
+				scoreScheme[2] = 1;
+				scoreScheme[3] = 0;
 				break;
 		}
 		

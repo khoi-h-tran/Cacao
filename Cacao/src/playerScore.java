@@ -1,4 +1,7 @@
 import java.awt.Graphics;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /* 
 	File Name: Player.java
@@ -8,13 +11,23 @@ import java.awt.Graphics;
 */
 
 //extending makes Player a sub class and Game Object a super class
-public class Player extends GameObject
+public class playerScore extends GameObject
 {
+	//Score tracker
+	// Gold, cacao beans, sun tokens, temples, water
+	HashMap<String, Integer> score = new HashMap<String, Integer>();
 	
 	//constructor class for player
-	public Player(ID id)
+	public playerScore()
 	{
-		super(id);
+		super();
+		score.put("Gold", 0);
+		score.put("Cacao Beans", 0);
+		score.put("Sun Tokens", 0);
+		score.put("Water", 0);
+		
+		//for (Entry<String, Integer> entry : score.entrySet()) {
+	  //System.out.println(entry.getKey() + ":" + entry.getValue().toString());
 	}
 
 	//these are the unimplemented abstract methods in the GAmeObject class

@@ -5,6 +5,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Map.Entry;
 
 /* 
 	File Name: Game.java
@@ -49,7 +50,7 @@ public class Game extends Canvas implements Runnable
 	public SpriteSheet ssr;
 	
 	//initializing the number of players
-	protected int numPlayers = 4;
+	protected int numPlayers = 2;
 	
 	//create instance of handler class
 	private Handler handler;
@@ -66,8 +67,12 @@ public class Game extends Canvas implements Runnable
 	
 	//create states for the game
 	public enum STATE {Player1, Player2, Player3, Player4, Select, Play, Pause, End};
+	public enum TYPESTATE{Worker, Jungle};
+	public enum TURNSTATE {Draw, Move, End};
 	
 	public STATE gameState = STATE.Player1;
+	public TYPESTATE typeState = TYPESTATE.Jungle;
+	public TURNSTATE turnState = TURNSTATE.Draw;
 	
 	//create constant for draw location
 	
@@ -130,25 +135,47 @@ public class Game extends Canvas implements Runnable
 		//populate the coordinate of the game grid
 		grid.popGridCoord(this);
 		
+		//populate score cards for all players
+		for(int i = 1; i <= numPlayers; i++)
+		{
+			switch(i)
+			{
+				case 1:
+					idplayer = IDPlayer.Player1;
+					break;
+				case 2:
+					idplayer = IDPlayer.Player2;
+					break;
+				case 3:
+					idplayer = IDPlayer.Player3;
+					break;
+				case 4:
+					idplayer = IDPlayer.Player4;
+					break;
+			}
+			
+			handler.addObject("Player" + String.valueOf(i), new playerScore(), ID.ScoreCard, idplayer);
+		}
+		
 		//populates hash map for all jungle tiles and worker tiles for the game
 		/*
 		 						***************Jungle Tiles***********
-							  GoldMinex2(),//total: 1
-							  SellingPricex4(),//total: 1*********************
+							   GoldMinex2(),//total: 1
+							   SellingPricex4(),//total: 1
 							  
-								Plantationx2(),//total: 2
-								SellingPricex2(),//total: 2
-								SunWorshippingSite(),//total: 2, if 2 players - 1
-								GoldMinex1(),//total: 2, if 2 players - 1
+								 Plantationx2(),//total: 2 
+								 SellingPricex2(),//total: 2 (one is placed to start game)
+								 (1 drawn) SunWorshippingSite(),//total: 2, if 2 players - 1
+								 GoldMinex1(),//total: 2, if 2 players - 1
 								
 								
-								Water(),//total: 3, if 2 players - 1
+								 (1 drawn) Water(),//total: 3, if 2 players - 1 ******************
 								
-								SellingPricex3(),//total: 4, if 2 players - 1***************
+								 SellingPricex3(),//total: 4, if 2 players - 1
+							
+								 4 Temple(),//total: 5, if 2 players - 1
 								
-								Temple(),//total: 5, if 2 players - 1
-								
-								Plantationx1(),//total: 6, if 2 players - 2
+								 Plantationx1(),//total: 6, if 2 players - 2 (one is placed to start game)
 								
 								***************Worker Tiles***********
 								
@@ -190,11 +217,11 @@ public class Game extends Canvas implements Runnable
 						idplayer = IDPlayer.Player4;
 						break;
 				}
-				handler.addObject(IDWorker.ThreeZeroZeroOne + String.valueOf(k),new WorkerTiles(deckLocWorkerX, deckLocWorkerY, ID.WorkerTile, IDWorker.ThreeZeroZeroOne, TILE_DIM, sst, idplayer), ID.WorkerTile, idplayer);
-				handler.addKey(IDWorker.ThreeZeroZeroOne + String.valueOf(k), ID.WorkerTile, idplayer);
+				handler.addObject(IDWorker.ThreeZeroZeroOne + String.valueOf(i),new WorkerTiles(deckLocWorkerX, deckLocWorkerY, ID.WorkerTile, IDWorker.ThreeZeroZeroOne, TILE_DIM, sst, idplayer), ID.WorkerTile, idplayer);
+				handler.addKey(IDWorker.ThreeZeroZeroOne + String.valueOf(i), ID.WorkerTile, idplayer);
 				
-				handler.addObject(IDWorker.ThreeOneZeroZero + String.valueOf(k),new WorkerTiles(deckLocWorkerX, deckLocWorkerY, ID.WorkerTile, IDWorker.ThreeOneZeroZero, TILE_DIM, sst, idplayer), ID.WorkerTile, idplayer);
-				handler.addKey(IDWorker.ThreeOneZeroZero + String.valueOf(k), ID.WorkerTile, idplayer);
+				handler.addObject(IDWorker.ThreeOneZeroZero + String.valueOf(i),new WorkerTiles(deckLocWorkerX, deckLocWorkerY, ID.WorkerTile, IDWorker.ThreeOneZeroZero, TILE_DIM, sst, idplayer), ID.WorkerTile, idplayer);
+				handler.addKey(IDWorker.ThreeOneZeroZero + String.valueOf(i), ID.WorkerTile, idplayer);
 			}
 				
 		}
@@ -226,7 +253,7 @@ public class Game extends Canvas implements Runnable
 			//takes out 1 of each jungle tile below if only 2 players (as per the instructions)
 			if(numPlayers == 2 && i == (max - 1))
 			{
-				continue;
+				
 			}
 			else 
 			{
@@ -258,7 +285,7 @@ public class Game extends Canvas implements Runnable
 			//takes out 1 of each jungle tile below if only 2 players (as per the instructions)
 			if(numPlayers == 2 && i == (max - 1))
 			{
-				continue;
+			
 			}
 			else
 			{
@@ -269,7 +296,7 @@ public class Game extends Canvas implements Runnable
 			//takes out 1 of each worker tile below if 3 or 4 players (as per the instructions)
 			if((numPlayers == 3 || numPlayers == 4) && i == (max - 1))
 			{
-				continue;
+				
 			}
 			else 
 			{
@@ -291,8 +318,8 @@ public class Game extends Canvas implements Runnable
 							break;
 					}
 					
-					handler.addObject(IDWorker.OneOneOneOne + String.valueOf(k),new WorkerTiles(deckLocWorkerX, deckLocWorkerY, ID.WorkerTile, IDWorker.OneOneOneOne, TILE_DIM, sst, idplayer), ID.WorkerTile, idplayer);
-					handler.addKey(IDWorker.OneOneOneOne + String.valueOf(k), ID.WorkerTile, idplayer);
+					handler.addObject(IDWorker.OneOneOneOne + String.valueOf(i),new WorkerTiles(deckLocWorkerX, deckLocWorkerY, ID.WorkerTile, IDWorker.OneOneOneOne, TILE_DIM, sst, idplayer), ID.WorkerTile, idplayer);
+					handler.addKey(IDWorker.OneOneOneOne + String.valueOf(i), ID.WorkerTile, idplayer);
 				}
 			}
 		}
@@ -307,7 +334,7 @@ public class Game extends Canvas implements Runnable
 			//takes out 1 of each jungle tile below if only 2 players (as per the instructions)
 			if(numPlayers == 2 && i == (max - 1))
 			{
-				continue;
+				
 			}
 			else
 			{
@@ -316,9 +343,9 @@ public class Game extends Canvas implements Runnable
 			}
 			
 			//takes out 1 of each worker tile below if 3 or 4 players (as per the instructions)
-			if((numPlayers == 3 || numPlayers == 4) && i == (max - 1))
+			if((numPlayers == 4) && i == (max - 1))
 			{
-				continue;
+				
 			}
 			else 
 			{
@@ -339,8 +366,8 @@ public class Game extends Canvas implements Runnable
 							idplayer = IDPlayer.Player4;
 							break;
 					}
-					handler.addObject(IDWorker.TwoOneZeroOne + String.valueOf(k),new WorkerTiles(deckLocWorkerX, deckLocWorkerY, ID.WorkerTile, IDWorker.TwoOneZeroOne, TILE_DIM, sst, idplayer), ID.WorkerTile, idplayer);
-					handler.addKey(IDWorker.TwoOneZeroOne + String.valueOf(k), ID.WorkerTile, idplayer);
+					handler.addObject(IDWorker.TwoOneZeroOne + String.valueOf(i),new WorkerTiles(deckLocWorkerX, deckLocWorkerY, ID.WorkerTile, IDWorker.TwoOneZeroOne, TILE_DIM, sst, idplayer), ID.WorkerTile, idplayer);
+					handler.addKey(IDWorker.TwoOneZeroOne + String.valueOf(i), ID.WorkerTile, idplayer);
 				}
 			}
 		}
@@ -351,10 +378,10 @@ public class Game extends Canvas implements Runnable
 		//tiles with 6 count
 		for(int i = 0; i < max; i++)
 		{
-			//takes out 1 of each jungle tile below if only 2 players (as per the instructions)
-			if(numPlayers == 2 && i >= (max - 2))
+			//takes out 2 of 1x plantation jungle tile below if only 2 players (as per the instructions)
+			if(numPlayers == 2 && i > (max - 2))
 			{
-				continue;
+				
 			}
 			else
 			{
@@ -393,43 +420,56 @@ public class Game extends Canvas implements Runnable
 		handler.shuffleDeck(handler.deckKeysWorkerP3);
 		handler.shuffleDeck(handler.deckKeysWorkerP4);
 	
-		turnEnd = true;
-		drawJungle1 = true;
-		drawJungle2 = true;
-		drawWorker1 = true;
-		drawWorker2 = true;
-		drawWorker3 = true;
+		handler.endTurnTrue(this);
+		handler.drawJungleTrue(this);
+		handler.drawWorkerTrue(this);
 	
+		gameState = STATE.Play;
+		turnState = TURNSTATE.Draw;
+		typeState = TYPESTATE.Jungle;
+		
+		handler.drawCard(this);
+		
+		handler.endTurnTrue(this);
+		handler.drawJungleTrue(this);
+		handler.drawWorkerTrue(this);
+		
 		for(int i = 1; i <= numPlayers; i++)
 		{
 			switch(i)
 			{
 				case 1:
 					gameState = STATE.Player1;
+					turnState = TURNSTATE.Draw;
+					typeState = TYPESTATE.Worker;
 					handler.drawCard(this);
 					handler.endTurnTrue(this);
 					handler.drawWorkerTrue(this);
 					break;
 				case 2:
 					gameState = STATE.Player2;
+					turnState = TURNSTATE.Draw;
+					typeState = TYPESTATE.Worker;
 					handler.drawCard(this);
 					handler.endTurnTrue(this);
 					handler.drawWorkerTrue(this);
 					break;
 				case 3:
 					gameState = STATE.Player3;
+					turnState = TURNSTATE.Draw;
+					typeState = TYPESTATE.Worker;
 					handler.drawCard(this);
 					handler.endTurnTrue(this);
 					handler.drawWorkerTrue(this);
 					break;
 				case 4:
 					gameState = STATE.Player4;
+					turnState = TURNSTATE.Draw;
+					typeState = TYPESTATE.Worker;
 					handler.drawCard(this);
 					break;
 			}
 		}
-		
-		gameState = STATE.Player4;
 	}
 	
 	//initializing method for sprites
@@ -526,6 +566,7 @@ public class Game extends Canvas implements Runnable
 				//run the render method
 				render();
 			}
+			
 			//count the frames
 			frames++;
 			
@@ -548,8 +589,9 @@ public class Game extends Canvas implements Runnable
 	//this is the code that should run every frame (i.e. 60x per second)
 	private void tick()
 	{
-		handler.tick(this);
+		
 		grid.tick();
+		handler.tick(this);
 		
 	}
 	
@@ -590,9 +632,16 @@ public class Game extends Canvas implements Runnable
 		
 		grid.render(g, this);
 		
-		handler.render(g, this);
+		try
+		{
+			handler.render(g, this);
+		}
+		catch(Exception e)
+		{
+			
+		}
 		
-		hud.render(g, this);
+		hud.render(g, this, handler);
 		
 		//disposes of previously rendered graphics no longer needed
 		//i.e. garbage collector

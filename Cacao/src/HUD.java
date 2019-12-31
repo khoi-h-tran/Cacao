@@ -13,13 +13,14 @@ import java.awt.geom.Line2D;
 public class HUD
 {
 	private Game game;
+	private Handler handler;
 
 	public void tick()
 	{
 		
 	}
 	
-	public void render(Graphics g, Game game)
+	public void render(Graphics g, Game game, Handler handler)
 	{
 		Font f1 = new Font(Font.SERIF, Font.PLAIN, 30);
 		
@@ -34,16 +35,16 @@ public class HUD
 		//drawing the work "Jungle"
 		g.setFont(f1);
 		g.setColor(Color.white);
-		g.drawString("Jungle", game.deckLocJungleX + game.TILE_DIM/5, game.deckLocJungleY + game.TILE_DIM*2/4);
+		g.drawString("Jungle", game.deckLocJungleX + game.TILE_DIM/5, game.deckLocJungleY + game.TILE_DIM*1/4);
 		//drawing the work "Deck"
 		g.setFont(f1);
 		g.setColor(Color.white);
-		g.drawString("Deck", game.deckLocJungleX + game.TILE_DIM/4, game.deckLocJungleY + game.TILE_DIM*3/4);
+		g.drawString("Deck", game.deckLocJungleX + game.TILE_DIM/4, game.deckLocJungleY + game.TILE_DIM*2/4);
+		g.drawString(String.valueOf(handler.deckKeysJungle.size()), game.deckLocJungleX + game.TILE_DIM/4, game.deckLocJungleY + game.TILE_DIM*3/4);
 		
 		//Covering the worker deck
 		
 		//Adding square to cover deck
-		/*
 		g.setColor(Color.gray);
 		g.fillRect(game.deckLocWorkerX, game.deckLocWorkerY, game.TILE_DIM, game.TILE_DIM);
 		//Drawing rectangle for border around the deck cover
@@ -52,12 +53,28 @@ public class HUD
 		//drawing the work "Jungle"
 		g.setFont(f1);
 		g.setColor(Color.white);
-		g.drawString("Worker", game.deckLocWorkerX + game.TILE_DIM/5, game.deckLocWorkerY + game.TILE_DIM*2/4);
+		g.drawString("Worker", game.deckLocWorkerX + game.TILE_DIM/5, game.deckLocWorkerY + game.TILE_DIM*1/4);
 		//drawing the work "Deck"
 		g.setFont(f1);
 		g.setColor(Color.white);
-		g.drawString("Deck", game.deckLocWorkerX + game.TILE_DIM/4, game.deckLocWorkerY + game.TILE_DIM*3/4);
-		*/
+		g.drawString("Deck", game.deckLocWorkerX + game.TILE_DIM/4, game.deckLocWorkerY + game.TILE_DIM*2/4);
+		
+		if(game.gameState == Game.STATE.Player1)
+		{
+			g.drawString(String.valueOf(handler.deckKeysWorkerP1.size()), game.deckLocWorkerX + game.TILE_DIM/4, game.deckLocWorkerY + game.TILE_DIM*3/4);
+		}
+		else if(game.gameState == Game.STATE.Player2)
+		{
+			g.drawString(String.valueOf(handler.deckKeysWorkerP2.size()), game.deckLocWorkerX + game.TILE_DIM/4, game.deckLocWorkerY + game.TILE_DIM*3/4);
+		}
+		else if(game.gameState == Game.STATE.Player3)
+		{
+			g.drawString(String.valueOf(handler.deckKeysWorkerP3.size()), game.deckLocWorkerX + game.TILE_DIM/4, game.deckLocWorkerY + game.TILE_DIM*3/4);
+		}
+		else if(game.gameState == Game.STATE.Player4)
+		{
+			g.drawString(String.valueOf(handler.deckKeysWorkerP4.size()), game.deckLocWorkerX + game.TILE_DIM/4, game.deckLocWorkerY + game.TILE_DIM*3/4);
+		}
 		
 		//Separating jungle tile cards in display
 		

@@ -14,6 +14,8 @@ public class JungleTiles extends GameObject
 	//pulls from main game method in constructor
 	private final int TILE_DIM;
 	private IDJungle idjungle;
+	private String scoreKey = " ";
+	private int scoreValue = 0;
 	
 	private BufferedImage tile_image;
 	
@@ -46,38 +48,58 @@ public class JungleTiles extends GameObject
 			//total 1
 			case GoldMinex2:
 				tile_image = ss.grabImage(1, 1, TILE_DIM, TILE_DIM, TILE_DIM);
+				scoreKey = "Gold";
+				scoreValue = 2;
 				break;
 			//total 2
 			case Plantationx2:
 				tile_image = ss.grabImage(1, 2, TILE_DIM, TILE_DIM, TILE_DIM);
+				scoreKey = "Gold";
+				scoreValue = 2;
 				break;
 			case SellingPricex2:
 				tile_image = ss.grabImage(2, 2, TILE_DIM, TILE_DIM, TILE_DIM);
+				scoreKey = "Gold";
+				scoreValue = 2;
 				break;
 			case SunWorshippingSite:
 				tile_image = ss.grabImage(3, 2, TILE_DIM, TILE_DIM, TILE_DIM);
+				scoreKey = "Sun Token";
+				scoreValue = 2;
 				break;
 			case GoldMinex1:
 				tile_image = ss.grabImage(4, 2, TILE_DIM, TILE_DIM, TILE_DIM);
+				scoreKey = "Gold";
+				scoreValue = 1;
 				break;
 			//total 3
 			case SellingPricex3:
 				tile_image = ss.grabImage(1, 3, TILE_DIM, TILE_DIM, TILE_DIM);
+				scoreKey = "Gold";
+				scoreValue = 3;
 				break;
 			case Water:
 				tile_image = ss.grabImage(2, 3, TILE_DIM, TILE_DIM, TILE_DIM);
+				scoreKey = "Water";
+				scoreValue = 1;
 				break;
 			//total 4
 			case SellingPricex4:
 				tile_image = ss.grabImage(1, 4, TILE_DIM, TILE_DIM, TILE_DIM);
+				scoreKey = "Gold";
+				scoreValue = 4;
 				break;
 			//total 5
 			case Temple:
 				tile_image = ss.grabImage(5, 1, TILE_DIM, TILE_DIM, TILE_DIM);
+				scoreKey = "Temple";
+				scoreValue = 1;
 				break;
 			//total 6
 			case Plantationx1:
 				tile_image = ss.grabImage(1, 6, TILE_DIM, TILE_DIM, TILE_DIM);
+				scoreKey = "Gold";
+				scoreValue = 1;
 				break;
 		}
 		
