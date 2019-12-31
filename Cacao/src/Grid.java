@@ -21,7 +21,7 @@ public class Grid
 	//create a hash map to determine if a grid has a tile in it
 	HashMap<String, Integer> gridUsed = new HashMap<String, Integer>();
 	
-	//Get the list of keys whose value indicates the grid is being used (indicated by value = 1)
+	//Get the list of keys whose value indicates the grid is being used (indicated by value = 1 for jungle tiles, value = 2 for worker tiles)
 	ArrayList<String> listOfKeys = new ArrayList<String>();;
 	
 	//get the hash map of all keys with column and row indicator separated
@@ -117,7 +117,7 @@ public class Grid
 		{
 			yellowCoords.put(((int)(key.charAt(0))-64), Character.getNumericValue(key.charAt(1)));
 		}
-		
+
 		//prints out grid usage
 		//used for debugging
 		/*
@@ -132,13 +132,46 @@ public class Grid
 		return yellowCoords;
 	}
 
-	public void tick()
+	public void tick(Game game)
 	{
-		//Get the list of keys whose value indicates the grid is being used (indicated by value = 1)
-		listOfKeys = getAllKeysForValue(gridUsed, 1);
+		// 0 means no state
+		// 1 means jungle type was employed and you need to clear the list for worker tiles
+		// 2 means worker type was employed and you need to clear the list for jungle tiles
 		
-		//get the hash map of all keys with column and row indicator separated
-		yellowCoords = tileUsedCoordSplit(listOfKeys, yellowCoords);
+		
+		if(game.typeState == Game.TYPESTATE.Jungle)
+		{
+			//clear the list if it was previously used to keep track of worker tiles
+			if(game.jungleState == 2)
+			{
+				listOfKeys.clear();
+				yellowCoords.clear();
+			}
+			//indicate that the jungle tiles were used at least once
+			game.jungleState = 1;
+			//Get the list of keys whose value indicates the grid is being used (indicated by value = 1)
+			listOfKeys = getAllKeysForValue(gridUsed, 1);
+			
+			//get the hash map of all keys with column and row indicator separated
+			yellowCoords = tileUsedCoordSplit(listOfKeys, yellowCoords);
+		}
+		
+		if(game.typeState == Game.TYPESTATE.Worker)
+		{
+		//clear the list if it was previously used to keep track of jungle tiles
+			if(game.jungleState == 1)
+			{
+				listOfKeys.clear();
+				yellowCoords.clear();
+			}
+			//indicate that the worker tiles were used at least once
+			game.jungleState = 2;
+			//Get the list of keys whose value indicates the grid is being used (indicated by value = 2), 2 meaning worker tiles
+			listOfKeys = getAllKeysForValue(gridUsed, 2);
+			
+			//get the hash map of all keys with column and row indicator separated
+			yellowCoords = tileUsedCoordSplit(listOfKeys, yellowCoords);
+		}
 	}
 	
 	public void render(Graphics g, Game game)

@@ -70,6 +70,11 @@ public class Game extends Canvas implements Runnable
 	private ID id;
 	private IDPlayer idplayer;
 	
+	// 0 means no state
+	// 1 means jungle type was employed and you need to clear the list for worker tiles
+	// 2 means worker type was employed and you need to clear the list for jungle tiles
+	public int jungleState = 0;
+	
 	//create states for the game
 	public enum STATE {Player1, Player2, Player3, Player4, Select, Play, Pause, End};
 	public enum TYPESTATE{Worker, Jungle};
@@ -123,6 +128,8 @@ public class Game extends Canvas implements Runnable
 		//sets the Window constructor for the window sizing
 		//note "this" keyword refers to the Game classes game instance
 		new Window(WIDTH, HEIGHT, "Cacao", this);
+		
+		typeState = TYPESTATE.Jungle;
 		
 		grid = new Grid();
 		hud = new HUD();
@@ -501,6 +508,9 @@ public class Game extends Canvas implements Runnable
 					break;
 			}
 		}
+		
+		typeState = TYPESTATE.Jungle;
+		//typeState = TYPESTATE.Worker;
 	}
 	
 	//initializing method for sprites
@@ -621,7 +631,7 @@ public class Game extends Canvas implements Runnable
 	private void tick()
 	{
 		
-		grid.tick();
+		grid.tick(this);
 		handler.tick(this);
 		
 	}
