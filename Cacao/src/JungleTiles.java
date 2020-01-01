@@ -110,6 +110,9 @@ public class JungleTiles extends GameObject
 	{
 		//velX of tile
 		//velY of tile
+		
+		//x = Game.clamp(x, 0, Game.WIDTH - TILE_DIM);
+		//y = Game.clamp(y, 0, Game.HEIGHT - TILE_DIM);
 	}
 
 	//renders the jungle tiles

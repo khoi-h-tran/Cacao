@@ -55,7 +55,7 @@ public class Game extends Canvas implements Runnable
 	public SpriteSheet ssr;
 	
 	//initializing the number of players
-	protected int numPlayers = 4;
+	protected int numPlayers = 0;
 	
 	//create instance of handler class
 	private Handler handler;
@@ -65,6 +65,9 @@ public class Game extends Canvas implements Runnable
 	
 	//create instance of grid class
 	private Grid grid;
+	
+	//create instance of select class
+	private Select select;
 	
 	//create instance of ID enumeration
 	private ID id;
@@ -80,7 +83,7 @@ public class Game extends Canvas implements Runnable
 	public enum TYPESTATE{Worker, Jungle};
 	public enum TURNSTATE {Draw, Move, End};
 	
-	public STATE gameState = STATE.Player1;
+	public STATE gameState = STATE.Select;
 	public TYPESTATE typeState = TYPESTATE.Jungle;
 	public TURNSTATE turnState = TURNSTATE.Draw;
 	
@@ -122,6 +125,11 @@ public class Game extends Canvas implements Runnable
 	public Boolean drawWorker2 = false;
 	public Boolean drawWorker3 = false;
 	
+	
+	//create variable to skip the jungle tiles on the board, when creating the deck
+	String remove1 = " ";
+	String remove2 = " ";
+	
 	//Game constructor class
 	public Game()
 	{
@@ -129,10 +137,12 @@ public class Game extends Canvas implements Runnable
 		//note "this" keyword refers to the Game classes game instance
 		new Window(WIDTH, HEIGHT, "Cacao", this);
 		
+		//ensure that the game starts off with the jungle type state so grid will work (it doesn't work on the first run if jungle isn't run first)
 		typeState = TYPESTATE.Jungle;
 		
 		grid = new Grid();
 		hud = new HUD();
+		select = new Select(this,handler);
 		
 		//initialize sprite sheets
 		init();
@@ -140,10 +150,17 @@ public class Game extends Canvas implements Runnable
 		//initializing constructor
 		handler = new Handler();
 		
-		//create variable to skip the jungle tiles on the board, when creating the deck
-		String remove1 = " ";
-		String remove2 = " ";
+		//this tells game to listen to the KeyInput class
+		this.addKeyListener(new KeyInput(handler));
+		
+		//this tells game to listen to the KeyInput class
+		this.addMouseListener(select);
+
+	}
 	
+	//initialize the game
+	public void initGame()
+	{
 		//populate the coordinate of the game grid
 		grid.popGridCoord(this);
 		
@@ -190,7 +207,6 @@ public class Game extends Canvas implements Runnable
 			handler.addObject("SunToken", new Ressources((Game.HEIGHT + 5) + iconOffset * 2, ((TITLE_BAR)*((i-1)*2 + 1) + RES_DIM/5), ID.Ressource, IDRessources.SunToken, idplayer, RES_DIM, ssr), ID.Ressource, idplayer);
 			handler.addObject("Water", new Ressources((Game.HEIGHT + 5) + iconOffset * 4, ((TITLE_BAR)*((i-1)*2 + 1) + RES_DIM/5), ID.Ressource, IDRessources.Water, idplayer, RES_DIM, ssr), ID.Ressource, idplayer);
 			handler.addObject("Temple", new Ressources((Game.HEIGHT + 5) + iconOffset * 6, ((TITLE_BAR)*((i-1)*2 + 1) + RES_DIM/5), ID.Ressource, IDRessources.Temple, idplayer, RES_DIM, ssr), ID.Ressource, idplayer);
-			
 			handler.addObject("Meeple", new Ressources((Game.HEIGHT + RES_DIM * 4), ((TITLE_BAR)*((i-1)*2 + 1) - RES_DIM - 5), ID.Ressource, IDRessources.Meeple, idplayer, RES_DIM, ssr), ID.Ressource, idplayer);
 			handler.addObject("Gold", new Ressources((Game.HEIGHT + RES_DIM * 5), ((TITLE_BAR)*((i-1)*2 + 1) - RES_DIM - 5), ID.Ressource, IDRessources.Gold, idplayer, RES_DIM, ssr), ID.Ressource, idplayer);
 		}
@@ -511,6 +527,24 @@ public class Game extends Canvas implements Runnable
 		
 		typeState = TYPESTATE.Jungle;
 		//typeState = TYPESTATE.Worker;
+		gameState = STATE.Player1;
+	}
+	
+	//clamp method to restrict movement to window of game
+	public static int clamp(int var, int min, int max)
+	{
+		if(var >= max)
+		{
+			return var = max;
+		}
+		else if(var <= min)
+		{
+			return var = min;
+		}
+		else
+		{
+			return var;
+		}
 	}
 	
 	//initializing method for sprites
@@ -630,9 +664,14 @@ public class Game extends Canvas implements Runnable
 	//this is the code that should run every frame (i.e. 60x per second)
 	private void tick()
 	{
-		
-		grid.tick(this);
-		handler.tick(this);
+		if(gameState == STATE.Player1 || gameState == STATE.Player2 || gameState == STATE.Player3 || gameState == STATE.Player4)
+		{
+			grid.tick(this);
+			handler.tick(this);
+		}
+
+		select.tick();
+
 		
 	}
 	
@@ -671,7 +710,14 @@ public class Game extends Canvas implements Runnable
 		g.setColor(Color.lightGray);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
-		grid.render(g, this);
+		if(gameState == STATE.Player1 || gameState == STATE.Player2 || gameState == STATE.Player3 || gameState == STATE.Player4)
+		{
+			grid.render(g, this);
+		}
+		else if(gameState == STATE.Select)
+		{
+			select.render(g);
+		}
 		
 		try
 		{
@@ -682,7 +728,10 @@ public class Game extends Canvas implements Runnable
 			
 		}
 		
-		hud.render(g, this, handler);
+		if(gameState == STATE.Player1 || gameState == STATE.Player2 || gameState == STATE.Player3 || gameState == STATE.Player4)
+		{
+			hud.render(g, this, handler);
+		}
 		
 		//disposes of previously rendered graphics no longer needed
 		//i.e. garbage collector

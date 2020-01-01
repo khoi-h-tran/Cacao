@@ -100,7 +100,7 @@ public class HUD
     g2.setColor(Color.black);
     Line2D lin2 = new Line2D.Float(Game.HEIGHT, game.draw1LocY + game.TILE_DIM, Game.WIDTH, game.draw1LocY + game.TILE_DIM);
     g2.draw(lin2);
-		//Labelling the drawn jungle tiles section
+		//Labeling the drawn jungle tiles section
     //creating filled rectangle for the section separation
     g.setColor(Color.gray);
 		g.fillRect(Game.HEIGHT, game.draw1WorkerLocY - game.TILE_DIM/3, Game.WIDTH - Game.HEIGHT, game.TILE_DIM/4);
@@ -161,7 +161,7 @@ public class HUD
 			
 			//Writing out the score count
 			//Gold Score
-			g.drawString(String.valueOf(handler.scoreCountP1.get("Gold")), (Game.HEIGHT + 10 + game.RES_DIM * 6), (game.TITLE_BAR)*(i*2 + 1) - 15);
+			g.drawString(String.valueOf(handler.scoreCountP1.get("Gold")), (Game.HEIGHT + 10 + game.RES_DIM * 6), (game.TITLE_BAR)*(i*2 + 1) - 10);
 			
 			//Cacao count
 			g.drawString(String.valueOf(handler.scoreCountP1.get("Cacao")), Game.HEIGHT + 3 + game.RES_DIM*3/2, ((game.TITLE_BAR)*((i)*2 + 1) + game.RES_DIM));
