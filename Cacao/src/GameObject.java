@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 /* 
 	File Name: GameObject.java
@@ -22,10 +23,16 @@ public abstract class GameObject
 	
 	protected int velX, velY;
 	
+	//to store and get the tile image stored in the subclass of worker tiles
+	//we need this to be able to rotate properly in the select class
+	protected BufferedImage tile_image;
+	
 	//Tile constructor class
 	//constructor for GameObject class
 	//initializes where the game object will start on window
 	//gives the ID of the game object (i.e. player, tile, etc.)
+	
+	//jungle tile constructor class
 	public GameObject(int x, int y, ID id, int TILE_DIM)
 	{
 		this.x = x;
@@ -33,9 +40,19 @@ public abstract class GameObject
 		this.id = id;
 	}
 	
-	//player constructor class
+	//worker tile constructor class
+	public GameObject(int x, int y, ID id, int TILE_DIM, BufferedImage tile_image)
+	{
+		this.x = x;
+		this.y = y;
+		this.id = id;
+		this.tile_image = tile_image;
+	}
+	
+	//empty constructor to create the player score
 	public GameObject()
 	{
+		
 	}
 	
 	//abstract methods cannot have code in it
@@ -96,5 +113,9 @@ public abstract class GameObject
 		this.velY = velY;
 	}
 
+	public BufferedImage getTile_image()
+	{
+		return tile_image;
+	}
 	
 }

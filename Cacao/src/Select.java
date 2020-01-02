@@ -3,12 +3,17 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+
+import javax.swing.SwingUtilities;
 
 /* 
 	File Name: Menu.java
 	   Author: Khoi Tran
 		 Date: Jan. 1, 2020 12:23:01 p.m.
-  Description: Handles the select screen
+  Description: Handles the select screen and any mouse choices
 */
 
 //extend mouse adapter to this class can react to mouse clicks
@@ -20,6 +25,19 @@ public class Select extends MouseAdapter
 	private int boxHeight = 75;
 	private Game game;
 	private Handler handler;
+	public MouseEvent e;
+	
+	//create variables to pass to handler to indicate that we have clicked on the worker tiles to rotate
+	protected boolean worker1Clicked = false;
+	protected boolean worker2Clicked = false;
+	protected boolean worker3Clicked = false;
+	//create variable so so that once the worker tile is clicked, an action only happens once (i.e. 1 action between mouse click and release)
+	protected boolean worker1ActionComplete = false;
+	protected boolean worker2ActionComplete = false;
+	protected boolean worker3ActionComplete = false;
+	//mouse pressed
+	protected int mxP = 0;
+	protected int myP = 0;
 	
 	public Select(Game game, Handler handler)
 	{
@@ -27,29 +45,32 @@ public class Select extends MouseAdapter
 		this.handler = handler;
 	}
 	 
+	//events if mouse button is pressed
+	//the listener in the game means we don't have to tick this.
 	public void mousePressed(MouseEvent e)
-	{
+	{	
 		//stores x position of mouse
-		int mx = e.getX();
+		mxP = e.getX();
 		
 		//stores y position of mouse
-		int my = e.getY();
+		myP = e.getY();
 		
+		//select number of players screen
 		if(game.gameState == Game.STATE.Select)
 		{
-			if(mouseOver(mx, my, 550, 400, 275, 75))
+			if(mouseOver(mxP, myP, 550, 400, 275, 75))
 			{
 				game.numPlayers = 2;
 				game.gameState = Game.STATE.Player1;
 				game.initGame();
 			}
-			else if(mouseOver(mx, my, 550, 500, 275, 75))
+			else if(mouseOver(mxP, myP, 550, 500, 275, 75))
 			{
 				game.numPlayers = 3;
 				game.gameState = Game.STATE.Player1;
 				game.initGame();
 			}
-			else if(mouseOver(mx, my, 550, 600, 275, 75))
+			else if(mouseOver(mxP, myP, 550, 600, 275, 75))
 			{
 				game.numPlayers = 4;
 				game.gameState = Game.STATE.Player1;
@@ -57,44 +78,53 @@ public class Select extends MouseAdapter
 			}
 		}
 		
-		if(game.typeState == Game.TYPESTATE.Jungle && game.turnState == Game.TURNSTATE.Move)
+		//notify handler class if worker tiles are clicked
+		//worker tile 1
+		if(mouseOver(mxP, myP, game.draw1WorkerLocX, game.draw1WorkerLocY, game.TILE_DIM, game.TILE_DIM) && (SwingUtilities.isRightMouseButton(e)))
 		{
-			if(game.gameState == Game.STATE.Player1)
-			{
-				if(mouseOver(mx, my, game.deckLocWorkerX, game.deckLocWorkerY, game.TILE_DIM, game.TILE_DIM))
-				{
-					
-				}
-			}
-			else if(game.gameState == Game.STATE.Player2)
-			{
-				
-			}
-			else if(game.gameState == Game.STATE.Player3)
-			{
-				
-			}
-			else if(game.gameState == Game.STATE.Player4)
-			{
-				
-			}
+			worker1Clicked = true;
+			worker1ActionComplete = false;
+		}
+		else if(mouseOver(mxP, myP, game.draw2WorkerLocX, game.draw2WorkerLocY, game.TILE_DIM, game.TILE_DIM) && (SwingUtilities.isRightMouseButton(e)))
+		{
+			worker2Clicked = true;
+			worker2ActionComplete = false;
+		}
+		else if(mouseOver(mxP, myP, game.draw3WorkerLocX, game.draw3WorkerLocY, game.TILE_DIM, game.TILE_DIM) && (SwingUtilities.isRightMouseButton(e)))
+		{
+			worker3Clicked = true;
+			worker3ActionComplete = false;
 		}
 
 	}
 	
+	//events if mouse button is released
+	//the listener in the game means we don't have to tick this.
 	public void mouseReleased(MouseEvent e)
 	{
 		
+		if(mouseOver(mxP, myP, game.draw1WorkerLocX, game.draw1WorkerLocY, game.TILE_DIM, game.TILE_DIM) && (SwingUtilities.isRightMouseButton(e)))
+		{
+			worker1Clicked = false;
+		}
+		if(mouseOver(mxP, myP, game.draw2WorkerLocX, game.draw2WorkerLocY, game.TILE_DIM, game.TILE_DIM) && (SwingUtilities.isRightMouseButton(e)))
+		{
+			worker2Clicked = false;
+		}
+		if(mouseOver(mxP, myP, game.draw3WorkerLocX, game.draw3WorkerLocY, game.TILE_DIM, game.TILE_DIM) && (SwingUtilities.isRightMouseButton(e)))
+		{
+			worker3Clicked = false;
+		}
 	}
 	
 	//checks if mouse is over our target
-	private boolean mouseOver(int mx, int my, int x, int y, int width, int height)
+	protected boolean mouseOver(int mx, int my, int x, int y, int width, int height)
 	{
 		//if statement to check if we are in x range of a box
-		if(mx > x && mx < x + boxWidth)
+		if(mxP > x && mxP < x + width)
 		{
 			//if statement to check if we are in y range of a box
-			if(my > y && my < y + boxHeight)
+			if(myP > y && myP < y + height)
 			{
 				return true;
 			}
@@ -106,7 +136,7 @@ public class Select extends MouseAdapter
 	
 	public void tick()
 	{
-		
+
 	}
 	
 	public void render(Graphics g)

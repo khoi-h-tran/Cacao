@@ -16,7 +16,7 @@ public class WorkerTiles extends GameObject
 	private IDWorker idworker;
 	private int [] scoreScheme = new int [4];
 	
-	private BufferedImage tile_image;
+	protected BufferedImage tile_image;
 	
 	//constructor method for jungle tiles
 	public WorkerTiles(int x, int y, ID id, IDWorker idworker, int TILE_DIM, SpriteSheet ss, IDPlayer idplayer)
@@ -105,4 +105,6 @@ public class WorkerTiles extends GameObject
 		//g.setColor(Color.green);
 		//g.fillRect(x, y, TILE_DIM, TILE_DIM);
 	}
+
+
 }

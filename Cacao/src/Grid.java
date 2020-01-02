@@ -55,6 +55,8 @@ public class Grid
 		//indicate that these 2 cells are used, as that is how the game starts
 		gridUsed.replace("D4", 1);
 		gridUsed.replace("E5", 1);
+		//******************DELLETE********************************TEMPORARY*******************
+		gridUsed.replace("F5", 2);
 		//prints out grid coordinates
 		//used for debugging
 		/*
@@ -167,10 +169,12 @@ public class Grid
 			//indicate that the worker tiles were used at least once
 			game.jungleState = 2;
 			//Get the list of keys whose value indicates the grid is being used (indicated by value = 2), 2 meaning worker tiles
+			/*
 			listOfKeys = getAllKeysForValue(gridUsed, 2);
 			
 			//get the hash map of all keys with column and row indicator separated
 			yellowCoords = tileUsedCoordSplit(listOfKeys, yellowCoords);
+			*/
 		}
 	}
 	

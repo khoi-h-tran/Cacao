@@ -474,19 +474,20 @@ public class Game extends Canvas implements Runnable
 		handler.shuffleDeck(handler.deckKeysWorkerP3);
 		handler.shuffleDeck(handler.deckKeysWorkerP4);
 	
-		handler.endTurnTrue(this);
-		handler.drawJungleTrue(this);
-		handler.drawWorkerTrue(this);
-	
 		gameState = STATE.Play;
 		turnState = TURNSTATE.Draw;
 		typeState = TYPESTATE.Jungle;
 		
-		handler.drawCard(this);
-		
 		handler.endTurnTrue(this);
 		handler.drawJungleTrue(this);
-		handler.drawWorkerTrue(this);
+		//handler.drawWorkerTrue(this);
+
+		//draw jungle cards
+		handler.drawCard(this);
+		
+		//handler.endTurnTrue(this);
+		//handler.drawJungleTrue(this);
+		//handler.drawWorkerTrue(this);
 		
 		for(int i = 1; i <= numPlayers; i++)
 		{
@@ -496,36 +497,40 @@ public class Game extends Canvas implements Runnable
 					gameState = STATE.Player1;
 					turnState = TURNSTATE.Draw;
 					typeState = TYPESTATE.Worker;
-					handler.drawCard(this);
 					handler.endTurnTrue(this);
 					handler.drawWorkerTrue(this);
+					handler.drawCard(this);
 					break;
 				case 2:
 					gameState = STATE.Player2;
 					turnState = TURNSTATE.Draw;
 					typeState = TYPESTATE.Worker;
-					handler.drawCard(this);
 					handler.endTurnTrue(this);
 					handler.drawWorkerTrue(this);
+					handler.drawCard(this);
 					break;
 				case 3:
 					gameState = STATE.Player3;
 					turnState = TURNSTATE.Draw;
 					typeState = TYPESTATE.Worker;
-					handler.drawCard(this);
 					handler.endTurnTrue(this);
 					handler.drawWorkerTrue(this);
+					handler.drawCard(this);
 					break;
 				case 4:
 					gameState = STATE.Player4;
 					turnState = TURNSTATE.Draw;
 					typeState = TYPESTATE.Worker;
+					handler.endTurnTrue(this);
+					handler.drawWorkerTrue(this);
 					handler.drawCard(this);
 					break;
 			}
 		}
+	
+		turnState = TURNSTATE.Move;
+		typeState = TYPESTATE.Worker;
 		
-		typeState = TYPESTATE.Jungle;
 		//typeState = TYPESTATE.Worker;
 		gameState = STATE.Player1;
 	}
@@ -667,7 +672,7 @@ public class Game extends Canvas implements Runnable
 		if(gameState == STATE.Player1 || gameState == STATE.Player2 || gameState == STATE.Player3 || gameState == STATE.Player4)
 		{
 			grid.tick(this);
-			handler.tick(this);
+			handler.tick(this, select);
 		}
 
 		select.tick();

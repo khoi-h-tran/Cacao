@@ -1,7 +1,14 @@
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+
+import javax.swing.SwingUtilities;
 
 /* 
 	File Name: handler.java
@@ -9,9 +16,10 @@ import java.util.HashMap;
 		 Date: Dec. 27, 2019 11:43:24 a.m.
   Description: Maintains, updates, renders all objects (i.e. players, game pieces, etc) in game
 */
-public class Handler
+public class Handler extends MouseAdapter
 {
 	private Game game;
+	private Select select;
 	
 	//create a hash map for all jungle tiles
 	HashMap<String, GameObject> objectJungle = new HashMap<String, GameObject>();
@@ -23,20 +31,21 @@ public class Handler
 	ArrayList<String> deckKeysJungle = new ArrayList<String>();
 	
 	//create hash map to hold which jungle tiles (by key) is in which draw deck
-	//String = key
+	//String = value (unique id of the jungle tile)
+	//key (draw location):
 	//Integer = 1 means loc 1 (on left)
 	//Integer = 2 means loc 2 (on right)
-	HashMap<String, Integer> drawLocJungle = new HashMap<String, Integer>();
+	HashMap<Integer, String> drawLocJungle = new HashMap<Integer, String>();
 	
 	//create hash map to hold which worker tiles (by key) is in which draw deck
-	//String = key
+	//String = key for worker tile in specific location
 	//Integer = 1 means loc 1 (top left)
 	//Integer = 2 means loc 2 (top right)
 	//Integer = 3 means loc 2 (bottom middle)
-	HashMap<String, Integer> drawLocWorker1 = new HashMap<String, Integer>();
-	HashMap<String, Integer> drawLocWorker2 = new HashMap<String, Integer>();
-	HashMap<String, Integer> drawLocWorker3 = new HashMap<String, Integer>();
-	HashMap<String, Integer> drawLocWorker4 = new HashMap<String, Integer>();
+	HashMap<Integer, String> drawLocWorker1 = new HashMap<Integer, String>();
+	HashMap<Integer, String> drawLocWorker2 = new HashMap<Integer, String>();
+	HashMap<Integer, String> drawLocWorker3 = new HashMap<Integer, String>();
+	HashMap<Integer, String> drawLocWorker4 = new HashMap<Integer, String>();
 	
 	//create a hash map for all worker tiles
 	//One for each player
@@ -91,7 +100,7 @@ public class Handler
 	
 	//create game loop for objects
 	
-	public void tick(Game game)
+	public void tick(Game game, Select select)
 	{
 		//loops through each object in jungle tile hash map
 		for(int i = 0; i < objectJungle.size(); i++) 
@@ -146,7 +155,12 @@ public class Handler
 				tempObject.tick();
 			}
 		}
-	
+		
+		//check if the worker tiles are clicked
+		if(select.worker1Clicked == true || select.worker2Clicked == true || select.worker3Clicked == true)
+		{
+			chooseImageRotate(game, this, select);
+		}
 	}
 	
 	public void render(Graphics g, Game game)
@@ -394,7 +408,7 @@ public class Handler
 	}
 	
 	//create method to draw jungle tiles from deck
-	public void drawFromDeck(ArrayList<String> deckKeys, HashMap<String, GameObject> object, HashMap<String, Integer> drawLocJungle, HashMap<String, Integer> drawLocWorker, int x, int y, Game game)
+	public void drawFromDeck(ArrayList<String> deckKeys, HashMap<String, GameObject> object, HashMap<Integer, String> drawLocJungle, HashMap<Integer, String> drawLocWorker, int x, int y, Game game)
 	{
 		//pulls the object from the hash map because this is where the object is actually stored and moved around
 		//the deckKeys at 0 index is just the top most card in the deck
@@ -406,23 +420,23 @@ public class Handler
 		//storing which tile was put in which draw location
 		if(x == game.draw1LocX && y == game.draw1LocY)
 		{
-			drawLocJungle.put(deckKeys.get(0), 1);
+			drawLocJungle.put(1, deckKeys.get(0));
 		}
 		else if(x == game.draw2LocX && y == game.draw2LocY)
 		{
-			drawLocJungle.put(deckKeys.get(0), 2);
+			drawLocJungle.put(2, deckKeys.get(0));
 		}
 		else if(x == game.draw1WorkerLocX && y == game.draw1WorkerLocY)
 		{
-			drawLocWorker.put(deckKeys.get(0), 1);
+			drawLocWorker.put(1, deckKeys.get(0));
 		}
 		else if(x == game.draw2WorkerLocX && y == game.draw2WorkerLocY)
 		{
-			drawLocWorker.put(deckKeys.get(0), 2);
+			drawLocWorker.put(2, deckKeys.get(0));
 		}
 		else if(x == game.draw3WorkerLocX && y == game.draw3WorkerLocY)
 		{
-			drawLocWorker.put(deckKeys.get(0), 3);
+			drawLocWorker.put(3, deckKeys.get(0));
 		}
 	}
 	
@@ -569,17 +583,17 @@ public class Handler
 				}
 				else if(game.gameState == Game.STATE.Player2)
 				{
-					drawFromDeck(deckKeysWorkerP2, objectWorkerP2, null, drawLocWorker1, game.draw1WorkerLocX, game.draw1WorkerLocY, game);
+					drawFromDeck(deckKeysWorkerP2, objectWorkerP2, null, drawLocWorker2, game.draw1WorkerLocX, game.draw1WorkerLocY, game);
 					removeFromDeck(deckKeysWorkerP2);
 				}
 				else if(game.gameState == Game.STATE.Player3)
 				{
-					drawFromDeck(deckKeysWorkerP3, objectWorkerP3, null, drawLocWorker1, game.draw1WorkerLocX, game.draw1WorkerLocY, game);
+					drawFromDeck(deckKeysWorkerP3, objectWorkerP3, null, drawLocWorker3, game.draw1WorkerLocX, game.draw1WorkerLocY, game);
 					removeFromDeck(deckKeysWorkerP3);
 				}
 				else if(game.gameState == Game.STATE.Player4)
 				{
-					drawFromDeck(deckKeysWorkerP4, objectWorkerP4, null, drawLocWorker1, game.draw1WorkerLocX, game.draw1WorkerLocY, game);
+					drawFromDeck(deckKeysWorkerP4, objectWorkerP4, null, drawLocWorker4, game.draw1WorkerLocX, game.draw1WorkerLocY, game);
 					removeFromDeck(deckKeysWorkerP4);
 				}
 
@@ -590,8 +604,7 @@ public class Handler
 			{
 				if(game.gameState == Game.STATE.Player1)
 				{
-					
-					drawFromDeck(deckKeysWorkerP1, objectWorkerP1, null, drawLocWorker2, game.draw2WorkerLocX, game.draw2WorkerLocY, game);
+					drawFromDeck(deckKeysWorkerP1, objectWorkerP1, null, drawLocWorker1, game.draw2WorkerLocX, game.draw2WorkerLocY, game);
 					removeFromDeck(deckKeysWorkerP1);
 				}
 				else if(game.gameState == Game.STATE.Player2)
@@ -601,12 +614,12 @@ public class Handler
 				}
 				else if(game.gameState == Game.STATE.Player3)
 				{
-					drawFromDeck(deckKeysWorkerP3, objectWorkerP3, null, drawLocWorker2, game.draw2WorkerLocX, game.draw2WorkerLocY, game);
+					drawFromDeck(deckKeysWorkerP3, objectWorkerP3, null, drawLocWorker3, game.draw2WorkerLocX, game.draw2WorkerLocY, game);
 					removeFromDeck(deckKeysWorkerP3);
 				}
 				else if(game.gameState == Game.STATE.Player4)
 				{
-					drawFromDeck(deckKeysWorkerP4, objectWorkerP4, null, drawLocWorker2, game.draw2WorkerLocX, game.draw2WorkerLocY, game);
+					drawFromDeck(deckKeysWorkerP4, objectWorkerP4, null, drawLocWorker4, game.draw2WorkerLocX, game.draw2WorkerLocY, game);
 					removeFromDeck(deckKeysWorkerP4);
 				}
 				
@@ -616,12 +629,12 @@ public class Handler
 			{
 				if(game.gameState == Game.STATE.Player1)
 				{
-					drawFromDeck(deckKeysWorkerP1, objectWorkerP1, null, drawLocWorker3, game.draw3WorkerLocX, game.draw3WorkerLocY, game);
+					drawFromDeck(deckKeysWorkerP1, objectWorkerP1, null, drawLocWorker1, game.draw3WorkerLocX, game.draw3WorkerLocY, game);
 					removeFromDeck(deckKeysWorkerP1);
 				}
 				else if(game.gameState == Game.STATE.Player2)
 				{
-					drawFromDeck(deckKeysWorkerP2, objectWorkerP2, null, drawLocWorker3, game.draw3WorkerLocX, game.draw3WorkerLocY, game);
+					drawFromDeck(deckKeysWorkerP2, objectWorkerP2, null, drawLocWorker2, game.draw3WorkerLocX, game.draw3WorkerLocY, game);
 					removeFromDeck(deckKeysWorkerP2);
 				}
 				else if(game.gameState == Game.STATE.Player3)
@@ -631,7 +644,7 @@ public class Handler
 				}
 				else if(game.gameState == Game.STATE.Player4)
 				{
-					drawFromDeck(deckKeysWorkerP4, objectWorkerP4, null, drawLocWorker3, game.draw3WorkerLocX, game.draw3WorkerLocY, game);
+					drawFromDeck(deckKeysWorkerP4, objectWorkerP4, null, drawLocWorker4, game.draw3WorkerLocX, game.draw3WorkerLocY, game);
 					removeFromDeck(deckKeysWorkerP4);
 				}
 
@@ -640,8 +653,65 @@ public class Handler
 			
 			game.turnEnd = false;
 		}
-		
-		//System.out.println(handler.deckKeys.size());
+	}
+	
+	//chooses the image to rotate
+	public void chooseImageRotate(Game game, Handler handler, Select select)
+	{
+		//select the worker tiles to move and rotate
+		if(game.typeState == Game.TYPESTATE.Worker && game.turnState == Game.TURNSTATE.Move)
+		{
+			if(game.gameState == Game.STATE.Player1)
+			{
+				if(select.worker1Clicked == true && select.worker1ActionComplete == false)
+				{
+	        //System.out.println("Right button pressed. On 1");
+					System.out.println(handler.objectWorkerP1.get(handler.drawLocWorker1.get(1)).getTile_image());
+	        //rotateImage(handler.objectWorkerP1.get(handler.drawLocWorker1.get(1)).getTile_image());
+	        select.worker1ActionComplete = true;
+				}
+				if(select.worker2Clicked == true && select.worker2ActionComplete == false)
+				{
+	        System.out.println("Right button pressed. On 2");
+	        select.worker2ActionComplete = true;
+				}
+				if(select.worker3Clicked == true && select.worker3ActionComplete == false)
+				{
+	        System.out.println("Right button pressed. On 3");
+	        select.worker3ActionComplete = true;
+				}
+			}
+			else if(game.gameState == Game.STATE.Player2)
+			{
+				
+			}
+			else if(game.gameState == Game.STATE.Player3)
+			{
+				
+			}
+			else if(game.gameState == Game.STATE.Player4)
+			{
+				
+			}
+		}
+	}
+	
+	//rotates the worker tiles
+	public void rotateImage(BufferedImage originalImage)
+	{
+		AffineTransform tx = new AffineTransform();
+
+		// last, width = height and height = width :)
+		tx.translate(originalImage.getHeight() / 2,originalImage.getWidth() / 2);
+		tx.rotate(Math.PI / 2);
+		// first - center image at the origin so rotate works OK
+		tx.translate(-originalImage.getWidth() / 2,-originalImage.getHeight() / 2);
+	
+		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+	
+		// new destination image where height = width and width = height.
+		BufferedImage newImage =new BufferedImage(originalImage.getHeight(), originalImage.getWidth(), originalImage.getType());
+		op.filter(originalImage, newImage);
 	}
 	
 }
