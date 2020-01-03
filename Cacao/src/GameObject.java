@@ -21,11 +21,26 @@ public abstract class GameObject
 	protected ID id;
 	protected IDJungle idjungle;
 	
+	//rotation variable for worker tile
+	//0 = none, 1 = 90 deg, 2 = 90deg x2, 3 = 90 deg x 3, reset to 0 after 3
+	protected int rotation = 0;
+	
+	//this is a boolean variable to determine if the rotation was changed and if the rotation ont he score scheme has been done (avoids indefinite rotating of score scheme)
+	protected boolean changed = true;
+	
 	protected int velX, velY;
+	
+	protected int [] scoreScheme = new int [4];
 	
 	//to store and get the tile image stored in the subclass of worker tiles
 	//we need this to be able to rotate properly in the select class
 	protected BufferedImage tile_image;
+	
+	private WorkerTiles workertiles;
+	
+	private Game game;
+	private Select select;
+	private Handler handler;
 	
 	//Tile constructor class
 	//constructor for GameObject class
@@ -41,12 +56,12 @@ public abstract class GameObject
 	}
 	
 	//worker tile constructor class
-	public GameObject(int x, int y, ID id, int TILE_DIM, BufferedImage tile_image)
+	public GameObject(int x, int y, ID id, int TILE_DIM, int rotation)
 	{
 		this.x = x;
 		this.y = y;
 		this.id = id;
-		this.tile_image = tile_image;
+		this.rotation = rotation;
 	}
 	
 	//empty constructor to create the player score
@@ -118,4 +133,35 @@ public abstract class GameObject
 		return tile_image;
 	}
 	
+	public void setTile_image(BufferedImage tile_image)
+	{
+		 this.tile_image = tile_image;
+	}
+	
+	public void incrementRotation()
+	{
+		if(rotation < 3)
+		{
+			rotation++;
+			changed = true;
+		}
+		else if(rotation == 3)
+		{
+			rotation = 0;
+			changed = true;
+		}
+	}
+	
+	public int [] getScoreScheme()
+	{
+		return scoreScheme;
+	}
+	
+	public void setScoreScheme(int a, int b, int c, int d)
+	{
+		this.scoreScheme[0] = a;
+		this.scoreScheme[1] = b;
+		this.scoreScheme[2] = c;
+		this.scoreScheme[3] = d;
+	}
 }

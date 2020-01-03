@@ -20,6 +20,7 @@ public class Handler extends MouseAdapter
 {
 	private Game game;
 	private Select select;
+	private WorkerTiles workertiles;
 	
 	//create a hash map for all jungle tiles
 	HashMap<String, GameObject> objectJungle = new HashMap<String, GameObject>();
@@ -658,6 +659,8 @@ public class Handler extends MouseAdapter
 	//chooses the image to rotate
 	public void chooseImageRotate(Game game, Handler handler, Select select)
 	{
+		int [] test = new int [4];
+		
 		//select the worker tiles to move and rotate
 		if(game.typeState == Game.TYPESTATE.Worker && game.turnState == Game.TURNSTATE.Move)
 		{
@@ -666,52 +669,131 @@ public class Handler extends MouseAdapter
 				if(select.worker1Clicked == true && select.worker1ActionComplete == false)
 				{
 	        //System.out.println("Right button pressed. On 1");
-					System.out.println(handler.objectWorkerP1.get(handler.drawLocWorker1.get(1)).getTile_image());
-	        //rotateImage(handler.objectWorkerP1.get(handler.drawLocWorker1.get(1)).getTile_image());
+					//System.out.println(handler.objectWorkerP1.get(handler.drawLocWorker1.get(1)).getTile_image());
+	        //rotateImage(handler.objectWorkerP1.get(handler.drawLocWorker1.get(1)).getTile_image(), handler);
+	        handler.objectWorkerP1.get(handler.drawLocWorker1.get(1)).incrementRotation();
+	        
+	        //used for debugging to print out the rotated scores after the tile is rotated
+	        /*
+	        test = handler.objectWorkerP1.get(handler.drawLocWorker1.get(1)).getScoreScheme();
+	       
+	        for(int score: test)
+	        {
+	        	System.out.print(score);
+	        }
+        	System.out.println();
+	        */
 	        select.worker1ActionComplete = true;
 				}
 				if(select.worker2Clicked == true && select.worker2ActionComplete == false)
 				{
-	        System.out.println("Right button pressed. On 2");
+	        handler.objectWorkerP1.get(handler.drawLocWorker1.get(2)).incrementRotation();
 	        select.worker2ActionComplete = true;
 				}
 				if(select.worker3Clicked == true && select.worker3ActionComplete == false)
 				{
-	        System.out.println("Right button pressed. On 3");
+	        handler.objectWorkerP1.get(handler.drawLocWorker1.get(3)).incrementRotation();
 	        select.worker3ActionComplete = true;
 				}
 			}
 			else if(game.gameState == Game.STATE.Player2)
 			{
-				
+				if(select.worker1Clicked == true && select.worker1ActionComplete == false)
+				{
+	        //System.out.println("Right button pressed. On 1");
+					//System.out.println(handler.objectWorkerP1.get(handler.drawLocWorker1.get(1)).getTile_image());
+	        //rotateImage(handler.objectWorkerP1.get(handler.drawLocWorker1.get(1)).getTile_image(), handler);
+	        handler.objectWorkerP2.get(handler.drawLocWorker2.get(1)).incrementRotation();
+	        
+	        //used for debugging to print out the rotated scores after the tile is rotated
+	        /*
+	        test = handler.objectWorkerP1.get(handler.drawLocWorker1.get(1)).getScoreScheme();
+	       
+	        for(int score: test)
+	        {
+	        	System.out.print(score);
+	        }
+        	System.out.println();
+	        */
+	        select.worker1ActionComplete = true;
+				}
+				if(select.worker2Clicked == true && select.worker2ActionComplete == false)
+				{
+	        handler.objectWorkerP2.get(handler.drawLocWorker2.get(2)).incrementRotation();
+	        select.worker2ActionComplete = true;
+				}
+				if(select.worker3Clicked == true && select.worker3ActionComplete == false)
+				{
+	        handler.objectWorkerP2.get(handler.drawLocWorker2.get(3)).incrementRotation();
+	        select.worker3ActionComplete = true;
+				}
 			}
 			else if(game.gameState == Game.STATE.Player3)
 			{
-				
+				if(select.worker1Clicked == true && select.worker1ActionComplete == false)
+				{
+	        //System.out.println("Right button pressed. On 1");
+					//System.out.println(handler.objectWorkerP1.get(handler.drawLocWorker1.get(1)).getTile_image());
+	        //rotateImage(handler.objectWorkerP1.get(handler.drawLocWorker1.get(1)).getTile_image(), handler);
+	        handler.objectWorkerP3.get(handler.drawLocWorker3.get(1)).incrementRotation();
+	        
+	        //used for debugging to print out the rotated scores after the tile is rotated
+	        /*
+	        test = handler.objectWorkerP1.get(handler.drawLocWorker1.get(1)).getScoreScheme();
+	       
+	        for(int score: test)
+	        {
+	        	System.out.print(score);
+	        }
+        	System.out.println();
+	        */
+	        select.worker1ActionComplete = true;
+				}
+				if(select.worker2Clicked == true && select.worker2ActionComplete == false)
+				{
+	        handler.objectWorkerP3.get(handler.drawLocWorker3.get(2)).incrementRotation();
+	        select.worker2ActionComplete = true;
+				}
+				if(select.worker3Clicked == true && select.worker3ActionComplete == false)
+				{
+	        handler.objectWorkerP3.get(handler.drawLocWorker3.get(3)).incrementRotation();
+	        select.worker3ActionComplete = true;
+				}
 			}
 			else if(game.gameState == Game.STATE.Player4)
 			{
-				
+				if(select.worker1Clicked == true && select.worker1ActionComplete == false)
+				{
+	        //System.out.println("Right button pressed. On 1");
+					//System.out.println(handler.objectWorkerP1.get(handler.drawLocWorker1.get(1)).getTile_image());
+	        //rotateImage(handler.objectWorkerP1.get(handler.drawLocWorker1.get(1)).getTile_image(), handler);
+	        handler.objectWorkerP4.get(handler.drawLocWorker4.get(1)).incrementRotation();
+	        
+	        //used for debugging to print out the rotated scores after the tile is rotated
+	        /*
+	        test = handler.objectWorkerP1.get(handler.drawLocWorker1.get(1)).getScoreScheme();
+	       
+	        for(int score: test)
+	        {
+	        	System.out.print(score);
+	        }
+        	System.out.println();
+	        */
+	        select.worker1ActionComplete = true;
+				}
+				if(select.worker2Clicked == true && select.worker2ActionComplete == false)
+				{
+	        handler.objectWorkerP4.get(handler.drawLocWorker4.get(2)).incrementRotation();
+	        select.worker2ActionComplete = true;
+				}
+				if(select.worker3Clicked == true && select.worker3ActionComplete == false)
+				{
+	        handler.objectWorkerP4.get(handler.drawLocWorker4.get(3)).incrementRotation();
+	        select.worker3ActionComplete = true;
+				}
 			}
 		}
 	}
 	
-	//rotates the worker tiles
-	public void rotateImage(BufferedImage originalImage)
-	{
-		AffineTransform tx = new AffineTransform();
-
-		// last, width = height and height = width :)
-		tx.translate(originalImage.getHeight() / 2,originalImage.getWidth() / 2);
-		tx.rotate(Math.PI / 2);
-		// first - center image at the origin so rotate works OK
-		tx.translate(-originalImage.getWidth() / 2,-originalImage.getHeight() / 2);
-	
-		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-	
-		// new destination image where height = width and width = height.
-		BufferedImage newImage =new BufferedImage(originalImage.getHeight(), originalImage.getWidth(), originalImage.getType());
-		op.filter(originalImage, newImage);
-	}
 	
 }

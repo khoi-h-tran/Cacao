@@ -49,10 +49,12 @@ public class Game extends Canvas implements Runnable
 	//creating buffered image
 	private BufferedImage spriteSheetTiles = null;
 	private BufferedImage spriteSheetRes = null;
+	private BufferedImage spriteSheetWorkerTiles = null;
 	
 	//creating objects to store sprite sheets
 	public SpriteSheet sst;
 	public SpriteSheet ssr;
+	public SpriteSheet sswt;
 	
 	//initializing the number of players
 	protected int numPlayers = 0;
@@ -130,9 +132,12 @@ public class Game extends Canvas implements Runnable
 	String remove1 = " ";
 	String remove2 = " ";
 	
+	public int [] scoreScheme = {0,0,0,0};
+	
 	//Game constructor class
 	public Game()
 	{
+
 		//sets the Window constructor for the window sizing
 		//note "this" keyword refers to the Game classes game instance
 		new Window(WIDTH, HEIGHT, "Cacao", this);
@@ -271,10 +276,10 @@ public class Game extends Canvas implements Runnable
 						idplayer = IDPlayer.Player4;
 						break;
 				}
-				handler.addObject(IDWorker.ThreeZeroZeroOne + String.valueOf(i),new WorkerTiles(deckLocWorkerX, deckLocWorkerY, ID.WorkerTile, IDWorker.ThreeZeroZeroOne, TILE_DIM, sst, idplayer), ID.WorkerTile, idplayer);
+				handler.addObject(IDWorker.ThreeZeroZeroOne + String.valueOf(i),new WorkerTiles(deckLocWorkerX, deckLocWorkerY, ID.WorkerTile, IDWorker.ThreeZeroZeroOne, TILE_DIM, sswt, idplayer), ID.WorkerTile, idplayer);
 				handler.addKey(IDWorker.ThreeZeroZeroOne + String.valueOf(i), ID.WorkerTile, idplayer);
 				
-				handler.addObject(IDWorker.ThreeOneZeroZero + String.valueOf(i),new WorkerTiles(deckLocWorkerX, deckLocWorkerY, ID.WorkerTile, IDWorker.ThreeOneZeroZero, TILE_DIM, sst, idplayer), ID.WorkerTile, idplayer);
+				handler.addObject(IDWorker.ThreeOneZeroZero + String.valueOf(i),new WorkerTiles(deckLocWorkerX, deckLocWorkerY, ID.WorkerTile, IDWorker.ThreeOneZeroZero, TILE_DIM, sswt, idplayer), ID.WorkerTile, idplayer);
 				handler.addKey(IDWorker.ThreeOneZeroZero + String.valueOf(i), ID.WorkerTile, idplayer);
 			}
 				
@@ -372,7 +377,7 @@ public class Game extends Canvas implements Runnable
 							break;
 					}
 					
-					handler.addObject(IDWorker.OneOneOneOne + String.valueOf(i),new WorkerTiles(deckLocWorkerX, deckLocWorkerY, ID.WorkerTile, IDWorker.OneOneOneOne, TILE_DIM, sst, idplayer), ID.WorkerTile, idplayer);
+					handler.addObject(IDWorker.OneOneOneOne + String.valueOf(i),new WorkerTiles(deckLocWorkerX, deckLocWorkerY, ID.WorkerTile, IDWorker.OneOneOneOne, TILE_DIM, sswt, idplayer), ID.WorkerTile, idplayer);
 					handler.addKey(IDWorker.OneOneOneOne + String.valueOf(i), ID.WorkerTile, idplayer);
 				}
 			}
@@ -420,7 +425,7 @@ public class Game extends Canvas implements Runnable
 							idplayer = IDPlayer.Player4;
 							break;
 					}
-					handler.addObject(IDWorker.TwoOneZeroOne + String.valueOf(i),new WorkerTiles(deckLocWorkerX, deckLocWorkerY, ID.WorkerTile, IDWorker.TwoOneZeroOne, TILE_DIM, sst, idplayer), ID.WorkerTile, idplayer);
+					handler.addObject(IDWorker.TwoOneZeroOne + String.valueOf(i),new WorkerTiles(deckLocWorkerX, deckLocWorkerY, ID.WorkerTile, IDWorker.TwoOneZeroOne, TILE_DIM, sswt, idplayer), ID.WorkerTile, idplayer);
 					handler.addKey(IDWorker.TwoOneZeroOne + String.valueOf(i), ID.WorkerTile, idplayer);
 				}
 			}
@@ -563,6 +568,7 @@ public class Game extends Canvas implements Runnable
 		{
 			spriteSheetTiles = loader.loadImage("res/Tiles.png");
 			spriteSheetRes = loader.loadImage("res/Ressources.png");
+			spriteSheetWorkerTiles = loader.loadImage("res/WorkerTiles.png");
 		}
 		catch(IOException e)
 		{
@@ -571,6 +577,7 @@ public class Game extends Canvas implements Runnable
 		
 		sst = new SpriteSheet(spriteSheetTiles);
 		ssr = new SpriteSheet(spriteSheetRes);
+		sswt = new SpriteSheet(spriteSheetWorkerTiles);
 	}
 	
 	//synchronized key word is used for threads

@@ -38,6 +38,7 @@ public class Select extends MouseAdapter
 	//mouse pressed
 	protected int mxP = 0;
 	protected int myP = 0;
+
 	
 	public Select(Game game, Handler handler)
 	{
