@@ -27,25 +27,53 @@ public class Select extends MouseAdapter
 	private Handler handler;
 	public MouseEvent e;
 	
-	//create variables to pass to handler to indicate that we have clicked on the worker tiles to rotate
+	//create variables to pass to handler to indicate that we have right clicked on the worker tiles to rotate
 	protected boolean worker1Clicked = false;
 	protected boolean worker2Clicked = false;
 	protected boolean worker3Clicked = false;
-	//create variable so so that once the worker tile is clicked, an action only happens once (i.e. 1 action between mouse click and release)
+	//create variable so so that once the worker tile is right clicked, an action only happens once (i.e. 1 action between mouse click and release)
 	protected boolean worker1ActionComplete = false;
 	protected boolean worker2ActionComplete = false;
 	protected boolean worker3ActionComplete = false;
+	
+	//create variables to pass to handler to indicate that we have left clicked on the worker tiles and held to move the tile
+	protected boolean worker1Hold = false;
+	protected boolean worker2Hold = false;
+	protected boolean worker3Hold = false;
+	//create variable so so that once the worker tile is left clicked, an action only happens once (i.e. 1 action between mouse click and release)
+	protected boolean worker1HoldComplete = false;
+	protected boolean worker2HoldComplete = false;
+	protected boolean worker3HoldComplete = false;
+	
 	//mouse pressed
-	protected int mxP = 0;
-	protected int myP = 0;
-
+	protected int mxP;
+	protected int myP;
+	
+	//mouse held
+	protected int mxH;
+	protected int myH;
+	
+	//variable to check if mouse was released
+	protected boolean mouseReleased = false;
 	
 	public Select(Game game, Handler handler)
 	{
 		this.game = game;
 		this.handler = handler;
 	}
-	 
+	
+	public void mouseDragged(MouseEvent e)
+	{
+		if(SwingUtilities.isLeftMouseButton(e) && (worker1Hold == true || worker2Hold == true  || worker3Hold == true ))
+		{
+			//stores x position of mouse
+			mxH = e.getX();
+			
+			//stores y position of mouse
+			myH = e.getY();
+		}
+	}
+	
 	//events if mouse button is pressed
 	//the listener in the game means we don't have to tick this.
 	public void mousePressed(MouseEvent e)
@@ -79,24 +107,67 @@ public class Select extends MouseAdapter
 			}
 		}
 		
-		//notify handler class if worker tiles are clicked
+		//notify handler class if worker tiles are clicked by right mouse button
+		
 		//worker tile 1
 		if(mouseOver(mxP, myP, game.draw1WorkerLocX, game.draw1WorkerLocY, game.TILE_DIM, game.TILE_DIM) && (SwingUtilities.isRightMouseButton(e)))
 		{
 			worker1Clicked = true;
 			worker1ActionComplete = false;
 		}
+		//worker tile 2
 		else if(mouseOver(mxP, myP, game.draw2WorkerLocX, game.draw2WorkerLocY, game.TILE_DIM, game.TILE_DIM) && (SwingUtilities.isRightMouseButton(e)))
 		{
 			worker2Clicked = true;
 			worker2ActionComplete = false;
 		}
+		//worker tile 3
 		else if(mouseOver(mxP, myP, game.draw3WorkerLocX, game.draw3WorkerLocY, game.TILE_DIM, game.TILE_DIM) && (SwingUtilities.isRightMouseButton(e)))
 		{
 			worker3Clicked = true;
 			worker3ActionComplete = false;
 		}
-
+		
+		//notify handler class if worker tiles are clicked by left mouse button
+		
+		//worker tile 1
+		if(mouseOver(mxP, myP, game.draw1WorkerLocX, game.draw1WorkerLocY, game.TILE_DIM, game.TILE_DIM) && (SwingUtilities.isLeftMouseButton(e)))
+		{
+			System.out.println("worker1 hold");
+			worker1Hold = true;
+			worker1HoldComplete = false;
+			mxH = game.draw1WorkerLocX + game.TILE_DIM/2;
+			myH = game.draw1WorkerLocY + game.TILE_DIM/2;
+		}
+		//worker tile 2
+		else if(mouseOver(mxP, myP, game.draw2WorkerLocX, game.draw2WorkerLocY, game.TILE_DIM, game.TILE_DIM) && (SwingUtilities.isLeftMouseButton(e)))
+		{
+			System.out.println("worker2 hold");
+			
+			worker2Hold = true;
+			worker2HoldComplete = false;
+			mxH = game.draw2WorkerLocX + game.TILE_DIM/2;
+			myH = game.draw2WorkerLocY + game.TILE_DIM/2;
+			/*
+			//set so that the worker tile doesn't move when you don't click and hold on it
+			handler.objectWorkerP1.get(handler.drawLocWorker1.get(2)).setWorker2Hold(true);
+			handler.objectWorkerP1.get(handler.drawLocWorker1.get(2)).setWorker2HoldComplete(false);
+			*/
+		}
+		//worker tile 3
+		else if(mouseOver(mxP, myP, game.draw3WorkerLocX, game.draw3WorkerLocY, game.TILE_DIM, game.TILE_DIM) && (SwingUtilities.isLeftMouseButton(e)))
+		{
+			System.out.println("worker3 hold");
+			worker3Hold = true;
+			worker3HoldComplete = false;
+			mxH = game.draw3WorkerLocX + game.TILE_DIM/2;
+			myH = game.draw3WorkerLocY + game.TILE_DIM/2;
+			/*
+			//set so that the worker tile doesn't move when you don't click and hold on it
+			handler.objectWorkerP1.get(handler.drawLocWorker1.get(3)).setWorker3Hold(true);
+			handler.objectWorkerP1.get(handler.drawLocWorker1.get(3)).setWorker3HoldComplete(false);
+			*/
+		}
 	}
 	
 	//events if mouse button is released
@@ -104,17 +175,40 @@ public class Select extends MouseAdapter
 	public void mouseReleased(MouseEvent e)
 	{
 		
+		
 		if(mouseOver(mxP, myP, game.draw1WorkerLocX, game.draw1WorkerLocY, game.TILE_DIM, game.TILE_DIM) && (SwingUtilities.isRightMouseButton(e)))
 		{
 			worker1Clicked = false;
 		}
-		if(mouseOver(mxP, myP, game.draw2WorkerLocX, game.draw2WorkerLocY, game.TILE_DIM, game.TILE_DIM) && (SwingUtilities.isRightMouseButton(e)))
+		else if(mouseOver(mxP, myP, game.draw2WorkerLocX, game.draw2WorkerLocY, game.TILE_DIM, game.TILE_DIM) && (SwingUtilities.isRightMouseButton(e)))
 		{
 			worker2Clicked = false;
 		}
-		if(mouseOver(mxP, myP, game.draw3WorkerLocX, game.draw3WorkerLocY, game.TILE_DIM, game.TILE_DIM) && (SwingUtilities.isRightMouseButton(e)))
+		else if(mouseOver(mxP, myP, game.draw3WorkerLocX, game.draw3WorkerLocY, game.TILE_DIM, game.TILE_DIM) && (SwingUtilities.isRightMouseButton(e)))
 		{
 			worker3Clicked = false;
+		}
+		
+		if(mouseOver(mxP, myP, game.draw1WorkerLocX, game.draw1WorkerLocY, game.TILE_DIM, game.TILE_DIM) && (SwingUtilities.isLeftMouseButton(e)))
+		{
+      //complete the action to prevent indefinite spinning/rotating of the tile
+			worker1Hold = false;
+      worker1HoldComplete = true;
+      mouseReleased = true;
+		}
+		else if(mouseOver(mxP, myP, game.draw2WorkerLocX, game.draw2WorkerLocY, game.TILE_DIM, game.TILE_DIM) && (SwingUtilities.isLeftMouseButton(e)))
+		{
+      //complete the action to prevent indefinite spinning/rotating of the tile
+			worker2Hold = false;
+      worker2HoldComplete = true;
+      mouseReleased = true;
+		}
+		else if(mouseOver(mxP, myP, game.draw3WorkerLocX, game.draw3WorkerLocY, game.TILE_DIM, game.TILE_DIM) && (SwingUtilities.isLeftMouseButton(e)))
+		{
+      //complete the action to prevent indefinite spinning/rotating of the tile
+			worker3Hold = false;
+      worker3HoldComplete = true;
+      mouseReleased = true;
 		}
 	}
 	

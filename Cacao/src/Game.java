@@ -1,11 +1,11 @@
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Map.Entry;
 
 /* 
 	File Name: Game.java
@@ -70,6 +70,9 @@ public class Game extends Canvas implements Runnable
 	
 	//create instance of select class
 	private Select select;
+	
+	//create instance of mouse event class
+	private MouseEvent e;
 	
 	//create instance of ID enumeration
 	private ID id;
@@ -158,9 +161,11 @@ public class Game extends Canvas implements Runnable
 		//this tells game to listen to the KeyInput class
 		this.addKeyListener(new KeyInput(handler));
 		
-		//this tells game to listen to the KeyInput class
+		//this tells game to listen to the mouse clicking class
 		this.addMouseListener(select);
 
+		//this tells game to listen to the mouse movements class
+		this.addMouseMotionListener(select);
 	}
 	
 	//initialize the game

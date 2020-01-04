@@ -42,6 +42,15 @@ public abstract class GameObject
 	private Select select;
 	private Handler handler;
 	
+	//create variables to pass to handler to indicate that we have left clicked on the worker tiles and held to move the tile
+	protected boolean worker1Hold = false;
+	protected boolean worker2Hold = false;
+	protected boolean worker3Hold = false;
+	//create variable so so that once the worker tile is left clicked, an action only happens once (i.e. 1 action between mouse click and release)
+	protected boolean worker1HoldComplete = false;
+	protected boolean worker2HoldComplete = false;
+	protected boolean worker3HoldComplete = false;
+	
 	//Tile constructor class
 	//constructor for GameObject class
 	//initializes where the game object will start on window
@@ -138,6 +147,68 @@ public abstract class GameObject
 		 this.tile_image = tile_image;
 	}
 	
+	
+	
+	public boolean isWorker1Hold()
+	{
+		return worker1Hold;
+	}
+
+	public void setWorker1Hold(boolean worker1Hold)
+	{
+		this.worker1Hold = worker1Hold;
+	}
+
+	public boolean isWorker2Hold()
+	{
+		return worker2Hold;
+	}
+
+	public void setWorker2Hold(boolean worker2Hold)
+	{
+		this.worker2Hold = worker2Hold;
+	}
+
+	public boolean isWorker3Hold()
+	{
+		return worker3Hold;
+	}
+
+	public void setWorker3Hold(boolean worker3Hold)
+	{
+		this.worker3Hold = worker2Hold;
+	}
+
+	public boolean isWorker1HoldComplete()
+	{
+		return worker1HoldComplete;
+	}
+
+	public void setWorker1HoldComplete(boolean worker1HoldComplete)
+	{
+		this.worker1HoldComplete = worker1HoldComplete;
+	}
+
+	public boolean isWorker2HoldComplete()
+	{
+		return worker2HoldComplete;
+	}
+
+	public void setWorker2HoldComplete(boolean worker2HoldComplete)
+	{
+		this.worker2HoldComplete = worker2HoldComplete;
+	}
+
+	public boolean isWorker3HoldComplete()
+	{
+		return worker3HoldComplete;
+	}
+
+	public void setWorker3HoldComplete(boolean worker3HoldComplete)
+	{
+		this.worker3HoldComplete = worker3HoldComplete;
+	}
+
 	public void incrementRotation()
 	{
 		if(rotation < 3)
