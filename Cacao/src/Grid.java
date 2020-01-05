@@ -238,8 +238,6 @@ public class Grid
 					//if it is the jungle turn, state which worker tiles could be used
 					if(game.typeState == Game.TYPESTATE.Jungle)
 					{
-						System.out.print(String.valueOf((char)(i+65)));
-						System.out.println(String.valueOf(j));
 						validJungleTileLoc.add(String.valueOf((char)(i+65)) + String.valueOf(j + 1));
 					}
 					

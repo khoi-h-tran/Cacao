@@ -274,7 +274,7 @@ public class Handler extends MouseAdapter
 					{
 						//check if the released point is within the y-range of any valid worker tile location
 						//you have to subtract an additional 1 sometimes because it will let you start at the correct location
-						if(select.myR > ((int)(coordinate.charAt(1)) - 48 - 1) * game.TILE_DIM  && select.myR < ((int)(coordinate.charAt(0)) - 48) * game.TILE_DIM + game.TILE_DIM)
+						if(select.myR > ((int)(coordinate.charAt(1)) - 48 - 1) * game.TILE_DIM  && select.myR < ((int)(coordinate.charAt(1)) - 48 - 1) * game.TILE_DIM + game.TILE_DIM)
 						{
 							int xStart = ((int)(coordinate.charAt(0)) - 65) * game.TILE_DIM;
 							int yStart = ((int)(coordinate.charAt(1)) - 48 - 1) * game.TILE_DIM;
@@ -450,29 +450,68 @@ public class Handler extends MouseAdapter
 					}
 
 		    }
-			}
-	    
-			if(game.typeState == Game.TYPESTATE.Jungle)
-			{
-		    if(placedJungle1 == false)
-		    {
-					System.out.println("jungle 1 returned");
-	  			objectJungle.get(drawLocJungle.get(1)).setX(game.draw1LocX);
-	  			objectJungle.get(drawLocJungle.get(1)).setY(game.draw1LocY);
-		    }
-		    if(placedJungle2 == false)
-		    {
-					System.out.println("jungle 2 returned");
-	  			objectJungle.get(drawLocJungle.get(2)).setX(game.draw2LocX);
-	  			objectJungle.get(drawLocJungle.get(2)).setY(game.draw2LocY);
-		    }
+		    
+				if(game.typeState == Game.TYPESTATE.Jungle)
+				{
+					for(String coordinate: grid.validJungleTileLoc)
+					{
+						//check if the released point is within the x-range of any valid worker tile location
+						if(select.mxR > ((int)(coordinate.charAt(0)) - 65) * game.TILE_DIM  && select.mxR < (((int)(coordinate.charAt(0)) - 65) * game.TILE_DIM) + game.TILE_DIM)
+						{
+							//check if the released point is within the y-range of any valid worker tile location
+							//you have to subtract an additional 1 sometimes because it will let you start at the correct location
+							if(select.myR > ((int)(coordinate.charAt(1)) - 48 - 1) * game.TILE_DIM  && select.myR < ((int)(coordinate.charAt(1)) - 48 - 1) * game.TILE_DIM + game.TILE_DIM)
+							{
+								int xStart = ((int)(coordinate.charAt(0)) - 65) * game.TILE_DIM;
+								int yStart = ((int)(coordinate.charAt(1)) - 48 - 1) * game.TILE_DIM;
+								
+								//if it is an acceptable square, place the correct object at the new location
+						    if(select.mouseJungle1Released == true)
+						    {
+									//System.out.println("worker 1 returned");
+					  			objectJungle.get(drawLocWorker1.get(1)).setX(xStart);
+					  			objectJungle.get(drawLocWorker1.get(1)).setY(yStart);
+					  			placedJungle1 = true;
+						    }
+						    if(select.mouseJungle2Released == true)
+						    {
+									//System.out.println("worker 2 returned");
+									objectJungle.get(drawLocWorker1.get(2)).setX(xStart);
+									objectJungle.get(drawLocWorker1.get(2)).setY(yStart);
+					  			placedJungle2 = true;
+						    }
+						    
+						  }
+						    
+						    break;//break out if we have found the correct row and column that is acceptable
+						}
+					}
+			
+			    if(placedJungle1 == false)
+			    {
+						System.out.println("jungle 1 returned");
+		  			objectJungle.get(drawLocJungle.get(1)).setX(game.draw1LocX);
+		  			objectJungle.get(drawLocJungle.get(1)).setY(game.draw1LocY);
+			    }
+			    if(placedJungle2 == false)
+			    {
+						System.out.println("jungle 2 returned");
+		  			objectJungle.get(drawLocJungle.get(2)).setX(game.draw2LocX);
+		  			objectJungle.get(drawLocJungle.get(2)).setY(game.draw2LocY);
+			    }
+				}
+				
+			}//if mouse released = true
+
+				select.mouseJungle1Released = false;
+				select.mouseJungle2Released = false;
+		    select.mouse1Released = false;
+		    select.mouse2Released = false;
+		    select.mouse3Released = false;
 			}
 			
-			select.mouseReleased = false;
-	    select.mouse1Released = false;
-	    select.mouse2Released = false;
-	    select.mouse3Released = false;
-		}
+
+		//}
 	//}
 	
 	public void render(Graphics g, Game game)

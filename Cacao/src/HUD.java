@@ -3,6 +3,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /* 
 	File Name: HUD.java
@@ -14,6 +16,10 @@ public class HUD
 {
 	private Game game;
 	private Handler handler;
+	
+	//using timer to flash if jungle tiles are supposed to be moved
+	//taking in the current time in miliseconds
+	long timer = System.currentTimeMillis();
 	
 	public void tick()
 	{
@@ -32,7 +38,7 @@ public class HUD
 		//Drawing rectangle for border around the deck cover
 		g.setColor(Color.black);
 		g.drawRect(game.deckLocJungleX, game.deckLocJungleY, game.TILE_DIM, game.TILE_DIM);
-		//drawing the work "Jungle"
+		//drawing the word "Jungle"
 		g.setFont(f1);
 		g.setColor(Color.white);
 		g.drawString("Jungle", game.deckLocJungleX + game.TILE_DIM/5, game.deckLocJungleY + game.TILE_DIM*1/4);
@@ -90,8 +96,32 @@ public class HUD
 		g.setColor(Color.black);
 		g.drawRect(Game.HEIGHT, game.draw1LocY - game.TILE_DIM/3, Game.WIDTH - Game.HEIGHT, game.TILE_DIM/4);
 		//creating text for the section
+		//allowing text to flash if it is the time to move the jungle tiles
 		g.setFont(f1);
-		g.setColor(Color.white);
+		g.setColor(Color.white);//sets white for the first run (or else it will read in the black above for the rectangle)
+		if(game.typeState == Game.TYPESTATE.Jungle)
+		{
+			if(System.currentTimeMillis() - timer < 1000)
+			{
+	  		g.setFont(f1);
+	  		g.setColor(Color.white);
+    	}
+    	else if (System.currentTimeMillis() - timer > 1000  && System.currentTimeMillis() - timer < 2000)
+    	{
+	  		g.setFont(f1);
+	  		g.setColor(Color.yellow);
+    	}
+    	else if (System.currentTimeMillis() - timer > 2000)
+    	{
+				//set the timer to current time to put the delta back to zero
+				timer = System.currentTimeMillis();
+    	}
+		}
+		else
+		{
+  		g.setFont(f1);
+  		g.setColor(Color.white);
+		}
 		g.drawString("Jungle Tiles Drawn", Game.HEIGHT + game.TILE_DIM/3, game.draw1LocY - game.TILE_DIM/7);
     
 		//Separating worker tile cards in display
@@ -107,8 +137,32 @@ public class HUD
 		g.setColor(Color.black);
 		g.drawRect(Game.HEIGHT, game.draw1WorkerLocY - game.TILE_DIM/3, Game.WIDTH - Game.HEIGHT, game.TILE_DIM/4);
 		//creating text for the section
+		//allowing text to flash if it is the time to move the jungle tiles
 		g.setFont(f1);
-		g.setColor(Color.white);
+		g.setColor(Color.white);//sets white for the first run (or else it will read in the black above for the rectangle)
+		if(game.typeState == Game.TYPESTATE.Worker)
+		{
+			if(System.currentTimeMillis() - timer < 1000)
+			{
+	  		g.setFont(f1);
+	  		g.setColor(Color.white);
+    	}
+    	else if (System.currentTimeMillis() - timer > 1000  && System.currentTimeMillis() - timer < 2000)
+    	{
+	  		g.setFont(f1);
+	  		g.setColor(Color.yellow);
+    	}
+    	else if (System.currentTimeMillis() - timer > 2000)
+    	{
+				//increment the timer by 3 seconds to put the delta back to zero
+				timer = System.currentTimeMillis();
+    	}
+		}
+		else
+		{
+  		g.setFont(f1);
+  		g.setColor(Color.white);
+		}
 		g.drawString("Worker Tiles Drawn", Game.HEIGHT + game.TILE_DIM/3, game.draw1WorkerLocY - game.TILE_DIM/7);
 		
 		//Separating deck tile cards in display

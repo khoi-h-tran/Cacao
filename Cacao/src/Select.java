@@ -66,7 +66,8 @@ public class Select extends MouseAdapter
 	protected int myH;
 	
 	//variable to check if mouse was released
-	protected boolean mouseReleased = false;//for jungle tiles
+	protected boolean mouseJungle1Released = false;//for jungle tiles
+	protected boolean mouseJungle2Released = false;//for worker draw 1
 	protected boolean mouse1Released = false;//for worker draw 1
 	protected boolean mouse2Released = false;// for worker draw 2
 	protected boolean mouse3Released = false;// for worker draw 3
@@ -263,14 +264,14 @@ public class Select extends MouseAdapter
 	      //complete the action to prevent indefinite spinning/rotating of the tile
 				jungle1Hold = false;
 				jungle1HoldComplete = true;
-	      mouseReleased = true;
+	      mouseJungle1Released = true;
 			}
 			else if(mouseOver(mxP, myP, game.draw2LocX, game.draw2LocY, game.TILE_DIM, game.TILE_DIM) && (SwingUtilities.isLeftMouseButton(e)))
 			{
 	      //complete the action to prevent indefinite spinning/rotating of the tile
 				jungle2Hold = false;
 				jungle2HoldComplete = true;
-	      mouseReleased = true;
+	      mouseJungle2Released = true;
 			}
 		}
 		

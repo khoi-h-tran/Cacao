@@ -192,9 +192,18 @@ public class Game extends Canvas implements Runnable
 		}
 		if(playerTracker == 1)
 		{
-			gameState = STATE.Player1;
-			typeState = TYPESTATE.Worker;
-			turnState = TURNSTATE.Move;
+			if(handler.placedWorker1 != true && handler.placedWorker2 != true && handler.placedWorker3 != true )
+			{
+				gameState = STATE.Player1;
+				typeState = TYPESTATE.Worker;
+				turnState = TURNSTATE.Move;
+			}
+			else if(handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true )
+			{
+				gameState = STATE.Player1;
+				typeState = TYPESTATE.Jungle;
+				turnState = TURNSTATE.Move;
+			}
 		}
 	}
 	
