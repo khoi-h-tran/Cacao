@@ -147,8 +147,6 @@ public abstract class GameObject
 		 this.tile_image = tile_image;
 	}
 	
-	
-	
 	public boolean isWorker1Hold()
 	{
 		return worker1Hold;

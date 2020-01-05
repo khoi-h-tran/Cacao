@@ -91,7 +91,7 @@ public class JungleTiles extends GameObject
 				break;
 			//total 5
 			case Temple:
-				tile_image = ss.grabImage(5, 1, TILE_DIM, TILE_DIM, TILE_DIM);
+				tile_image = ss.grabImage(1, 5, TILE_DIM, TILE_DIM, TILE_DIM);
 				scoreKey = "Temple";
 				scoreValue = 1;
 				break;

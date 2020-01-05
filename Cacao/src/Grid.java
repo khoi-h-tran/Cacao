@@ -15,10 +15,15 @@ public class Grid
 {
 	private Game game;
 	
-	//create a hash map for grid coordinates
+	//create a hash map for grid coordinates (populates the point at which a specific row starts and the point at which a specific columns)
+	//String is the column or row indicated. E.g. either A to indicate column, or 1 to indicate row
+	//Integer is the starting point of the column or row as a multiple of the tile dimension
 	HashMap<String, Integer> gridCoord = new HashMap<String, Integer>();
 	
 	//create a hash map to determine if a grid has a tile in it
+	//String is the combined coordinate (e.g. E4).
+	//Integer = 1 means a jungle tile
+	//Integer = 2 means a worker tile
 	HashMap<String, Integer> gridUsed = new HashMap<String, Integer>();
 	
 	//Get the list of keys whose value indicates the grid is being used (indicated by value = 1 for jungle tiles, value = 2 for worker tiles)
@@ -26,6 +31,12 @@ public class Grid
 	
 	//get the hash map of all keys with column and row indicator separated
 	HashMap<Integer, Integer> yellowCoords = new HashMap<Integer, Integer>();;
+	
+	//hash map to store all the grids a worker tile could be put on
+	ArrayList<String> validWorkerTileLoc = new ArrayList<String>();
+	
+	//hash map to store all the grids a jungle tile could be put on
+	ArrayList<String> validJungleTileLoc = new ArrayList<String>();
 	
 	//populate the coordinates of the grid
 	public void popGridCoord(Game game)
@@ -141,16 +152,16 @@ public class Grid
 		// 2 means worker type was employed and you need to clear the list for jungle tiles
 		
 		
-		if(game.typeState == Game.TYPESTATE.Jungle)
+		if(game.typeState == Game.TYPESTATE.Worker)
 		{
 			//clear the list if it was previously used to keep track of worker tiles
-			if(game.jungleState == 2)
+			if(game.tileState == 2)
 			{
 				listOfKeys.clear();
 				yellowCoords.clear();
 			}
 			//indicate that the jungle tiles were used at least once
-			game.jungleState = 1;
+			game.tileState = 1;
 			//Get the list of keys whose value indicates the grid is being used (indicated by value = 1)
 			listOfKeys = getAllKeysForValue(gridUsed, 1);
 			
@@ -158,16 +169,16 @@ public class Grid
 			yellowCoords = tileUsedCoordSplit(listOfKeys, yellowCoords);
 		}
 		
-		if(game.typeState == Game.TYPESTATE.Worker)
+		if(game.typeState == Game.TYPESTATE.Jungle)
 		{
 		//clear the list if it was previously used to keep track of jungle tiles
-			if(game.jungleState == 1)
+			if(game.tileState == 1)
 			{
 				listOfKeys.clear();
 				yellowCoords.clear();
 			}
 			//indicate that the worker tiles were used at least once
-			game.jungleState = 2;
+			game.tileState = 2;
 			//Get the list of keys whose value indicates the grid is being used (indicated by value = 2), 2 meaning worker tiles
 			/*
 			listOfKeys = getAllKeysForValue(gridUsed, 2);
@@ -181,35 +192,64 @@ public class Grid
 	public void render(Graphics g, Game game)
 	{
 		boolean colorYellow = false;
-		//Font f1 = new Font(Font.SERIF, Font.PLAIN, 30);
+		
+		//empty the list so it can be populated each time as the game ticks
+		//or else we will jus tkeep adding inifinite values
+		//this will allow us to use the same array list for jungle tiles or worth tiles
+		validWorkerTileLoc.clear();
+		validJungleTileLoc.clear();
+		
 		//populates the grid display in the game
-		for(int i = 0; i < Game.HEIGHT/game.TILE_DIM; i++)
+		for(int i = 0; i < Game.HEIGHT/game.TILE_DIM; i++)//populates rows
 		{
-			for(int j = 0; j < Game.HEIGHT/game.TILE_DIM; j++)
+			for(int j = 0; j < Game.HEIGHT/game.TILE_DIM; j++)//populates columns
 			{
+				//set the default colour of the square to not yellow
 				colorYellow = false;
 				
+				//loop through the HashMap that contains all the coordinates (e.g. key = E, value = 4).
 				for (HashMap.Entry<Integer, Integer> entry : yellowCoords.entrySet()) 
 				{
+					//For each grid which is identified as used (e.g. E4)
+					//check if in row E, if there is a column that is one above or one below 4. This is a potential option to place your next tile (i.e. adjacent to your tiles)
+					//check if in column 4, if there is a row = C or F, which is one above or below 4.This is a potential option to place your next tile (i.e. adjacent to your tiles)
+					//if it is above or below the already placed tiles, indicate it should be yellow
+					
+					//add 1 for i, because the for loop starts at 0, but our numbers start at 1
+					//goes to each square, and flags as yellow if it checks above and below or left side and right side and finds a grid that is used
 			    if(((i+1) == entry.getKey() && ((j+1) == entry.getValue() - 1 || (j+1) == entry.getValue() +1)) || ((j+1) == entry.getKey() && ((i+1) == entry.getValue() - 1 || (i+1) == entry.getValue() +1)))
 			    {
 			    	colorYellow = true;
 			    }
 				}
 				
+				//if it is a potential place to put the tile, color the box yellow
 				if(colorYellow == true)
 				{
 					g.setColor(Color.yellow);
 					g.fillRect((game.TILE_DIM*i), (game.TILE_DIM*j), game.TILE_DIM, game.TILE_DIM);
+					
+					//if it is the worker turn, state which worker tiles could be used
+					if(game.typeState == Game.TYPESTATE.Worker)
+					{
+						validWorkerTileLoc.add(String.valueOf((char)(i + 65)) + String.valueOf(j + 1));
+					}
+					
+					//if it is the jungle turn, state which worker tiles could be used
+					if(game.typeState == Game.TYPESTATE.Jungle)
+					{
+						System.out.print(String.valueOf((char)(i+65)));
+						System.out.println(String.valueOf(j));
+						validJungleTileLoc.add(String.valueOf((char)(i+65)) + String.valueOf(j + 1));
+					}
+					
 				}
+				//if it is a potential place to put the tile, color the box black
 				else
 				{
 					g.setColor(Color.black);
 					g.drawRect((game.TILE_DIM*i), (game.TILE_DIM*j), game.TILE_DIM, game.TILE_DIM);
 				}
-	    	
-	    	
-	    	
 			}
 		}
 	}

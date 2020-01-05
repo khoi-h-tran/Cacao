@@ -142,7 +142,6 @@ public class WorkerTiles extends GameObject
 			}
 			changed = false;
 		}
-
 	}
 
 	//renders the jungle tiles

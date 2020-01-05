@@ -22,6 +22,7 @@ public class Handler extends MouseAdapter
 	private Select select;
 	private WorkerTiles workertiles;
 	private MouseEvent e;
+	private Grid grid;
 	
 	//create a hash map for all jungle tiles
 	HashMap<String, GameObject> objectJungle = new HashMap<String, GameObject>();
@@ -104,10 +105,12 @@ public class Handler extends MouseAdapter
 	public boolean placedWorker1 = false;
 	public boolean placedWorker2 = false;
 	public boolean placedWorker3 = false;
+	public boolean placedJungle1 = false;
+	public boolean placedJungle2 = false;
 	
 	//create game loop for objects
 	
-	public void tick(Game game, Select select)
+	public void tick(Game game, Select select, Grid grid)
 	{
 		//loops through each object in jungle tile hash map
 		for(int i = 0; i < objectJungle.size(); i++) 
@@ -163,50 +166,314 @@ public class Handler extends MouseAdapter
 			}
 		}
 		
+		if(game.typeState == Game.TYPESTATE.Worker)
+		{
 		//check if the worker tiles are right clicked
-		if(select.worker1Clicked == true || select.worker2Clicked == true || select.worker3Clicked == true)
-		{
-			chooseImageRotate(game, this, select);
-		}
-		
-		//check if worker tiles are left clicked
-		if(select.worker1Hold == true)
-		{
+			if(select.worker1Clicked == true || select.worker2Clicked == true || select.worker3Clicked == true)
+			{
+				chooseImageRotate(game, this, select);
+			}
 			
-			objectWorkerP1.get(drawLocWorker1.get(1)).setX(select.mxH - game.TILE_DIM/2);
-			objectWorkerP1.get(drawLocWorker1.get(1)).setY(select.myH - game.TILE_DIM/2);
-		}
-		else if(select.worker2Hold == true)
-		{
-			objectWorkerP1.get(drawLocWorker1.get(2)).setX(select.mxH - game.TILE_DIM/2);
-			objectWorkerP1.get(drawLocWorker1.get(2)).setY(select.myH - game.TILE_DIM/2);
-		}
-		else if(select.worker3Hold == true )
-		{
-			objectWorkerP1.get(drawLocWorker1.get(3)).setX(select.mxH - game.TILE_DIM/2);
-			objectWorkerP1.get(drawLocWorker1.get(3)).setY(select.myH - game.TILE_DIM/2);
+			//check if worker tiles are left clicked and move to follow cursor if it is held
+			if(select.worker1Hold == true)
+			{
+				if(game.gameState == Game.STATE.Player1)
+				{
+					objectWorkerP1.get(drawLocWorker1.get(1)).setX(select.mxH - game.TILE_DIM/2);
+					objectWorkerP1.get(drawLocWorker1.get(1)).setY(select.myH - game.TILE_DIM/2);
+				}
+				else if(game.gameState == Game.STATE.Player2)
+				{
+					objectWorkerP2.get(drawLocWorker1.get(1)).setX(select.mxH - game.TILE_DIM/2);
+					objectWorkerP2.get(drawLocWorker1.get(1)).setY(select.myH - game.TILE_DIM/2);
+				}
+				else if(game.gameState == Game.STATE.Player3)
+				{
+					objectWorkerP3.get(drawLocWorker1.get(1)).setX(select.mxH - game.TILE_DIM/2);
+					objectWorkerP3.get(drawLocWorker1.get(1)).setY(select.myH - game.TILE_DIM/2);
+				}
+				else if(game.gameState == Game.STATE.Player4)
+				{
+					objectWorkerP4.get(drawLocWorker1.get(1)).setX(select.mxH - game.TILE_DIM/2);
+					objectWorkerP4.get(drawLocWorker1.get(1)).setY(select.myH - game.TILE_DIM/2);
+				}
+
+			}
+			else if(select.worker2Hold == true)
+			{
+				if(game.gameState == Game.STATE.Player1)
+				{
+					objectWorkerP1.get(drawLocWorker1.get(2)).setX(select.mxH - game.TILE_DIM/2);
+					objectWorkerP1.get(drawLocWorker1.get(2)).setY(select.myH - game.TILE_DIM/2);
+				}
+				else if(game.gameState == Game.STATE.Player2)
+				{
+					objectWorkerP2.get(drawLocWorker1.get(2)).setX(select.mxH - game.TILE_DIM/2);
+					objectWorkerP2.get(drawLocWorker1.get(2)).setY(select.myH - game.TILE_DIM/2);
+				}
+				else if(game.gameState == Game.STATE.Player3)
+				{
+					objectWorkerP3.get(drawLocWorker1.get(2)).setX(select.mxH - game.TILE_DIM/2);
+					objectWorkerP3.get(drawLocWorker1.get(2)).setY(select.myH - game.TILE_DIM/2);
+				}
+				else if(game.gameState == Game.STATE.Player4)
+				{
+					objectWorkerP4.get(drawLocWorker1.get(2)).setX(select.mxH - game.TILE_DIM/2);
+					objectWorkerP4.get(drawLocWorker1.get(2)).setY(select.myH - game.TILE_DIM/2);
+				}
+			}
+			else if(select.worker3Hold == true )
+			{
+				if(game.gameState == Game.STATE.Player1)
+				{
+					objectWorkerP1.get(drawLocWorker1.get(3)).setX(select.mxH - game.TILE_DIM/2);
+					objectWorkerP1.get(drawLocWorker1.get(3)).setY(select.myH - game.TILE_DIM/2);
+				}
+				else if(game.gameState == Game.STATE.Player2)
+				{
+					objectWorkerP2.get(drawLocWorker1.get(3)).setX(select.mxH - game.TILE_DIM/2);
+					objectWorkerP2.get(drawLocWorker1.get(3)).setY(select.myH - game.TILE_DIM/2);
+				}
+				else if(game.gameState == Game.STATE.Player3)
+				{
+					objectWorkerP3.get(drawLocWorker1.get(3)).setX(select.mxH - game.TILE_DIM/2);
+					objectWorkerP3.get(drawLocWorker1.get(3)).setY(select.myH - game.TILE_DIM/2);
+				}
+				else if(game.gameState == Game.STATE.Player4)
+				{
+					objectWorkerP4.get(drawLocWorker1.get(3)).setX(select.mxH - game.TILE_DIM/2);
+					objectWorkerP4.get(drawLocWorker1.get(3)).setY(select.myH - game.TILE_DIM/2);
+				}
+			}
 		}
 		
-		if(select.mouseReleased == true)
+		if(game.typeState == Game.TYPESTATE.Jungle)
 		{
-	    if(placedWorker1 == false)
-	    {
-  			objectWorkerP1.get(drawLocWorker1.get(1)).setX(game.draw1WorkerLocX);
-  			objectWorkerP1.get(drawLocWorker1.get(1)).setY(game.draw1WorkerLocY);
-	    }
-	    if(placedWorker2 == false)
-	    {
-  			objectWorkerP1.get(drawLocWorker1.get(2)).setX(game.draw2WorkerLocX);
-  			objectWorkerP1.get(drawLocWorker1.get(2)).setY(game.draw2WorkerLocY);
-	    }
-	    if(placedWorker3 == false)
-	    {
-  			objectWorkerP1.get(drawLocWorker1.get(3)).setX(game.draw3WorkerLocX);
-  			objectWorkerP1.get(drawLocWorker1.get(3)).setY(game.draw3WorkerLocY);
-	    }
-	    select.mouseReleased = false;
+			//check if jungle tiles are left clicked and move to follow cursor if it is held
+			if(select.jungle1Hold == true)
+			{
+				objectJungle.get(drawLocJungle.get(1)).setX(select.mxH - game.TILE_DIM/2);
+				objectJungle.get(drawLocJungle.get(1)).setY(select.myH - game.TILE_DIM/2);
+			}
+			else if(select.jungle2Hold == true)
+			{
+				objectJungle.get(drawLocJungle.get(2)).setX(select.mxH - game.TILE_DIM/2);
+				objectJungle.get(drawLocJungle.get(2)).setY(select.myH - game.TILE_DIM/2);
+			}
 		}
-	}
+
+		
+		if(select.mouse1Released == true || select.mouse2Released == true || select.mouse3Released == true)
+		{
+			if(game.typeState == Game.TYPESTATE.Worker)
+			{
+				for(String coordinate: grid.validWorkerTileLoc)
+				{
+					//check if the released point is within the x-range of any valid worker tile location
+					if(select.mxR > ((int)(coordinate.charAt(0)) - 65) * game.TILE_DIM  && select.mxR < (((int)(coordinate.charAt(0)) - 65) * game.TILE_DIM) + game.TILE_DIM)
+					{
+						//check if the released point is within the y-range of any valid worker tile location
+						//you have to subtract an additional 1 sometimes because it will let you start at the correct location
+						if(select.myR > ((int)(coordinate.charAt(1)) - 48 - 1) * game.TILE_DIM  && select.myR < ((int)(coordinate.charAt(0)) - 48) * game.TILE_DIM + game.TILE_DIM)
+						{
+							int xStart = ((int)(coordinate.charAt(0)) - 65) * game.TILE_DIM;
+							int yStart = ((int)(coordinate.charAt(1)) - 48 - 1) * game.TILE_DIM;
+							
+							//if it is an acceptable square, place the correct object at the new location
+					    if(select.mouse1Released == true)
+					    {
+								//System.out.println("worker 1 returned");
+								if(game.gameState == Game.STATE.Player1)
+								{
+					  			objectWorkerP1.get(drawLocWorker1.get(1)).setX(xStart);
+					  			objectWorkerP1.get(drawLocWorker1.get(1)).setY(yStart);
+					  			placedWorker1 = true;
+								}
+								else if(game.gameState == Game.STATE.Player2)
+								{
+					  			objectWorkerP2.get(drawLocWorker1.get(1)).setX(xStart);
+					  			objectWorkerP2.get(drawLocWorker1.get(1)).setY(yStart);
+					  			placedWorker1 = true;
+								}
+								else if(game.gameState == Game.STATE.Player3)
+								{
+					  			objectWorkerP3.get(drawLocWorker1.get(1)).setX(xStart);
+					  			objectWorkerP3.get(drawLocWorker1.get(1)).setY(yStart);
+					  			placedWorker1 = true;
+								}
+								else if(game.gameState == Game.STATE.Player4)
+								{
+					  			objectWorkerP4.get(drawLocWorker1.get(1)).setX(xStart);
+					  			objectWorkerP4.get(drawLocWorker1.get(1)).setY(yStart);
+					  			placedWorker1 = true;
+								}
+					    }
+					    if(select.mouse2Released == true)
+					    {
+								//System.out.println("worker 2 returned");
+								if(game.gameState == Game.STATE.Player1)
+								{
+					  			objectWorkerP1.get(drawLocWorker1.get(2)).setX(xStart);
+					  			objectWorkerP1.get(drawLocWorker1.get(2)).setY(yStart);
+					  			placedWorker2 = true;
+								}
+								else if(game.gameState == Game.STATE.Player2)
+								{
+					  			objectWorkerP2.get(drawLocWorker1.get(2)).setX(xStart);
+					  			objectWorkerP2.get(drawLocWorker1.get(2)).setY(yStart);
+					  			placedWorker2 = true;
+								}
+								else if(game.gameState == Game.STATE.Player3)
+								{
+					  			objectWorkerP3.get(drawLocWorker1.get(2)).setX(xStart);
+					  			objectWorkerP3.get(drawLocWorker1.get(2)).setY(yStart);
+					  			placedWorker2 = true;
+								}
+								else if(game.gameState == Game.STATE.Player4)
+								{
+					  			objectWorkerP4.get(drawLocWorker1.get(2)).setX(xStart);
+					  			objectWorkerP4.get(drawLocWorker1.get(2)).setY(yStart);
+					  			placedWorker2 = true;
+								}
+
+					    }
+					    if(select.mouse3Released == true)
+					    {
+								//System.out.println("worker 3 returned");
+								if(game.gameState == Game.STATE.Player1)
+								{
+					  			objectWorkerP1.get(drawLocWorker1.get(3)).setX(xStart);
+					  			objectWorkerP1.get(drawLocWorker1.get(3)).setY(yStart);
+					  			placedWorker3 = true;
+								}
+								else if(game.gameState == Game.STATE.Player2)
+								{
+					  			objectWorkerP2.get(drawLocWorker1.get(3)).setX(xStart);
+					  			objectWorkerP2.get(drawLocWorker1.get(3)).setY(yStart);
+					  			placedWorker3 = true;
+								}
+								else if(game.gameState == Game.STATE.Player3)
+								{
+					  			objectWorkerP3.get(drawLocWorker1.get(3)).setX(xStart);
+					  			objectWorkerP3.get(drawLocWorker1.get(3)).setY(yStart);
+					  			placedWorker3 = true;
+								}
+								else if(game.gameState == Game.STATE.Player4)
+								{
+					  			objectWorkerP4.get(drawLocWorker1.get(3)).setX(xStart);
+					  			objectWorkerP4.get(drawLocWorker1.get(3)).setY(yStart);
+					  			placedWorker3 = true;
+								}
+
+					    }
+					    
+					    break;//break out if we have found the correct row and column that is acceptable
+						}
+						}
+					}
+
+				}
+				
+				
+				//return the worker tile back if it is not placed in the correct location
+		    if(placedWorker1 == false)
+		    {
+					//System.out.println("worker 1 returned");
+					if(game.gameState == Game.STATE.Player1)
+					{
+		  			objectWorkerP1.get(drawLocWorker1.get(1)).setX(game.draw1WorkerLocX);
+		  			objectWorkerP1.get(drawLocWorker1.get(1)).setY(game.draw1WorkerLocY);
+					}
+					else if(game.gameState == Game.STATE.Player2)
+					{
+		  			objectWorkerP2.get(drawLocWorker1.get(1)).setX(game.draw1WorkerLocX);
+		  			objectWorkerP2.get(drawLocWorker1.get(1)).setY(game.draw1WorkerLocY);
+					}
+					else if(game.gameState == Game.STATE.Player3)
+					{
+		  			objectWorkerP3.get(drawLocWorker1.get(1)).setX(game.draw1WorkerLocX);
+		  			objectWorkerP3.get(drawLocWorker1.get(1)).setY(game.draw1WorkerLocY);
+					}
+					else if(game.gameState == Game.STATE.Player4)
+					{
+		  			objectWorkerP4.get(drawLocWorker1.get(1)).setX(game.draw1WorkerLocX);
+		  			objectWorkerP4.get(drawLocWorker1.get(1)).setY(game.draw1WorkerLocY);
+					}
+		    }
+		    if(placedWorker2 == false)
+		    {
+					//System.out.println("worker 2 returned");
+					if(game.gameState == Game.STATE.Player1)
+					{
+		  			objectWorkerP1.get(drawLocWorker1.get(2)).setX(game.draw2WorkerLocX);
+		  			objectWorkerP1.get(drawLocWorker1.get(2)).setY(game.draw2WorkerLocY);
+					}
+					else if(game.gameState == Game.STATE.Player2)
+					{
+		  			objectWorkerP2.get(drawLocWorker1.get(2)).setX(game.draw2WorkerLocX);
+		  			objectWorkerP2.get(drawLocWorker1.get(2)).setY(game.draw2WorkerLocY);
+					}
+					else if(game.gameState == Game.STATE.Player3)
+					{
+		  			objectWorkerP3.get(drawLocWorker1.get(2)).setX(game.draw2WorkerLocX);
+		  			objectWorkerP3.get(drawLocWorker1.get(2)).setY(game.draw2WorkerLocY);
+					}
+					else if(game.gameState == Game.STATE.Player4)
+					{
+		  			objectWorkerP4.get(drawLocWorker1.get(2)).setX(game.draw2WorkerLocX);
+		  			objectWorkerP4.get(drawLocWorker1.get(2)).setY(game.draw2WorkerLocY);
+					}
+
+		    }
+		    if(placedWorker3 == false)
+		    {
+					//System.out.println("worker 3 returned");
+					if(game.gameState == Game.STATE.Player1)
+					{
+		  			objectWorkerP1.get(drawLocWorker1.get(3)).setX(game.draw3WorkerLocX);
+		  			objectWorkerP1.get(drawLocWorker1.get(3)).setY(game.draw3WorkerLocY);
+					}
+					else if(game.gameState == Game.STATE.Player2)
+					{
+		  			objectWorkerP2.get(drawLocWorker1.get(3)).setX(game.draw3WorkerLocX);
+		  			objectWorkerP2.get(drawLocWorker1.get(3)).setY(game.draw3WorkerLocY);
+					}
+					else if(game.gameState == Game.STATE.Player3)
+					{
+		  			objectWorkerP3.get(drawLocWorker1.get(3)).setX(game.draw3WorkerLocX);
+		  			objectWorkerP3.get(drawLocWorker1.get(3)).setY(game.draw3WorkerLocY);
+					}
+					else if(game.gameState == Game.STATE.Player4)
+					{
+		  			objectWorkerP4.get(drawLocWorker1.get(3)).setX(game.draw3WorkerLocX);
+		  			objectWorkerP4.get(drawLocWorker1.get(3)).setY(game.draw3WorkerLocY);
+					}
+
+		    }
+			}
+	    
+			if(game.typeState == Game.TYPESTATE.Jungle)
+			{
+		    if(placedJungle1 == false)
+		    {
+					System.out.println("jungle 1 returned");
+	  			objectJungle.get(drawLocJungle.get(1)).setX(game.draw1LocX);
+	  			objectJungle.get(drawLocJungle.get(1)).setY(game.draw1LocY);
+		    }
+		    if(placedJungle2 == false)
+		    {
+					System.out.println("jungle 2 returned");
+	  			objectJungle.get(drawLocJungle.get(2)).setX(game.draw2LocX);
+	  			objectJungle.get(drawLocJungle.get(2)).setY(game.draw2LocY);
+		    }
+			}
+			
+			select.mouseReleased = false;
+	    select.mouse1Released = false;
+	    select.mouse2Released = false;
+	    select.mouse3Released = false;
+		}
+	//}
 	
 	public void render(Graphics g, Game game)
 	{
@@ -733,17 +1000,7 @@ public class Handler extends MouseAdapter
 	        //complete the action to prevent indefinite spinning/rotating of the tile
 	        select.worker3ActionComplete = true;
 				}
-				/*
-				//Performing translations
-				
-				if(select.worker1Hold == true && select.worker1HoldComplete == false)
-				{
-					//increment the rotation counter to determine which rotation sprite to be loaded
-	        handler.objectWorkerP1.get(handler.drawLocWorker1.get(1)).incrementRotation();
-	        //complete the action to prevent indefinite spinning/rotating of the tile
-	        select.worker1HoldComplete = true;
-				}
-				*/
+
 			}
 			else if(game.gameState == Game.STATE.Player2)
 			{
@@ -825,86 +1082,5 @@ public class Handler extends MouseAdapter
 			}
 		}
 	}
-	
-	//chooses the image to rotate
-	public void chooseImageTranslate(Game game, Handler handler, Select select)
-	{
-		//select the worker tiles to translate
-		if(game.typeState == Game.TYPESTATE.Worker && game.turnState == Game.TURNSTATE.Move)
-		{
-			if(game.gameState == Game.STATE.Player1)
-			{
-				//Performing rotations
-				
-				if(select.worker1Clicked == true && select.worker1ActionComplete == false)
-				{
-					//set so that the worker tile doesn't move when you don't click and hold on it
-					//handler.objectWorkerP1.get(handler.drawLocWorker1.get(1)).setWorker1Hold(true);
-					//handler.objectWorkerP1.get(handler.drawLocWorker1.get(1)).setWorker1HoldComplete(false);
-				}
-				else if(select.worker2Clicked == true && select.worker2ActionComplete == false)
-				{
-
-				}
-				else if(select.worker3Clicked == true && select.worker3ActionComplete == false)
-				{
-
-				}
-			}
-			else if(game.gameState == Game.STATE.Player2)
-			{
-				//Performing rotations
-				
-				if(select.worker1Clicked == true && select.worker1ActionComplete == false)
-				{
-
-				}
-				else if(select.worker2Clicked == true && select.worker2ActionComplete == false)
-				{
-
-				}
-				else if(select.worker3Clicked == true && select.worker3ActionComplete == false)
-				{
-
-				}
-			}
-			else if(game.gameState == Game.STATE.Player3)
-			{
-				//Performing rotations
-				
-				if(select.worker1Clicked == true && select.worker1ActionComplete == false)
-				{
-
-				}
-				else if(select.worker2Clicked == true && select.worker2ActionComplete == false)
-				{
-
-				}
-				else if(select.worker3Clicked == true && select.worker3ActionComplete == false)
-				{
-
-				}
-			}
-			else if(game.gameState == Game.STATE.Player4)
-			{
-				//Performing rotations
-				
-				if(select.worker1Clicked == true && select.worker1ActionComplete == false)
-				{
-
-				}
-				else if(select.worker2Clicked == true && select.worker2ActionComplete == false)
-				{
-
-				}
-				else if(select.worker3Clicked == true && select.worker3ActionComplete == false)
-				{
-
-				}
-			}
-		}
-	}
-
-	
 	
 }

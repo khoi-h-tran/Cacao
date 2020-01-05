@@ -40,6 +40,12 @@ public class Game extends Canvas implements Runnable
 	//offset for each ressource icon
 	protected final int iconOffset = 40;
 	
+	//total turn counter
+	private int turnCounter = 0;
+	
+	//player turn tracker
+	private int playerTracker = 0;
+	
 	//creating instance of thread class
 	private Thread thread;
 	
@@ -81,7 +87,7 @@ public class Game extends Canvas implements Runnable
 	// 0 means no state
 	// 1 means jungle type was employed and you need to clear the list for worker tiles
 	// 2 means worker type was employed and you need to clear the list for jungle tiles
-	public int jungleState = 0;
+	public int tileState = 0;
 	
 	//create states for the game
 	public enum STATE {Player1, Player2, Player3, Player4, Select, Play, Pause, End};
@@ -168,6 +174,43 @@ public class Game extends Canvas implements Runnable
 		this.addMouseMotionListener(select);
 	}
 	
+	//alternate through turns
+	/*
+	1. Initialize game
+	2. Player 1
+		- Worker Tile
+		- Jungle Tile(s)
+		- Draw
+	3. Repeat with all other players until game over
+	*/
+	public void turnRotation()
+	{
+		if(turnCounter == 0 && numPlayers > 0)
+		{
+			initGame();
+			incrementTurn();
+		}
+		if(playerTracker == 1)
+		{
+			gameState = STATE.Player1;
+			typeState = TYPESTATE.Worker;
+			turnState = TURNSTATE.Move;
+		}
+	}
+	
+	public void incrementTurn()
+	{
+		turnCounter++;
+		if(playerTracker <= 4)
+		{
+			playerTracker++;
+		}
+		else if(playerTracker == 5)
+		{
+			playerTracker = 1;
+		}
+	}
+	
 	//initialize the game
 	public void initGame()
 	{
@@ -195,6 +238,7 @@ public class Game extends Canvas implements Runnable
 			
 			//creating a score card for each player
 			handler.addObject("Player" + String.valueOf(i), new playerScore(), ID.ScoreCard, idplayer);
+			
 			if(idplayer == IDPlayer.Player1)
 			{
 				handler.popScoresToZero(handler.scoreCountP1);
@@ -478,16 +522,16 @@ public class Game extends Canvas implements Runnable
 		//shuffles the jungle deck
 		handler.shuffleDeck(handler.deckKeysJungle);
 		
-		//shuffles the worker deck
+		//shuffles the worker decks for all players
 		handler.shuffleDeck(handler.deckKeysWorkerP1);
 		handler.shuffleDeck(handler.deckKeysWorkerP2);
 		handler.shuffleDeck(handler.deckKeysWorkerP3);
 		handler.shuffleDeck(handler.deckKeysWorkerP4);
 	
+		typeState = TYPESTATE.Jungle;
 		gameState = STATE.Play;
 		turnState = TURNSTATE.Draw;
-		typeState = TYPESTATE.Jungle;
-		
+
 		handler.endTurnTrue(this);
 		handler.drawJungleTrue(this);
 		//handler.drawWorkerTrue(this);
@@ -539,7 +583,7 @@ public class Game extends Canvas implements Runnable
 		}
 	
 		turnState = TURNSTATE.Move;
-		typeState = TYPESTATE.Worker;
+		typeState = TYPESTATE.Jungle;
 		
 		//typeState = TYPESTATE.Worker;
 		gameState = STATE.Player1;
@@ -684,12 +728,12 @@ public class Game extends Canvas implements Runnable
 		if(gameState == STATE.Player1 || gameState == STATE.Player2 || gameState == STATE.Player3 || gameState == STATE.Player4)
 		{
 			grid.tick(this);
-			handler.tick(this, select);
+			handler.tick(this, select, grid);
 		}
 
 		select.tick();
 
-		
+		turnRotation();
 	}
 	
 	//this code is basically the graphics creator
