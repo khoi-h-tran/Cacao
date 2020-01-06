@@ -263,7 +263,7 @@ public class Handler extends MouseAdapter
 		}
 
 		
-		if(select.mouse1Released == true || select.mouse2Released == true || select.mouse3Released == true)
+		if(select.mouse1Released == true || select.mouse2Released == true || select.mouse3Released == true || select.mouseJungle1Released == true || select.mouseJungle2Released == true)
 		{
 			if(game.typeState == Game.TYPESTATE.Worker)
 			{
@@ -278,6 +278,10 @@ public class Handler extends MouseAdapter
 						{
 							int xStart = ((int)(coordinate.charAt(0)) - 65) * game.TILE_DIM;
 							int yStart = ((int)(coordinate.charAt(1)) - 48 - 1) * game.TILE_DIM;
+							
+							String newGridUsed = String.valueOf((char)((int)(coordinate.charAt(0)))) + String.valueOf(((int)(coordinate.charAt(1)) - 48));
+							
+							grid.gridUsed.replace(newGridUsed, 2);
 							
 							//if it is an acceptable square, place the correct object at the new location
 					    if(select.mouse1Released == true)
@@ -487,13 +491,13 @@ public class Handler extends MouseAdapter
 						}
 					}
 			
-			    if(placedJungle1 == false)
+			    if(placedJungle1 == false && select.mouseJungle1Released == true)
 			    {
 						System.out.println("jungle 1 returned");
 		  			objectJungle.get(drawLocJungle.get(1)).setX(game.draw1LocX);
 		  			objectJungle.get(drawLocJungle.get(1)).setY(game.draw1LocY);
 			    }
-			    if(placedJungle2 == false)
+			    if(placedJungle2 == false && select.mouseJungle2Released == true)
 			    {
 						System.out.println("jungle 2 returned");
 		  			objectJungle.get(drawLocJungle.get(2)).setX(game.draw2LocX);

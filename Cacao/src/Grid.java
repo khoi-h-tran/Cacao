@@ -66,8 +66,6 @@ public class Grid
 		//indicate that these 2 cells are used, as that is how the game starts
 		gridUsed.replace("D4", 1);
 		gridUsed.replace("E5", 1);
-		//******************DELLETE********************************TEMPORARY*******************
-		gridUsed.replace("F5", 2);
 		//prints out grid coordinates
 		//used for debugging
 		/*
@@ -180,12 +178,10 @@ public class Grid
 			//indicate that the worker tiles were used at least once
 			game.tileState = 2;
 			//Get the list of keys whose value indicates the grid is being used (indicated by value = 2), 2 meaning worker tiles
-			/*
 			listOfKeys = getAllKeysForValue(gridUsed, 2);
 			
 			//get the hash map of all keys with column and row indicator separated
 			yellowCoords = tileUsedCoordSplit(listOfKeys, yellowCoords);
-			*/
 		}
 	}
 	
@@ -211,14 +207,29 @@ public class Grid
 				for (HashMap.Entry<Integer, Integer> entry : yellowCoords.entrySet()) 
 				{
 					//For each grid which is identified as used (e.g. E4)
-					//check if in row E, if there is a column that is one above or one below 4. This is a potential option to place your next tile (i.e. adjacent to your tiles)
-					//check if in column 4, if there is a row = C or F, which is one above or below 4.This is a potential option to place your next tile (i.e. adjacent to your tiles)
+					//check if in column E, if there is a row that is one above or one below 4. This is a potential option to place your next tile (i.e. adjacent to your tiles)
+					//check if in row 4, if there is a column = C or F, which is one above or below 4.This is a potential option to place your next tile (i.e. adjacent to your tiles)
 					//if it is above or below the already placed tiles, indicate it should be yellow
 					
 					//add 1 for i, because the for loop starts at 0, but our numbers start at 1
 					//goes to each square, and flags as yellow if it checks above and below or left side and right side and finds a grid that is used
-			    if(((i+1) == entry.getKey() && ((j+1) == entry.getValue() - 1 || (j+1) == entry.getValue() +1)) || ((j+1) == entry.getKey() && ((i+1) == entry.getValue() - 1 || (i+1) == entry.getValue() +1)))
+					
+		    	//System.out.print((char)(entry.getKey() + 64));
+		    	//System.out.println(entry.getValue());
+					
+		    	//System.out.print("key " + entry.getKey() + j);
+		    	//System.out.println("value " + entry.getValue() + i);
+		    	
+		    	//how logic works
+		    	//all the(i+1) or (j+1) are just because the for loops start at 0, but the column values start at 1 or A.
+		    	//check if the row matches the row of a grid square that is used
+		    	//if yes, check if it's value is either 1 above or below that used grid
+		    	//if yes, fill it in yellow
+		    	//vice versa for the columns
+			    if( ( ((i+1) == entry.getValue()) && ((j+1) == entry.getKey() - 1 || (j+1) == entry.getKey() +1) ) || ((j+1) == entry.getKey() && ((i+1) == entry.getValue() - 1 || (i+1) == entry.getValue() +1)) )
 			    {
+			    	System.out.print("key " + entry.getKey() + " column " + (j+1));
+			    	System.out.println(" value " + entry.getValue() + " row " +  (i+1));
 			    	colorYellow = true;
 			    }
 				}
@@ -226,19 +237,25 @@ public class Grid
 				//if it is a potential place to put the tile, color the box yellow
 				if(colorYellow == true)
 				{
-					g.setColor(Color.yellow);
-					g.fillRect((game.TILE_DIM*i), (game.TILE_DIM*j), game.TILE_DIM, game.TILE_DIM);
 					
+					g.setColor(Color.yellow);
+					g.fillRect((game.TILE_DIM*j), (game.TILE_DIM*i), game.TILE_DIM, game.TILE_DIM);
+
 					//if it is the worker turn, state which worker tiles could be used
 					if(game.typeState == Game.TYPESTATE.Worker)
 					{
 						validWorkerTileLoc.add(String.valueOf((char)(i + 65)) + String.valueOf(j + 1));
+						//System.out.print(String.valueOf((char)(i + 65)));
+						//System.out.println(String.valueOf(j + 1));
 					}
 					
 					//if it is the jungle turn, state which worker tiles could be used
 					if(game.typeState == Game.TYPESTATE.Jungle)
 					{
+						
 						validJungleTileLoc.add(String.valueOf((char)(i+65)) + String.valueOf(j + 1));
+						//System.out.print(String.valueOf((char)(i + 65)));
+						//System.out.println(String.valueOf(j + 1));
 					}
 					
 				}
