@@ -91,6 +91,9 @@ public class Handler extends MouseAdapter
 	HashMap<String, GameObject>  ressourceP3 = new HashMap<String, GameObject>();
 	HashMap<String, GameObject>  ressourceP4 = new HashMap<String, GameObject>();
 
+	//create a hash map for all the worker tiles in play (so that it renders regardsless of which player's turn it is)
+	ArrayList<GameObject> workerTilesInPlay = new ArrayList<GameObject>();
+	
 	/*
 	Cacao(),//total: 20
 	SunToken(),//total: 12
@@ -184,18 +187,18 @@ public class Handler extends MouseAdapter
 				}
 				else if(game.gameState == Game.STATE.Player2)
 				{
-					objectWorkerP2.get(drawLocWorker1.get(1)).setX(select.mxH - game.TILE_DIM/2);
-					objectWorkerP2.get(drawLocWorker1.get(1)).setY(select.myH - game.TILE_DIM/2);
+					objectWorkerP2.get(drawLocWorker2.get(1)).setX(select.mxH - game.TILE_DIM/2);
+					objectWorkerP2.get(drawLocWorker2.get(1)).setY(select.myH - game.TILE_DIM/2);
 				}
 				else if(game.gameState == Game.STATE.Player3)
 				{
-					objectWorkerP3.get(drawLocWorker1.get(1)).setX(select.mxH - game.TILE_DIM/2);
-					objectWorkerP3.get(drawLocWorker1.get(1)).setY(select.myH - game.TILE_DIM/2);
+					objectWorkerP3.get(drawLocWorker3.get(1)).setX(select.mxH - game.TILE_DIM/2);
+					objectWorkerP3.get(drawLocWorker3.get(1)).setY(select.myH - game.TILE_DIM/2);
 				}
 				else if(game.gameState == Game.STATE.Player4)
 				{
-					objectWorkerP4.get(drawLocWorker1.get(1)).setX(select.mxH - game.TILE_DIM/2);
-					objectWorkerP4.get(drawLocWorker1.get(1)).setY(select.myH - game.TILE_DIM/2);
+					objectWorkerP4.get(drawLocWorker4.get(1)).setX(select.mxH - game.TILE_DIM/2);
+					objectWorkerP4.get(drawLocWorker4.get(1)).setY(select.myH - game.TILE_DIM/2);
 				}
 
 			}
@@ -208,18 +211,18 @@ public class Handler extends MouseAdapter
 				}
 				else if(game.gameState == Game.STATE.Player2)
 				{
-					objectWorkerP2.get(drawLocWorker1.get(2)).setX(select.mxH - game.TILE_DIM/2);
-					objectWorkerP2.get(drawLocWorker1.get(2)).setY(select.myH - game.TILE_DIM/2);
+					objectWorkerP2.get(drawLocWorker2.get(2)).setX(select.mxH - game.TILE_DIM/2);
+					objectWorkerP2.get(drawLocWorker2.get(2)).setY(select.myH - game.TILE_DIM/2);
 				}
 				else if(game.gameState == Game.STATE.Player3)
 				{
-					objectWorkerP3.get(drawLocWorker1.get(2)).setX(select.mxH - game.TILE_DIM/2);
-					objectWorkerP3.get(drawLocWorker1.get(2)).setY(select.myH - game.TILE_DIM/2);
+					objectWorkerP3.get(drawLocWorker3.get(2)).setX(select.mxH - game.TILE_DIM/2);
+					objectWorkerP3.get(drawLocWorker3.get(2)).setY(select.myH - game.TILE_DIM/2);
 				}
 				else if(game.gameState == Game.STATE.Player4)
 				{
-					objectWorkerP4.get(drawLocWorker1.get(2)).setX(select.mxH - game.TILE_DIM/2);
-					objectWorkerP4.get(drawLocWorker1.get(2)).setY(select.myH - game.TILE_DIM/2);
+					objectWorkerP4.get(drawLocWorker4.get(2)).setX(select.mxH - game.TILE_DIM/2);
+					objectWorkerP4.get(drawLocWorker4.get(2)).setY(select.myH - game.TILE_DIM/2);
 				}
 			}
 			else if(select.worker3Hold == true )
@@ -231,18 +234,18 @@ public class Handler extends MouseAdapter
 				}
 				else if(game.gameState == Game.STATE.Player2)
 				{
-					objectWorkerP2.get(drawLocWorker1.get(3)).setX(select.mxH - game.TILE_DIM/2);
-					objectWorkerP2.get(drawLocWorker1.get(3)).setY(select.myH - game.TILE_DIM/2);
+					objectWorkerP2.get(drawLocWorker2.get(3)).setX(select.mxH - game.TILE_DIM/2);
+					objectWorkerP2.get(drawLocWorker2.get(3)).setY(select.myH - game.TILE_DIM/2);
 				}
 				else if(game.gameState == Game.STATE.Player3)
 				{
-					objectWorkerP3.get(drawLocWorker1.get(3)).setX(select.mxH - game.TILE_DIM/2);
-					objectWorkerP3.get(drawLocWorker1.get(3)).setY(select.myH - game.TILE_DIM/2);
+					objectWorkerP3.get(drawLocWorker3.get(3)).setX(select.mxH - game.TILE_DIM/2);
+					objectWorkerP3.get(drawLocWorker3.get(3)).setY(select.myH - game.TILE_DIM/2);
 				}
 				else if(game.gameState == Game.STATE.Player4)
 				{
-					objectWorkerP4.get(drawLocWorker1.get(3)).setX(select.mxH - game.TILE_DIM/2);
-					objectWorkerP4.get(drawLocWorker1.get(3)).setY(select.myH - game.TILE_DIM/2);
+					objectWorkerP4.get(drawLocWorker4.get(3)).setX(select.mxH - game.TILE_DIM/2);
+					objectWorkerP4.get(drawLocWorker4.get(3)).setY(select.myH - game.TILE_DIM/2);
 				}
 			}
 		}
@@ -279,8 +282,10 @@ public class Handler extends MouseAdapter
 							int xStart = ((int)(coordinate.charAt(0)) - 65) * game.TILE_DIM;
 							int yStart = ((int)(coordinate.charAt(1)) - 48 - 1) * game.TILE_DIM;
 							
+							//create a string to store the new coordinate/grid location that is used
 							String newGridUsed = String.valueOf((char)((int)(coordinate.charAt(0)))) + String.valueOf(((int)(coordinate.charAt(1)) - 48));
 							
+							//update the grid used hash map
 							grid.gridUsed.replace(newGridUsed, 2);
 							
 							//if it is an acceptable square, place the correct object at the new location
@@ -291,25 +296,41 @@ public class Handler extends MouseAdapter
 								{
 					  			objectWorkerP1.get(drawLocWorker1.get(1)).setX(xStart);
 					  			objectWorkerP1.get(drawLocWorker1.get(1)).setY(yStart);
+					  			workerTilesInPlay.add(objectWorkerP1.get(drawLocWorker1.get(1)));
+					  			//hashMapKeysWorkerP1.remove(drawLocWorker1.get(1));
+					  			//objectWorkerP1.remove(drawLocWorker1.get(1));
 					  			placedWorker1 = true;
+									game.drawWorker1 = true;
 								}
 								else if(game.gameState == Game.STATE.Player2)
 								{
-					  			objectWorkerP2.get(drawLocWorker1.get(1)).setX(xStart);
-					  			objectWorkerP2.get(drawLocWorker1.get(1)).setY(yStart);
+					  			objectWorkerP2.get(drawLocWorker2.get(1)).setX(xStart);
+					  			objectWorkerP2.get(drawLocWorker2.get(1)).setY(yStart);
+					  			workerTilesInPlay.add(objectWorkerP2.get(drawLocWorker2.get(1)));
+					  			//hashMapKeysWorkerP2.remove(drawLocWorker2.get(1));
+					  			//objectWorkerP2.remove(drawLocWorker2.get(1));
 					  			placedWorker1 = true;
+									game.drawWorker1 = true;
 								}
 								else if(game.gameState == Game.STATE.Player3)
 								{
-					  			objectWorkerP3.get(drawLocWorker1.get(1)).setX(xStart);
-					  			objectWorkerP3.get(drawLocWorker1.get(1)).setY(yStart);
+					  			objectWorkerP3.get(drawLocWorker3.get(1)).setX(xStart);
+					  			objectWorkerP3.get(drawLocWorker3.get(1)).setY(yStart);
+					  			workerTilesInPlay.add(objectWorkerP3.get(drawLocWorker3.get(1)));
+					  			//hashMapKeysWorkerP3.remove(drawLocWorker3.get(1));
+					  			//objectWorkerP3.remove(drawLocWorker3.get(1));
 					  			placedWorker1 = true;
+									game.drawWorker1 = true;
 								}
 								else if(game.gameState == Game.STATE.Player4)
 								{
-					  			objectWorkerP4.get(drawLocWorker1.get(1)).setX(xStart);
-					  			objectWorkerP4.get(drawLocWorker1.get(1)).setY(yStart);
+					  			objectWorkerP4.get(drawLocWorker4.get(1)).setX(xStart);
+					  			objectWorkerP4.get(drawLocWorker4.get(1)).setY(yStart);
+					  			workerTilesInPlay.add(objectWorkerP4.get(drawLocWorker4.get(1)));
+					  			//hashMapKeysWorkerP4.remove(drawLocWorker4.get(1));
+					  			//objectWorkerP4.remove(drawLocWorker4.get(1));
 					  			placedWorker1 = true;
+									game.drawWorker1 = true;
 								}
 					    }
 					    if(select.mouse2Released == true)
@@ -319,25 +340,41 @@ public class Handler extends MouseAdapter
 								{
 					  			objectWorkerP1.get(drawLocWorker1.get(2)).setX(xStart);
 					  			objectWorkerP1.get(drawLocWorker1.get(2)).setY(yStart);
+					  			workerTilesInPlay.add(objectWorkerP1.get(drawLocWorker1.get(2)));
+					  			//hashMapKeysWorkerP1.remove(drawLocWorker1.get(2));
+					  			//objectWorkerP1.remove(drawLocWorker1.get(2));
 					  			placedWorker2 = true;
+									game.drawWorker2 = true;
 								}
 								else if(game.gameState == Game.STATE.Player2)
 								{
-					  			objectWorkerP2.get(drawLocWorker1.get(2)).setX(xStart);
-					  			objectWorkerP2.get(drawLocWorker1.get(2)).setY(yStart);
+					  			objectWorkerP2.get(drawLocWorker2.get(2)).setX(xStart);
+					  			objectWorkerP2.get(drawLocWorker2.get(2)).setY(yStart);
+					  			workerTilesInPlay.add(objectWorkerP2.get(drawLocWorker2.get(2)));
+					  			//hashMapKeysWorkerP2.remove(drawLocWorker2.get(2));
+					  			//objectWorkerP2.remove(drawLocWorker2.get(2));
 					  			placedWorker2 = true;
+									game.drawWorker2 = true;
 								}
 								else if(game.gameState == Game.STATE.Player3)
 								{
-					  			objectWorkerP3.get(drawLocWorker1.get(2)).setX(xStart);
-					  			objectWorkerP3.get(drawLocWorker1.get(2)).setY(yStart);
+					  			objectWorkerP3.get(drawLocWorker3.get(2)).setX(xStart);
+					  			objectWorkerP3.get(drawLocWorker3.get(2)).setY(yStart);
+					  			workerTilesInPlay.add(objectWorkerP3.get(drawLocWorker3.get(2)));
+					  			//hashMapKeysWorkerP3.remove(drawLocWorker3.get(2));
+					  			//objectWorkerP3.remove(drawLocWorker3.get(2));
 					  			placedWorker2 = true;
+									game.drawWorker2 = true;
 								}
 								else if(game.gameState == Game.STATE.Player4)
 								{
-					  			objectWorkerP4.get(drawLocWorker1.get(2)).setX(xStart);
-					  			objectWorkerP4.get(drawLocWorker1.get(2)).setY(yStart);
+					  			objectWorkerP4.get(drawLocWorker4.get(2)).setX(xStart);
+					  			objectWorkerP4.get(drawLocWorker4.get(2)).setY(yStart);
+					  			workerTilesInPlay.add(objectWorkerP4.get(drawLocWorker4.get(2)));
+					  			//hashMapKeysWorkerP4.remove(drawLocWorker4.get(2));
+					  			//objectWorkerP4.remove(drawLocWorker4.get(2));
 					  			placedWorker2 = true;
+									game.drawWorker2 = true;
 								}
 
 					    }
@@ -348,25 +385,41 @@ public class Handler extends MouseAdapter
 								{
 					  			objectWorkerP1.get(drawLocWorker1.get(3)).setX(xStart);
 					  			objectWorkerP1.get(drawLocWorker1.get(3)).setY(yStart);
+					  			workerTilesInPlay.add(objectWorkerP1.get(drawLocWorker1.get(3)));
+					  			//hashMapKeysWorkerP1.remove(drawLocWorker1.get(3));
+					  			//objectWorkerP1.remove(drawLocWorker1.get(3));
 					  			placedWorker3 = true;
+									game.drawWorker3 = true;
 								}
 								else if(game.gameState == Game.STATE.Player2)
 								{
-					  			objectWorkerP2.get(drawLocWorker1.get(3)).setX(xStart);
-					  			objectWorkerP2.get(drawLocWorker1.get(3)).setY(yStart);
+					  			objectWorkerP2.get(drawLocWorker2.get(3)).setX(xStart);
+					  			objectWorkerP2.get(drawLocWorker2.get(3)).setY(yStart);
+					  			workerTilesInPlay.add(objectWorkerP2.get(drawLocWorker2.get(3)));
+					  			//hashMapKeysWorkerP2.remove(drawLocWorker2.get(3));
+					  			//objectWorkerP2.remove(drawLocWorker2.get(3));
 					  			placedWorker3 = true;
+									game.drawWorker3 = true;
 								}
 								else if(game.gameState == Game.STATE.Player3)
 								{
-					  			objectWorkerP3.get(drawLocWorker1.get(3)).setX(xStart);
-					  			objectWorkerP3.get(drawLocWorker1.get(3)).setY(yStart);
+					  			objectWorkerP3.get(drawLocWorker3.get(3)).setX(xStart);
+					  			objectWorkerP3.get(drawLocWorker3.get(3)).setY(yStart);
+					  			workerTilesInPlay.add(objectWorkerP3.get(drawLocWorker3.get(3)));
+					  			//hashMapKeysWorkerP3.remove(drawLocWorker3.get(3));
+					  			//objectWorkerP3.remove(drawLocWorker3.get(3));
 					  			placedWorker3 = true;
+									game.drawWorker3 = true;
 								}
 								else if(game.gameState == Game.STATE.Player4)
 								{
-					  			objectWorkerP4.get(drawLocWorker1.get(3)).setX(xStart);
-					  			objectWorkerP4.get(drawLocWorker1.get(3)).setY(yStart);
+					  			objectWorkerP4.get(drawLocWorker4.get(3)).setX(xStart);
+					  			objectWorkerP4.get(drawLocWorker4.get(3)).setY(yStart);
+					  			workerTilesInPlay.add(objectWorkerP4.get(drawLocWorker4.get(3)));
+					  			//hashMapKeysWorkerP4.remove(drawLocWorker4.get(3));
+					  			//objectWorkerP4.remove(drawLocWorker4.get(3));
 					  			placedWorker3 = true;
+									game.drawWorker3 = true;
 								}
 
 					    }
@@ -390,18 +443,18 @@ public class Handler extends MouseAdapter
 					}
 					else if(game.gameState == Game.STATE.Player2)
 					{
-		  			objectWorkerP2.get(drawLocWorker1.get(1)).setX(game.draw1WorkerLocX);
-		  			objectWorkerP2.get(drawLocWorker1.get(1)).setY(game.draw1WorkerLocY);
+		  			objectWorkerP2.get(drawLocWorker2.get(1)).setX(game.draw1WorkerLocX);
+		  			objectWorkerP2.get(drawLocWorker2.get(1)).setY(game.draw1WorkerLocY);
 					}
 					else if(game.gameState == Game.STATE.Player3)
 					{
-		  			objectWorkerP3.get(drawLocWorker1.get(1)).setX(game.draw1WorkerLocX);
-		  			objectWorkerP3.get(drawLocWorker1.get(1)).setY(game.draw1WorkerLocY);
+		  			objectWorkerP3.get(drawLocWorker3.get(1)).setX(game.draw1WorkerLocX);
+		  			objectWorkerP3.get(drawLocWorker3.get(1)).setY(game.draw1WorkerLocY);
 					}
 					else if(game.gameState == Game.STATE.Player4)
 					{
-		  			objectWorkerP4.get(drawLocWorker1.get(1)).setX(game.draw1WorkerLocX);
-		  			objectWorkerP4.get(drawLocWorker1.get(1)).setY(game.draw1WorkerLocY);
+		  			objectWorkerP4.get(drawLocWorker4.get(1)).setX(game.draw1WorkerLocX);
+		  			objectWorkerP4.get(drawLocWorker4.get(1)).setY(game.draw1WorkerLocY);
 					}
 		    }
 		    if(placedWorker2 == false)
@@ -414,18 +467,18 @@ public class Handler extends MouseAdapter
 					}
 					else if(game.gameState == Game.STATE.Player2)
 					{
-		  			objectWorkerP2.get(drawLocWorker1.get(2)).setX(game.draw2WorkerLocX);
-		  			objectWorkerP2.get(drawLocWorker1.get(2)).setY(game.draw2WorkerLocY);
+		  			objectWorkerP2.get(drawLocWorker2.get(2)).setX(game.draw2WorkerLocX);
+		  			objectWorkerP2.get(drawLocWorker2.get(2)).setY(game.draw2WorkerLocY);
 					}
 					else if(game.gameState == Game.STATE.Player3)
 					{
-		  			objectWorkerP3.get(drawLocWorker1.get(2)).setX(game.draw2WorkerLocX);
-		  			objectWorkerP3.get(drawLocWorker1.get(2)).setY(game.draw2WorkerLocY);
+		  			objectWorkerP3.get(drawLocWorker3.get(2)).setX(game.draw2WorkerLocX);
+		  			objectWorkerP3.get(drawLocWorker3.get(2)).setY(game.draw2WorkerLocY);
 					}
 					else if(game.gameState == Game.STATE.Player4)
 					{
-		  			objectWorkerP4.get(drawLocWorker1.get(2)).setX(game.draw2WorkerLocX);
-		  			objectWorkerP4.get(drawLocWorker1.get(2)).setY(game.draw2WorkerLocY);
+		  			objectWorkerP4.get(drawLocWorker4.get(2)).setX(game.draw2WorkerLocX);
+		  			objectWorkerP4.get(drawLocWorker4.get(2)).setY(game.draw2WorkerLocY);
 					}
 
 		    }
@@ -439,18 +492,18 @@ public class Handler extends MouseAdapter
 					}
 					else if(game.gameState == Game.STATE.Player2)
 					{
-		  			objectWorkerP2.get(drawLocWorker1.get(3)).setX(game.draw3WorkerLocX);
-		  			objectWorkerP2.get(drawLocWorker1.get(3)).setY(game.draw3WorkerLocY);
+		  			objectWorkerP2.get(drawLocWorker2.get(3)).setX(game.draw3WorkerLocX);
+		  			objectWorkerP2.get(drawLocWorker2.get(3)).setY(game.draw3WorkerLocY);
 					}
 					else if(game.gameState == Game.STATE.Player3)
 					{
-		  			objectWorkerP3.get(drawLocWorker1.get(3)).setX(game.draw3WorkerLocX);
-		  			objectWorkerP3.get(drawLocWorker1.get(3)).setY(game.draw3WorkerLocY);
+		  			objectWorkerP3.get(drawLocWorker3.get(3)).setX(game.draw3WorkerLocX);
+		  			objectWorkerP3.get(drawLocWorker3.get(3)).setY(game.draw3WorkerLocY);
 					}
 					else if(game.gameState == Game.STATE.Player4)
 					{
-		  			objectWorkerP4.get(drawLocWorker1.get(3)).setX(game.draw3WorkerLocX);
-		  			objectWorkerP4.get(drawLocWorker1.get(3)).setY(game.draw3WorkerLocY);
+		  			objectWorkerP4.get(drawLocWorker4.get(3)).setX(game.draw3WorkerLocX);
+		  			objectWorkerP4.get(drawLocWorker4.get(3)).setY(game.draw3WorkerLocY);
 					}
 
 		    }
@@ -459,36 +512,55 @@ public class Handler extends MouseAdapter
 				{
 					for(String coordinate: grid.validJungleTileLoc)
 					{
+						System.out.println("xstart " + ((int)(coordinate.charAt(0)) - 65) * game.TILE_DIM);
+						System.out.println("mxR " + select.mxR);
+						System.out.println("xend " + (((int)(coordinate.charAt(0)) - 65) * game.TILE_DIM + game.TILE_DIM));
+
+						System.out.println("ystart " + ((int)(coordinate.charAt(1)) - 48 - 1) * game.TILE_DIM);
+						System.out.println("myR " + select.myR);
+						System.out.println("yend " + (((int)(coordinate.charAt(1)) - 48 - 1) * game.TILE_DIM + game.TILE_DIM));
+						
 						//check if the released point is within the x-range of any valid worker tile location
 						if(select.mxR > ((int)(coordinate.charAt(0)) - 65) * game.TILE_DIM  && select.mxR < (((int)(coordinate.charAt(0)) - 65) * game.TILE_DIM) + game.TILE_DIM)
 						{
+							//System.out.println("correct row: " + String.valueOf(coordinate.charAt(0) - 65));
 							//check if the released point is within the y-range of any valid worker tile location
 							//you have to subtract an additional 1 sometimes because it will let you start at the correct location
 							if(select.myR > ((int)(coordinate.charAt(1)) - 48 - 1) * game.TILE_DIM  && select.myR < ((int)(coordinate.charAt(1)) - 48 - 1) * game.TILE_DIM + game.TILE_DIM)
 							{
+								//System.out.println("correct col: " + ((int)(coordinate.charAt(1)) - 48));
+								
+								System.out.println("mxR" + select.mxR);
+								System.out.println("myR" + select.myR);
+								
 								int xStart = ((int)(coordinate.charAt(0)) - 65) * game.TILE_DIM;
 								int yStart = ((int)(coordinate.charAt(1)) - 48 - 1) * game.TILE_DIM;
+								
+								String newGridUsed = String.valueOf((char)((int)(coordinate.charAt(0)))) + String.valueOf(((int)(coordinate.charAt(1)) - 48));
+								
+								grid.gridUsed.replace(newGridUsed, 1);
 								
 								//if it is an acceptable square, place the correct object at the new location
 						    if(select.mouseJungle1Released == true)
 						    {
 									//System.out.println("worker 1 returned");
-					  			objectJungle.get(drawLocWorker1.get(1)).setX(xStart);
-					  			objectJungle.get(drawLocWorker1.get(1)).setY(yStart);
+					  			objectJungle.get(drawLocJungle.get(1)).setX(xStart);
+					  			objectJungle.get(drawLocJungle.get(1)).setY(yStart);
 					  			placedJungle1 = true;
+									game.drawJungle1 = true;
 						    }
 						    if(select.mouseJungle2Released == true)
 						    {
 									//System.out.println("worker 2 returned");
-									objectJungle.get(drawLocWorker1.get(2)).setX(xStart);
-									objectJungle.get(drawLocWorker1.get(2)).setY(yStart);
+									objectJungle.get(drawLocJungle.get(2)).setX(xStart);
+									objectJungle.get(drawLocJungle.get(2)).setY(yStart);
 					  			placedJungle2 = true;
+									game.drawJungle2 = true;
 						    }
-						    
-						  }
-						    
 						    break;//break out if we have found the correct row and column that is acceptable
+						  }
 						}
+						
 					}
 			
 			    if(placedJungle1 == false && select.mouseJungle1Released == true)
@@ -512,7 +584,9 @@ public class Handler extends MouseAdapter
 		    select.mouse1Released = false;
 		    select.mouse2Released = false;
 		    select.mouse3Released = false;
-			}
+		    
+		    
+		}//end tick
 			
 
 		//}
@@ -577,6 +651,15 @@ public class Handler extends MouseAdapter
 					//this is an abstract class that is called in the player or tile classes
 					tempObject.render(g);
 				}
+			}
+			
+			//render all worker tiles in play regardless of player turn
+			for(int i = 0; i < workerTilesInPlay.size(); i++) 
+			{
+				GameObject tempObject = workerTilesInPlay.get(i);
+			
+				//this is an abstract class that is called in the player or tile classes
+				tempObject.render(g);
 			}
 			
 			//Render the resource icons

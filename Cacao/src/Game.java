@@ -41,10 +41,10 @@ public class Game extends Canvas implements Runnable
 	protected final int iconOffset = 40;
 	
 	//total turn counter
-	private int turnCounter = 0;
+	protected int turnCounter = 0;
 	
 	//player turn tracker
-	private int playerTracker = 0;
+	protected int playerTracker = 0;
 	
 	//creating instance of thread class
 	private Thread thread;
@@ -140,6 +140,7 @@ public class Game extends Canvas implements Runnable
 	//create variable to skip the jungle tiles on the board, when creating the deck
 	String remove1 = " ";
 	String remove2 = " ";
+	boolean nextPlayer = false;
 	
 	public int [] scoreScheme = {0,0,0,0};
 	
@@ -194,17 +195,220 @@ public class Game extends Canvas implements Runnable
 		{
 			if(handler.placedWorker1 != true && handler.placedWorker2 != true && handler.placedWorker3 != true )
 			{
+				nextPlayer = false;
 				gameState = STATE.Player1;
 				typeState = TYPESTATE.Worker;
 				turnState = TURNSTATE.Move;
 			}
-			else if(handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true )
+			else if((handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true) && turnState != TURNSTATE.Draw)
 			{
-				gameState = STATE.Player1;
 				typeState = TYPESTATE.Jungle;
+				if(grid.validJungleTile == true)
+				{
+					turnState = TURNSTATE.Move;
+				}
+				else if(grid.validJungleTile == false)
+				{
+					turnState = TURNSTATE.Draw;
+				}
+			}
+			else if(turnState == TURNSTATE.Draw && nextPlayer == false)
+			{				
+				gameState = STATE.Play;
+				handler.endTurnTrue(this);
+				handler.drawCard(this);
+
+				gameState = STATE.Player1;
+				typeState = TYPESTATE.Worker;
+				handler.endTurnTrue(this);
+				handler.drawCard(this);
+				
+				turnState = TURNSTATE.End;
+				nextPlayer = true;
+			}
+			else if(turnState == TURNSTATE.End || nextPlayer == true)
+			{
+				grid.validJungleTile = true;
+				handler.placedWorker1 = false;
+				handler.placedWorker2 = false;
+				handler.placedWorker3 = false;
+				gameState = STATE.Player2;
+				typeState = TYPESTATE.Worker;
 				turnState = TURNSTATE.Move;
+				incrementTurn();
 			}
 		}
+		
+		if(playerTracker == 2)
+		{
+			if(handler.placedWorker1 != true && handler.placedWorker2 != true && handler.placedWorker3 != true )
+			{
+				//System.out.println("placing worker tile plyaer 2");
+				nextPlayer = false;
+			}
+			else if((handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true) && turnState != TURNSTATE.Draw)
+			{
+				System.out.println(grid.validJungleTile);
+				typeState = TYPESTATE.Jungle;
+				if(grid.validJungleTile == true)
+				{
+					System.out.println("jungle tile valid");
+					turnState = TURNSTATE.Move;
+				}
+				else if(grid.validJungleTile == false)
+				{
+					turnState = TURNSTATE.Draw;
+				}
+			}
+			else if(turnState == TURNSTATE.Draw && nextPlayer == false)
+			{				
+				gameState = STATE.Play;
+				turnState = TURNSTATE.Draw;
+				handler.endTurnTrue(this);
+				handler.drawCard(this);
+
+				turnState = TURNSTATE.Draw;
+				typeState = TYPESTATE.Worker;
+				handler.endTurnTrue(this);
+				handler.drawCard(this);
+				
+				turnState = TURNSTATE.End;
+
+			}
+			else if(turnState == TURNSTATE.End || nextPlayer == true)
+			{
+				grid.validJungleTile = true;
+				handler.placedWorker1 = false;
+				handler.placedWorker2 = false;
+				handler.placedWorker3 = false;
+				typeState = TYPESTATE.Worker;
+				turnState = TURNSTATE.Move;
+				if(numPlayers <= 2)
+				{
+					gameState = STATE.Player1;
+					incrementTurn();
+					playerTracker = 1;
+				}
+				else
+				{
+					gameState = STATE.Player3;
+					incrementTurn();
+				}
+			}
+			
+			nextPlayer = true;
+		}
+
+		if(playerTracker == 3)
+		{
+			if(handler.placedWorker1 != true && handler.placedWorker2 != true && handler.placedWorker3 != true )
+			{
+				nextPlayer = false;
+				//System.out.println("placing worker tile plyaer 2");
+			}
+			else if((handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true) && turnState != TURNSTATE.Draw)
+			{
+				typeState = TYPESTATE.Jungle;
+				if(grid.validJungleTile == true)
+				{
+					turnState = TURNSTATE.Move;
+				}
+				else if(grid.validJungleTile == false)
+				{
+					turnState = TURNSTATE.Draw;
+				}
+			}
+			else if(turnState == TURNSTATE.Draw && nextPlayer == false)
+			{				
+				gameState = STATE.Play;
+				turnState = TURNSTATE.Draw;
+				handler.endTurnTrue(this);
+				handler.drawCard(this);
+
+				turnState = TURNSTATE.Draw;
+				typeState = TYPESTATE.Worker;
+				handler.endTurnTrue(this);
+				handler.drawCard(this);
+				
+				turnState = TURNSTATE.End;
+
+			}
+			else if(turnState == TURNSTATE.End || nextPlayer == true)
+			{
+				grid.validJungleTile = true;
+				handler.placedWorker1 = false;
+				handler.placedWorker2 = false;
+				handler.placedWorker3 = false;
+				typeState = TYPESTATE.Worker;
+				turnState = TURNSTATE.Move;
+				if(numPlayers <= 3)
+				{
+					gameState = STATE.Player1;
+					incrementTurn();
+					playerTracker = 1;
+				}
+				else
+				{
+					gameState = STATE.Player4;
+					incrementTurn();
+				}
+			}
+			
+			nextPlayer = true;
+		}
+
+		if(playerTracker == 4)
+		{
+			if(handler.placedWorker1 != true && handler.placedWorker2 != true && handler.placedWorker3 != true )
+			{
+				nextPlayer = false;
+				//System.out.println("placing worker tile plyaer 2");
+			}
+			else if((handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true) && turnState != TURNSTATE.Draw)
+			{
+				typeState = TYPESTATE.Jungle;
+				if(grid.validJungleTile == true)
+				{
+					turnState = TURNSTATE.Move;
+				}
+				else if(grid.validJungleTile == false)
+				{
+					turnState = TURNSTATE.Draw;
+				}
+			}
+			else if(turnState == TURNSTATE.Draw && nextPlayer == false)
+			{				
+				gameState = STATE.Play;
+				turnState = TURNSTATE.Draw;
+				handler.endTurnTrue(this);
+				handler.drawCard(this);
+
+				turnState = TURNSTATE.Draw;
+				typeState = TYPESTATE.Worker;
+				handler.endTurnTrue(this);
+				handler.drawCard(this);
+				
+				turnState = TURNSTATE.End;
+
+			}
+			else if(turnState == TURNSTATE.End || nextPlayer == true)
+			{
+				grid.validJungleTile = true;
+				handler.placedWorker1 = false;
+				handler.placedWorker2 = false;
+				handler.placedWorker3 = false;
+				typeState = TYPESTATE.Worker;
+				turnState = TURNSTATE.Move;
+
+				gameState = STATE.Player1;
+				incrementTurn();
+				playerTracker = 1;
+
+			}
+			
+			nextPlayer = true;
+		}
+		
 	}
 	
 	public void incrementTurn()

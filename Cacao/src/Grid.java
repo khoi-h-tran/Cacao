@@ -38,6 +38,9 @@ public class Grid
 	//hash map to store all the grids a jungle tile could be put on
 	ArrayList<String> validJungleTileLoc = new ArrayList<String>();
 	
+	//if there are no valid jungle tiles, set boolean to skip the jungle tile phase
+	public boolean validJungleTile = true;
+	
 	//populate the coordinates of the grid
 	public void popGridCoord(Game game)
 	{
@@ -202,7 +205,7 @@ public class Grid
 			{
 				//set the default colour of the square to not yellow
 				colorYellow = false;
-				
+    		//int count = 0;
 				//loop through the HashMap that contains all the coordinates (e.g. key = E, value = 4).
 				for (HashMap.Entry<Integer, Integer> entry : yellowCoords.entrySet()) 
 				{
@@ -228,9 +231,53 @@ public class Grid
 		    	//vice versa for the columns
 			    if( ( ((i+1) == entry.getValue()) && ((j+1) == entry.getKey() - 1 || (j+1) == entry.getKey() +1) ) || ((j+1) == entry.getKey() && ((i+1) == entry.getValue() - 1 || (i+1) == entry.getValue() +1)) )
 			    {
-			    	System.out.print("key " + entry.getKey() + " column " + (j+1));
-			    	System.out.println(" value " + entry.getValue() + " row " +  (i+1));
-			    	colorYellow = true;
+			    	if(game.typeState == Game.TYPESTATE.Worker)
+			    	{
+				    	colorYellow = true;
+			    	}
+			    	else if(game.typeState == Game.TYPESTATE.Jungle)
+			    	{
+			    		
+			    		/*
+			    		int valueComparedAlready = entry.getValue();
+			    		int keyComparedAlready = entry.getKey();
+			    		
+							for (HashMap.Entry<Integer, Integer> entry2 : yellowCoords.entrySet()) 
+							{
+								if(valueComparedAlready != entry2.getValue() || keyComparedAlready != entry2.getKey())
+								{
+									if( ( ((i+1) == entry2.getValue()) && ((j+1) == entry2.getKey() - 1 || (j+1) == entry2.getKey() +1) ) || ((j+1) == entry2.getKey() && ((i+1) == entry2.getValue() - 1 || (i+1) == entry2.getValue() +1)) )
+							    {
+							    	colorYellow = true;
+							    }
+								}
+							*/
+			    		
+		    			//count++;
+		    			/*
+			    		if((i+1) == entry.getValue() && (j+1) == entry.getKey() - 1)
+			    		{
+			    			count++;
+			    		}
+			    		if((i+1) == entry.getValue() && (j+1) == entry.getKey() + 1)
+			    		{
+			    			count++;
+			    		}
+			    		if((j+1) == entry.getKey() && (i+1) == entry.getValue() - 1 )
+			    		{
+			    			count++;
+			    		}
+			    		if((j+1) == entry.getKey() && (i+1) == entry.getValue() + 1)
+			    		{
+			    			count++;
+			    		}
+			    		
+			    		if(count > 1)
+			    		{
+					    	colorYellow = true;
+			    		}
+			    		*/
+			    	}
 			    }
 				}
 				
@@ -244,7 +291,38 @@ public class Grid
 					//if it is the worker turn, state which worker tiles could be used
 					if(game.typeState == Game.TYPESTATE.Worker)
 					{
-						validWorkerTileLoc.add(String.valueOf((char)(i + 65)) + String.valueOf(j + 1));
+						//boolean variable to check if the tile is not used (if it is used it cannot be a valid placement location)
+						boolean notUsed = true;
+						
+						//find all jungle tiles used
+						ArrayList<String> listOfKeysJungle = getAllKeysForValue(gridUsed, 1);
+						//find all worker tiles used
+						if(game.turnCounter > 1)
+						{
+							ArrayList<String> listOfKeysWorker = getAllKeysForValue(gridUsed, 2);
+							
+							//combine the lists for all tiles
+							listOfKeysJungle.addAll(listOfKeysWorker);
+						}
+						
+						//check all keys used (see above line, it is for both workers and jungle combined into one list)
+						for ( String key : listOfKeysJungle ) 
+						{
+				    	//System.out.print("key used" + key);
+				    	//System.out.println(" new grid " + (String.valueOf((char)(i + 65)) + String.valueOf(j + 1)));
+					    if (key.equals(String.valueOf((char)(j + 65)) + String.valueOf(i + 1)))
+					    {
+					    	notUsed = false;
+					    	//System.out.println("flagged as false");
+					    }
+						}
+						
+						//only add as a viable location if there is no existing tile in that grid location
+						if(notUsed == true)
+						{
+							validWorkerTileLoc.add(String.valueOf((char)(j + 65)) + String.valueOf(i + 1));
+						}
+						
 						//System.out.print(String.valueOf((char)(i + 65)));
 						//System.out.println(String.valueOf(j + 1));
 					}
@@ -252,12 +330,40 @@ public class Grid
 					//if it is the jungle turn, state which worker tiles could be used
 					if(game.typeState == Game.TYPESTATE.Jungle)
 					{
+						//boolean variable to check if the tile is not used (if it is used it cannot be a valid placement location)
+						boolean notUsed = true;
 						
-						validJungleTileLoc.add(String.valueOf((char)(i+65)) + String.valueOf(j + 1));
+						//find all jungle tiles used
+						ArrayList<String> listOfKeysJungle = getAllKeysForValue(gridUsed, 1);
+						//find all worker tiles used
+						ArrayList<String> listOfKeysWorker = getAllKeysForValue(gridUsed, 2);
+						
+						//combine the lists for all tiles
+						listOfKeysJungle.addAll(listOfKeysWorker);
+						
+						//check all keys used (see above line, it is for both workers and jungle combined into one list)
+						for ( String key : listOfKeysJungle ) 
+						{
+				    	//System.out.print("key used" + key);
+				    	//System.out.println(" new grid " + (String.valueOf((char)(i + 65)) + String.valueOf(j + 1)));
+					    if (key.equals(String.valueOf((char)(j + 65)) + String.valueOf(i + 1)))
+					    {
+					    	notUsed = false;
+					    	//System.out.println("flagged as false");
+					    }
+						}
+						
+						//only add as a viable location if there is no existing tile in that grid location
+						if(notUsed == true)
+						{
+							validJungleTileLoc.add(String.valueOf((char)(j+65)) + String.valueOf(i + 1));
+						}
 						//System.out.print(String.valueOf((char)(i + 65)));
 						//System.out.println(String.valueOf(j + 1));
 					}
 					
+					
+
 				}
 				//if it is a potential place to put the tile, color the box black
 				else
@@ -267,6 +373,18 @@ public class Grid
 				}
 			}
 		}
+		
+		//if there are no valid jungle tiles, set boolean to skip the jungle tile phase
+		if(validJungleTileLoc.size() == 0)
+		{
+			validJungleTile = false;
+		}
+		else
+		{
+			validJungleTile = true;
+		}
+		
+		//System.out.println(validJungleTileLoc.size());
 	}
 
 }
