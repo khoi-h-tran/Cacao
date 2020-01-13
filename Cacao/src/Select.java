@@ -187,7 +187,6 @@ public class Select extends MouseAdapter
 			//jungle tile 1
 			if(mouseOver(mxP, myP, game.draw1LocX, game.draw1LocY, game.TILE_DIM, game.TILE_DIM) && (SwingUtilities.isLeftMouseButton(e)))
 			{
-				System.out.println("jungle1 hold");
 				jungle1Hold = true;
 				jungle1HoldComplete = false;
 				mxH = game.draw1LocX + game.TILE_DIM/2;
@@ -196,8 +195,6 @@ public class Select extends MouseAdapter
 			//jungle tile 2
 			else if(mouseOver(mxP, myP, game.draw2LocX, game.draw2LocY, game.TILE_DIM, game.TILE_DIM) && (SwingUtilities.isLeftMouseButton(e)))
 			{
-				System.out.println("jungle2 hold");
-				
 				jungle2Hold = true;
 				jungle2HoldComplete = false;
 				mxH = game.draw2LocX + game.TILE_DIM/2;

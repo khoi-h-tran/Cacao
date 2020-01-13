@@ -297,6 +297,9 @@ public class Handler extends MouseAdapter
 					  			objectWorkerP1.get(drawLocWorker1.get(1)).setX(xStart);
 					  			objectWorkerP1.get(drawLocWorker1.get(1)).setY(yStart);
 					  			workerTilesInPlay.add(objectWorkerP1.get(drawLocWorker1.get(1)));
+					  			drawLocWorker1.remove(1);
+					  			drawLocWorker1.remove(1);
+
 					  			//hashMapKeysWorkerP1.remove(drawLocWorker1.get(1));
 					  			//objectWorkerP1.remove(drawLocWorker1.get(1));
 					  			placedWorker1 = true;
@@ -307,6 +310,9 @@ public class Handler extends MouseAdapter
 					  			objectWorkerP2.get(drawLocWorker2.get(1)).setX(xStart);
 					  			objectWorkerP2.get(drawLocWorker2.get(1)).setY(yStart);
 					  			workerTilesInPlay.add(objectWorkerP2.get(drawLocWorker2.get(1)));
+					  			drawLocWorker2.remove(1);
+					  			drawLocWorker2.remove(1);
+
 					  			//hashMapKeysWorkerP2.remove(drawLocWorker2.get(1));
 					  			//objectWorkerP2.remove(drawLocWorker2.get(1));
 					  			placedWorker1 = true;
@@ -317,6 +323,9 @@ public class Handler extends MouseAdapter
 					  			objectWorkerP3.get(drawLocWorker3.get(1)).setX(xStart);
 					  			objectWorkerP3.get(drawLocWorker3.get(1)).setY(yStart);
 					  			workerTilesInPlay.add(objectWorkerP3.get(drawLocWorker3.get(1)));
+					  			drawLocWorker3.remove(1);
+					  			drawLocWorker3.remove(1);
+
 					  			//hashMapKeysWorkerP3.remove(drawLocWorker3.get(1));
 					  			//objectWorkerP3.remove(drawLocWorker3.get(1));
 					  			placedWorker1 = true;
@@ -327,6 +336,9 @@ public class Handler extends MouseAdapter
 					  			objectWorkerP4.get(drawLocWorker4.get(1)).setX(xStart);
 					  			objectWorkerP4.get(drawLocWorker4.get(1)).setY(yStart);
 					  			workerTilesInPlay.add(objectWorkerP4.get(drawLocWorker4.get(1)));
+					  			drawLocWorker4.remove(1);
+					  			drawLocWorker4.remove(1);
+
 					  			//hashMapKeysWorkerP4.remove(drawLocWorker4.get(1));
 					  			//objectWorkerP4.remove(drawLocWorker4.get(1));
 					  			placedWorker1 = true;
@@ -341,6 +353,9 @@ public class Handler extends MouseAdapter
 					  			objectWorkerP1.get(drawLocWorker1.get(2)).setX(xStart);
 					  			objectWorkerP1.get(drawLocWorker1.get(2)).setY(yStart);
 					  			workerTilesInPlay.add(objectWorkerP1.get(drawLocWorker1.get(2)));
+					  			drawLocWorker1.remove(2);
+					  			drawLocWorker1.remove(2);
+
 					  			//hashMapKeysWorkerP1.remove(drawLocWorker1.get(2));
 					  			//objectWorkerP1.remove(drawLocWorker1.get(2));
 					  			placedWorker2 = true;
@@ -351,6 +366,9 @@ public class Handler extends MouseAdapter
 					  			objectWorkerP2.get(drawLocWorker2.get(2)).setX(xStart);
 					  			objectWorkerP2.get(drawLocWorker2.get(2)).setY(yStart);
 					  			workerTilesInPlay.add(objectWorkerP2.get(drawLocWorker2.get(2)));
+					  			drawLocWorker2.remove(2);
+					  			drawLocWorker2.remove(2);
+
 					  			//hashMapKeysWorkerP2.remove(drawLocWorker2.get(2));
 					  			//objectWorkerP2.remove(drawLocWorker2.get(2));
 					  			placedWorker2 = true;
@@ -361,6 +379,9 @@ public class Handler extends MouseAdapter
 					  			objectWorkerP3.get(drawLocWorker3.get(2)).setX(xStart);
 					  			objectWorkerP3.get(drawLocWorker3.get(2)).setY(yStart);
 					  			workerTilesInPlay.add(objectWorkerP3.get(drawLocWorker3.get(2)));
+					  			drawLocWorker3.remove(2);
+					  			drawLocWorker3.remove(2);
+
 					  			//hashMapKeysWorkerP3.remove(drawLocWorker3.get(2));
 					  			//objectWorkerP3.remove(drawLocWorker3.get(2));
 					  			placedWorker2 = true;
@@ -371,6 +392,9 @@ public class Handler extends MouseAdapter
 					  			objectWorkerP4.get(drawLocWorker4.get(2)).setX(xStart);
 					  			objectWorkerP4.get(drawLocWorker4.get(2)).setY(yStart);
 					  			workerTilesInPlay.add(objectWorkerP4.get(drawLocWorker4.get(2)));
+					  			drawLocWorker4.remove(2);
+					  			drawLocWorker4.remove(2);
+
 					  			//hashMapKeysWorkerP4.remove(drawLocWorker4.get(2));
 					  			//objectWorkerP4.remove(drawLocWorker4.get(2));
 					  			placedWorker2 = true;
@@ -386,6 +410,9 @@ public class Handler extends MouseAdapter
 					  			objectWorkerP1.get(drawLocWorker1.get(3)).setX(xStart);
 					  			objectWorkerP1.get(drawLocWorker1.get(3)).setY(yStart);
 					  			workerTilesInPlay.add(objectWorkerP1.get(drawLocWorker1.get(3)));
+					  			drawLocWorker1.remove(3);
+					  			drawLocWorker1.remove(3);
+
 					  			//hashMapKeysWorkerP1.remove(drawLocWorker1.get(3));
 					  			//objectWorkerP1.remove(drawLocWorker1.get(3));
 					  			placedWorker3 = true;
@@ -396,6 +423,9 @@ public class Handler extends MouseAdapter
 					  			objectWorkerP2.get(drawLocWorker2.get(3)).setX(xStart);
 					  			objectWorkerP2.get(drawLocWorker2.get(3)).setY(yStart);
 					  			workerTilesInPlay.add(objectWorkerP2.get(drawLocWorker2.get(3)));
+					  			drawLocWorker2.remove(3);
+					  			drawLocWorker2.remove(3);
+
 					  			//hashMapKeysWorkerP2.remove(drawLocWorker2.get(3));
 					  			//objectWorkerP2.remove(drawLocWorker2.get(3));
 					  			placedWorker3 = true;
@@ -406,6 +436,9 @@ public class Handler extends MouseAdapter
 					  			objectWorkerP3.get(drawLocWorker3.get(3)).setX(xStart);
 					  			objectWorkerP3.get(drawLocWorker3.get(3)).setY(yStart);
 					  			workerTilesInPlay.add(objectWorkerP3.get(drawLocWorker3.get(3)));
+					  			drawLocWorker3.remove(3);
+					  			drawLocWorker3.remove(3);
+
 					  			//hashMapKeysWorkerP3.remove(drawLocWorker3.get(3));
 					  			//objectWorkerP3.remove(drawLocWorker3.get(3));
 					  			placedWorker3 = true;
@@ -416,6 +449,9 @@ public class Handler extends MouseAdapter
 					  			objectWorkerP4.get(drawLocWorker4.get(3)).setX(xStart);
 					  			objectWorkerP4.get(drawLocWorker4.get(3)).setY(yStart);
 					  			workerTilesInPlay.add(objectWorkerP4.get(drawLocWorker4.get(3)));
+					  			drawLocWorker4.remove(3);
+					  			drawLocWorker4.remove(3);
+
 					  			//hashMapKeysWorkerP4.remove(drawLocWorker4.get(3));
 					  			//objectWorkerP4.remove(drawLocWorker4.get(3));
 					  			placedWorker3 = true;
@@ -512,6 +548,7 @@ public class Handler extends MouseAdapter
 				{
 					for(String coordinate: grid.validJungleTileLoc)
 					{
+						/*
 						System.out.println("xstart " + ((int)(coordinate.charAt(0)) - 65) * game.TILE_DIM);
 						System.out.println("mxR " + select.mxR);
 						System.out.println("xend " + (((int)(coordinate.charAt(0)) - 65) * game.TILE_DIM + game.TILE_DIM));
@@ -519,6 +556,7 @@ public class Handler extends MouseAdapter
 						System.out.println("ystart " + ((int)(coordinate.charAt(1)) - 48 - 1) * game.TILE_DIM);
 						System.out.println("myR " + select.myR);
 						System.out.println("yend " + (((int)(coordinate.charAt(1)) - 48 - 1) * game.TILE_DIM + game.TILE_DIM));
+						*/
 						
 						//check if the released point is within the x-range of any valid worker tile location
 						if(select.mxR > ((int)(coordinate.charAt(0)) - 65) * game.TILE_DIM  && select.mxR < (((int)(coordinate.charAt(0)) - 65) * game.TILE_DIM) + game.TILE_DIM)
@@ -530,8 +568,8 @@ public class Handler extends MouseAdapter
 							{
 								//System.out.println("correct col: " + ((int)(coordinate.charAt(1)) - 48));
 								
-								System.out.println("mxR" + select.mxR);
-								System.out.println("myR" + select.myR);
+								//System.out.println("mxR" + select.mxR);
+								//System.out.println("myR" + select.myR);
 								
 								int xStart = ((int)(coordinate.charAt(0)) - 65) * game.TILE_DIM;
 								int yStart = ((int)(coordinate.charAt(1)) - 48 - 1) * game.TILE_DIM;
@@ -546,6 +584,8 @@ public class Handler extends MouseAdapter
 									//System.out.println("worker 1 returned");
 					  			objectJungle.get(drawLocJungle.get(1)).setX(xStart);
 					  			objectJungle.get(drawLocJungle.get(1)).setY(yStart);
+					  			drawLocJungle.remove(1);
+					  			drawLocJungle.remove(1);
 					  			placedJungle1 = true;
 									game.drawJungle1 = true;
 						    }
@@ -554,6 +594,8 @@ public class Handler extends MouseAdapter
 									//System.out.println("worker 2 returned");
 									objectJungle.get(drawLocJungle.get(2)).setX(xStart);
 									objectJungle.get(drawLocJungle.get(2)).setY(yStart);
+					  			drawLocJungle.remove(2);
+					  			drawLocJungle.remove(2);
 					  			placedJungle2 = true;
 									game.drawJungle2 = true;
 						    }
@@ -594,7 +636,7 @@ public class Handler extends MouseAdapter
 	
 	public void render(Graphics g, Game game)
 	{
-		if(game.gameState == Game.STATE.Player1 || game.gameState == Game.STATE.Player2 || game.gameState == Game.STATE.Player3 || game.gameState == Game.STATE.Player4)
+		if(game.gameState != Game.STATE.Select)
 		{
 			for(int i = 0; i < objectJungle.size(); i++)
 			{
@@ -610,46 +652,58 @@ public class Handler extends MouseAdapter
 			
 			if(game.gameState == Game.STATE.Player1)
 			{
-				//loops through each object in worker tile hash map
-				for(int i = 0; i < objectWorkerP1.size(); i++) 
+				if(game.gameState == Game.STATE.Player1)
 				{
-					GameObject tempObject = objectWorkerP1.get(hashMapKeysWorkerP1.get(i));
-				
-					//this is an abstract class that is called in the player or tile classes
-					tempObject.render(g);
+					//loops through each object in worker tile hash map
+					for(int i = 0; i < objectWorkerP1.size(); i++) 
+					{
+						GameObject tempObject = objectWorkerP1.get(hashMapKeysWorkerP1.get(i));
+					
+						//this is an abstract class that is called in the player or tile classes
+						tempObject.render(g);
+					}
 				}
 			}
 			
-			if(game.gameState == Game.STATE.Player2)
+			else if(game.gameState == Game.STATE.Player2)
 			{
-				for(int i = 0; i < objectWorkerP2.size(); i++) 
+				if(game.gameState == Game.STATE.Player2)
 				{
-					GameObject tempObject = objectWorkerP2.get(hashMapKeysWorkerP2.get(i));
-				
-					//this is an abstract class that is called in the player or tile classes
-					tempObject.render(g);
+					for(int i = 0; i < objectWorkerP2.size(); i++) 
+					{
+						GameObject tempObject = objectWorkerP2.get(hashMapKeysWorkerP2.get(i));
+					
+						//this is an abstract class that is called in the player or tile classes
+						tempObject.render(g);
+					}
 				}
 			}
 			
-			if(game.gameState == Game.STATE.Player3)
+			else if(game.gameState == Game.STATE.Player3)
 			{
-				for(int i = 0; i < objectWorkerP3.size(); i++) 
+				if(game.gameState == Game.STATE.Player3)
 				{
-					GameObject tempObject = objectWorkerP3.get(hashMapKeysWorkerP3.get(i));
-				
-					//this is an abstract class that is called in the player or tile classes
-					tempObject.render(g);
+					for(int i = 0; i < objectWorkerP3.size(); i++) 
+					{
+						GameObject tempObject = objectWorkerP3.get(hashMapKeysWorkerP3.get(i));
+					
+						//this is an abstract class that is called in the player or tile classes
+						tempObject.render(g);
+					}
 				}
 			}
 			
-			if(game.gameState == Game.STATE.Player4)
+			else if(game.gameState == Game.STATE.Player4)
 			{
-				for(int i = 0; i < objectWorkerP4.size(); i++) 
+				if(game.gameState == Game.STATE.Player4)
 				{
-					GameObject tempObject = objectWorkerP4.get(hashMapKeysWorkerP4.get(i));
-				
-					//this is an abstract class that is called in the player or tile classes
-					tempObject.render(g);
+					for(int i = 0; i < objectWorkerP4.size(); i++) 
+					{
+						GameObject tempObject = objectWorkerP4.get(hashMapKeysWorkerP4.get(i));
+					
+						//this is an abstract class that is called in the player or tile classes
+						tempObject.render(g);
+					}
 				}
 			}
 			
@@ -996,19 +1050,23 @@ public class Handler extends MouseAdapter
 		//Logic to determine if any tiles should be drawn from the decks
 		if(game.turnEnd == true)
 		{
+			//System.out.println("game.turnEnd == true");
 			if(game.gameState == Game.STATE.Play && game.typeState == Game.TYPESTATE.Jungle && game.turnState == Game.TURNSTATE.Draw)
 			{
+				System.out.println("proper game state, type, and turn");
 				if(game.drawJungle1 == true)
 				{
 					drawFromDeck(deckKeysJungle, objectJungle, drawLocJungle, null, game.draw1LocX, game.draw1LocY, game);
 					removeFromDeck(deckKeysJungle);
 					game.drawJungle1 = false;
+					System.out.println("tried to draw to location 1");
 				}
 				if(game.drawJungle2 == true)
 				{
 					drawFromDeck(deckKeysJungle, objectJungle, drawLocJungle, null,  game.draw2LocX, game.draw2LocY, game);
 					removeFromDeck(deckKeysJungle);
 					game.drawJungle2 = false;
+					System.out.println("tried to draw to location 2");
 				}
 			}
 			

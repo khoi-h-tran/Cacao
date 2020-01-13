@@ -148,11 +148,21 @@ public class Grid
 
 	public void tick(Game game)
 	{
+		popYellowCoords(game);
+	}
+	
+	public void render(Graphics g, Game game)
+	{
+		//checks if the grid boxes should be yellow or not
+		checkBoxIsYellow(g, game);
+	}
+	
+	//populates where the yellow boxes should be according to coordinates
+	public void popYellowCoords(Game game)
+	{
 		// 0 means no state
 		// 1 means jungle type was employed and you need to clear the list for worker tiles
 		// 2 means worker type was employed and you need to clear the list for jungle tiles
-		
-		
 		if(game.typeState == Game.TYPESTATE.Worker)
 		{
 			//clear the list if it was previously used to keep track of worker tiles
@@ -163,7 +173,7 @@ public class Grid
 			}
 			//indicate that the jungle tiles were used at least once
 			game.tileState = 1;
-			//Get the list of keys whose value indicates the grid is being used (indicated by value = 1)
+			//Get the list of keys whose value indicates the grid is being used (indicated by value = 1), 1 meaning jungle tile
 			listOfKeys = getAllKeysForValue(gridUsed, 1);
 			
 			//get the hash map of all keys with column and row indicator separated
@@ -187,8 +197,10 @@ public class Grid
 			yellowCoords = tileUsedCoordSplit(listOfKeys, yellowCoords);
 		}
 	}
+
 	
-	public void render(Graphics g, Game game)
+	//method to sort through grids and compare them to worker tiles or jungle tiles
+	public void checkBoxIsYellow(Graphics g, Game game)
 	{
 		boolean colorYellow = false;
 		
@@ -197,6 +209,14 @@ public class Grid
 		//this will allow us to use the same array list for jungle tiles or worth tiles
 		validWorkerTileLoc.clear();
 		validJungleTileLoc.clear();
+		
+		/*
+		for (HashMap.Entry<Integer, Integer> entry : yellowCoords.entrySet()) 
+		{
+			System.out.print(entry.getKey());
+			System.out.println(entry.getValue());
+		}
+		*/
 		
 		//populates the grid display in the game
 		for(int i = 0; i < Game.HEIGHT/game.TILE_DIM; i++)//populates rows
@@ -209,6 +229,7 @@ public class Grid
 				//loop through the HashMap that contains all the coordinates (e.g. key = E, value = 4).
 				for (HashMap.Entry<Integer, Integer> entry : yellowCoords.entrySet()) 
 				{
+					
 					//For each grid which is identified as used (e.g. E4)
 					//check if in column E, if there is a row that is one above or one below 4. This is a potential option to place your next tile (i.e. adjacent to your tiles)
 					//check if in row 4, if there is a column = C or F, which is one above or below 4.This is a potential option to place your next tile (i.e. adjacent to your tiles)
@@ -238,20 +259,26 @@ public class Grid
 			    	else if(game.typeState == Game.TYPESTATE.Jungle)
 			    	{
 			    		
-			    		/*
 			    		int valueComparedAlready = entry.getValue();
 			    		int keyComparedAlready = entry.getKey();
 			    		
 							for (HashMap.Entry<Integer, Integer> entry2 : yellowCoords.entrySet()) 
 							{
-								if(valueComparedAlready != entry2.getValue() || keyComparedAlready != entry2.getKey())
+								if(valueComparedAlready != entry2.getValue() && keyComparedAlready != entry2.getKey())
 								{
 									if( ( ((i+1) == entry2.getValue()) && ((j+1) == entry2.getKey() - 1 || (j+1) == entry2.getKey() +1) ) || ((j+1) == entry2.getKey() && ((i+1) == entry2.getValue() - 1 || (i+1) == entry2.getValue() +1)) )
 							    {
 							    	colorYellow = true;
+							    	//System.out.println("yellow jungle true");
+							    	
+							    	//System.out.print((char)(entry.getKey() + 64));
+							    	//System.out.println(entry.getValue());
+							    	
+							    	//System.out.print((char)((i+1) + 64));
+							    	//System.out.println(j+1);
 							    }
 								}
-							*/
+							}
 			    		
 		    			//count++;
 		    			/*
@@ -284,7 +311,7 @@ public class Grid
 				//if it is a potential place to put the tile, color the box yellow
 				if(colorYellow == true)
 				{
-					
+
 					g.setColor(Color.yellow);
 					g.fillRect((game.TILE_DIM*j), (game.TILE_DIM*i), game.TILE_DIM, game.TILE_DIM);
 
