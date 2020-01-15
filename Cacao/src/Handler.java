@@ -79,6 +79,7 @@ public class Handler extends MouseAdapter
 	HashMap<String, GameObject> scoreP4 = new HashMap<String, GameObject>();
 	
 	//Holds hash maps for the scores of each player
+	//order is Gold, Cacao, SunTokens, Water, Temple
 	HashMap<String, Integer> scoreCountP1 = new HashMap<String, Integer>();
 	HashMap<String, Integer> scoreCountP2 = new HashMap<String, Integer>();
 	HashMap<String, Integer> scoreCountP3 = new HashMap<String, Integer>();

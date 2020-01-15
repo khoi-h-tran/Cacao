@@ -30,7 +30,8 @@ public class Grid
 	ArrayList<String> listOfKeys = new ArrayList<String>();;
 	
 	//get the hash map of all keys with column and row indicator separated
-	HashMap<Integer, Integer> yellowCoords = new HashMap<Integer, Integer>();;
+	ArrayList<Integer> yellowCoordsCol = new ArrayList<Integer>();
+	ArrayList<Integer> yellowCoordsRow = new ArrayList<Integer>();
 	
 	//hash map to store all the grids a worker tile could be put on
 	ArrayList<String> validWorkerTileLoc = new ArrayList<String>();
@@ -127,26 +128,16 @@ public class Grid
 	}
 	
 	//splits up each coordinate that is occupied by a tile
-	public HashMap <Integer, Integer> tileUsedCoordSplit(ArrayList<String> listOfKeys, HashMap<Integer, Integer> yellowCoords)
+	public void tileUsedCoordSplit(ArrayList<String> listOfKeys, ArrayList<Integer> yellowCoordsCol, ArrayList<Integer> yellowCoordsRow)
 	{
+		yellowCoordsCol.clear();
+		yellowCoordsRow.clear();
 		//split up the column and row  value and store it in a hash map
 		for(String key: listOfKeys)
 		{
-			yellowCoords.put( ( (int)(key.charAt(0))-64), Character.getNumericValue(key.charAt(1) ) );
+			yellowCoordsCol.add( (int)(key.charAt(0))-64 );
+			yellowCoordsRow.add( Character.getNumericValue(key.charAt(1)) );
 		}
-
-		//prints out grid usage
-		//used for debugging
-		/*
-		System.out.println(yellowCoords.size());
-		
-		for (HashMap.Entry<Integer, Integer> entry : yellowCoords.entrySet()) 
-		{
-	    System.out.println(entry.getKey() + ":" + entry.getValue());
-		}
-		*/
-		
-		return yellowCoords;
 	}
 
 	public void tick(Game game)
@@ -172,7 +163,6 @@ public class Grid
 			if(game.tileState == 2)
 			{
 				listOfKeys.clear();
-				yellowCoords.clear();
 			}
 			//indicate that the jungle tiles were used at least once
 			game.tileState = 1;
@@ -180,7 +170,7 @@ public class Grid
 			listOfKeys = getAllKeysForValue(gridUsed, 1);
 			
 			//get the hash map of all keys with column and row indicator separated
-			yellowCoords = tileUsedCoordSplit(listOfKeys, yellowCoords);
+			tileUsedCoordSplit(listOfKeys, yellowCoordsCol, yellowCoordsRow);
 			
 			/*
 			for (HashMap.Entry<String, Integer> entry : gridUsed.entrySet()) 
@@ -196,14 +186,6 @@ public class Grid
 			}
 			System.out.println();
 			*/
-			
-			
-			for (HashMap.Entry<Integer, Integer> entry : yellowCoords.entrySet()) 
-			{
-				System.out.println((char)(entry.getKey() + 64) + ":" + entry.getValue());
-			}
-			
-
 		}
 		
 		if(game.typeState == Game.TYPESTATE.Jungle)
@@ -212,7 +194,6 @@ public class Grid
 			if(game.tileState == 1)
 			{
 				listOfKeys.clear();
-				yellowCoords.clear();
 			}
 			//indicate that the worker tiles were used at least once
 			game.tileState = 2;
@@ -220,9 +201,7 @@ public class Grid
 			listOfKeys = getAllKeysForValue(gridUsed, 2);
 			
 			//get the hash map of all keys with column and row indicator separated
-			yellowCoords = tileUsedCoordSplit(listOfKeys, yellowCoords);
-			
-
+			tileUsedCoordSplit(listOfKeys, yellowCoordsCol, yellowCoordsRow);
 		}
 	}
 
@@ -273,7 +252,7 @@ public class Grid
 				colorYellow = false;
     		//int count = 0;
 				//loop through the HashMap that contains all the coordinates (e.g. key = E, value = 4).
-				for (HashMap.Entry<Integer, Integer> entry : yellowCoords.entrySet()) 
+				for (int c = 0; c < yellowCoordsCol.size(); c++) 
 				{
 				  //System.out.println((char)(entry.getKey() + 64) + ":" + entry.getValue());
 
@@ -297,7 +276,7 @@ public class Grid
 		    	//if yes, check if it's value is either 1 above or below that used grid
 		    	//if yes, fill it in yellow
 		    	//vice versa for the columns
-			    if( ( ((i+1) == entry.getValue()) && ((j+1) == entry.getKey() - 1 || (j+1) == entry.getKey() +1) ) || ((j+1) == entry.getKey() && ((i+1) == entry.getValue() - 1 || (i+1) == entry.getValue() +1)) )
+			    if( ( ((i+1) == yellowCoordsRow.get(c)) && ((j+1) == yellowCoordsCol.get(c) - 1 || (j+1) == yellowCoordsCol.get(c) +1) ) || ((j+1) == yellowCoordsCol.get(c) && ((i+1) == yellowCoordsRow.get(c) - 1 || (i+1) == yellowCoordsRow.get(c) +1)) )
 			    {
 			    	if(game.typeState == Game.TYPESTATE.Worker)
 			    	{
@@ -305,15 +284,12 @@ public class Grid
 			    	}
 			    	else if(game.typeState == Game.TYPESTATE.Jungle)
 			    	{
-			    		
-			    		int valueComparedAlready = entry.getValue();
-			    		int keyComparedAlready = entry.getKey();
-			    		
-							for (HashMap.Entry<Integer, Integer> entry2 : yellowCoords.entrySet()) 
+
+							for (int k = 0; k < yellowCoordsCol.size(); k++) 
 							{
-								if(valueComparedAlready != entry2.getValue() && keyComparedAlready != entry2.getKey())
+								if(yellowCoordsRow.get(c) != yellowCoordsRow.get(k) && yellowCoordsCol.get(c) != yellowCoordsCol.get(k))
 								{
-									if( ( ((i+1) == entry2.getValue()) && ((j+1) == entry2.getKey() - 1 || (j+1) == entry2.getKey() +1) ) || ((j+1) == entry2.getKey() && ((i+1) == entry2.getValue() - 1 || (i+1) == entry2.getValue() +1)) )
+									if( ( ((i+1) == yellowCoordsRow.get(k)) && ((j+1) == yellowCoordsCol.get(k) - 1 || (j+1) == yellowCoordsCol.get(k) +1) ) || ((j+1) == yellowCoordsCol.get(k) && ((i+1) == yellowCoordsRow.get(k) - 1 || (i+1) == yellowCoordsRow.get(k) +1)) )
 							    {
 							    	colorYellow = true;
 							    	//System.out.println("yellow jungle true");

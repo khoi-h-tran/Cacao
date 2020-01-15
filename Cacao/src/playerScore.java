@@ -13,9 +13,6 @@ import java.util.Map.Entry;
 //extending makes Player a sub class and Game Object a super class
 public class playerScore extends GameObject
 {
-	
-
-	
 	//constructor class for player
 	public playerScore()
 	{

@@ -214,17 +214,66 @@ public class HUD
 			g.drawString("Player " + (i+1) + ":", (Game.HEIGHT + 10), ((game.TITLE_BAR)*(i*2 + 1) - 10));
 			
 			//Writing out the score count
-			//Gold Score
-			g.drawString(String.valueOf(handler.scoreCountP1.get("Gold")), (Game.HEIGHT + 10 + game.RES_DIM * 6), (game.TITLE_BAR)*(i*2 + 1) - 10);
 			
-			//Cacao count
-			g.drawString(String.valueOf(handler.scoreCountP1.get("Cacao")), Game.HEIGHT + 3 + game.RES_DIM*3/2, ((game.TITLE_BAR)*((i)*2 + 1) + game.RES_DIM));
-			//Sun worshiping token count
-			g.drawString(String.valueOf(handler.scoreCountP1.get("Sun Tokens")), Game.HEIGHT + 3 + game.RES_DIM*3/2 + game.iconOffset * 2, ((game.TITLE_BAR)*((i)*2 + 1) + game.RES_DIM));
-			//Water count
-			g.drawString(String.valueOf(handler.scoreCountP1.get("Water")), Game.HEIGHT + 3 + game.RES_DIM*3/2 + game.iconOffset * 4, ((game.TITLE_BAR)*((i)*2 + 1) + game.RES_DIM));
-			//Temple Count
-			g.drawString(String.valueOf(handler.scoreCountP1.get("Temple")), Game.HEIGHT + 3 + game.RES_DIM*3/2 + game.iconOffset * 6, ((game.TITLE_BAR)*((i)*2 + 1) + game.RES_DIM));
+			if(i == 0)
+			{
+				//Gold Score
+				g.drawString(String.valueOf(handler.scoreCountP1.get("Gold")), (Game.HEIGHT + 10 + game.RES_DIM * 6), (game.TITLE_BAR)*(i*2 + 1) - 10);
+				
+				//Cacao count
+				g.drawString(String.valueOf(handler.scoreCountP1.get("Cacao")), Game.HEIGHT + 3 + game.RES_DIM*3/2, ((game.TITLE_BAR)*((i)*2 + 1) + game.RES_DIM));
+				//Sun worshiping token count
+				g.drawString(String.valueOf(handler.scoreCountP1.get("Sun Tokens")), Game.HEIGHT + 3 + game.RES_DIM*3/2 + game.iconOffset * 2, ((game.TITLE_BAR)*((i)*2 + 1) + game.RES_DIM));
+				//Water count
+				g.drawString(String.valueOf(handler.scoreCountP1.get("Water")), Game.HEIGHT + 3 + game.RES_DIM*3/2 + game.iconOffset * 4, ((game.TITLE_BAR)*((i)*2 + 1) + game.RES_DIM));
+				//Temple Count
+				g.drawString(String.valueOf(handler.scoreCountP1.get("Temple")), Game.HEIGHT + 3 + game.RES_DIM*3/2 + game.iconOffset * 6, ((game.TITLE_BAR)*((i)*2 + 1) + game.RES_DIM));
+			}
+
+			else if(i == 1)
+			{
+				//Gold Score
+				g.drawString(String.valueOf(handler.scoreCountP2.get("Gold")), (Game.HEIGHT + 10 + game.RES_DIM * 6), (game.TITLE_BAR)*(i*2 + 1) - 10);
+				
+				//Cacao count
+				g.drawString(String.valueOf(handler.scoreCountP2.get("Cacao")), Game.HEIGHT + 3 + game.RES_DIM*3/2, ((game.TITLE_BAR)*((i)*2 + 1) + game.RES_DIM));
+				//Sun worshiping token count
+				g.drawString(String.valueOf(handler.scoreCountP2.get("Sun Tokens")), Game.HEIGHT + 3 + game.RES_DIM*3/2 + game.iconOffset * 2, ((game.TITLE_BAR)*((i)*2 + 1) + game.RES_DIM));
+				//Water count
+				g.drawString(String.valueOf(handler.scoreCountP2.get("Water")), Game.HEIGHT + 3 + game.RES_DIM*3/2 + game.iconOffset * 4, ((game.TITLE_BAR)*((i)*2 + 1) + game.RES_DIM));
+				//Temple Count
+				g.drawString(String.valueOf(handler.scoreCountP2.get("Temple")), Game.HEIGHT + 3 + game.RES_DIM*3/2 + game.iconOffset * 6, ((game.TITLE_BAR)*((i)*2 + 1) + game.RES_DIM));
+			}
+			
+			else if(i == 2)
+			{
+				//Gold Score
+				g.drawString(String.valueOf(handler.scoreCountP3.get("Gold")), (Game.HEIGHT + 10 + game.RES_DIM * 6), (game.TITLE_BAR)*(i*2 + 1) - 10);
+				
+				//Cacao count
+				g.drawString(String.valueOf(handler.scoreCountP3.get("Cacao")), Game.HEIGHT + 3 + game.RES_DIM*3/2, ((game.TITLE_BAR)*((i)*2 + 1) + game.RES_DIM));
+				//Sun worshiping token count
+				g.drawString(String.valueOf(handler.scoreCountP3.get("Sun Tokens")), Game.HEIGHT + 3 + game.RES_DIM*3/2 + game.iconOffset * 2, ((game.TITLE_BAR)*((i)*2 + 1) + game.RES_DIM));
+				//Water count
+				g.drawString(String.valueOf(handler.scoreCountP3.get("Water")), Game.HEIGHT + 3 + game.RES_DIM*3/2 + game.iconOffset * 4, ((game.TITLE_BAR)*((i)*2 + 1) + game.RES_DIM));
+				//Temple Count
+				g.drawString(String.valueOf(handler.scoreCountP3.get("Temple")), Game.HEIGHT + 3 + game.RES_DIM*3/2 + game.iconOffset * 6, ((game.TITLE_BAR)*((i)*2 + 1) + game.RES_DIM));
+			}
+			
+			else if(i == 3)
+			{
+				//Gold Score
+				g.drawString(String.valueOf(handler.scoreCountP4.get("Gold")), (Game.HEIGHT + 10 + game.RES_DIM * 6), (game.TITLE_BAR)*(i*2 + 1) - 10);
+				
+				//Cacao count
+				g.drawString(String.valueOf(handler.scoreCountP4.get("Cacao")), Game.HEIGHT + 3 + game.RES_DIM*3/2, ((game.TITLE_BAR)*((i)*2 + 1) + game.RES_DIM));
+				//Sun worshiping token count
+				g.drawString(String.valueOf(handler.scoreCountP4.get("Sun Tokens")), Game.HEIGHT + 3 + game.RES_DIM*3/2 + game.iconOffset * 2, ((game.TITLE_BAR)*((i)*2 + 1) + game.RES_DIM));
+				//Water count
+				g.drawString(String.valueOf(handler.scoreCountP4.get("Water")), Game.HEIGHT + 3 + game.RES_DIM*3/2 + game.iconOffset * 4, ((game.TITLE_BAR)*((i)*2 + 1) + game.RES_DIM));
+				//Temple Count
+				g.drawString(String.valueOf(handler.scoreCountP4.get("Temple")), Game.HEIGHT + 3 + game.RES_DIM*3/2 + game.iconOffset * 6, ((game.TITLE_BAR)*((i)*2 + 1) + game.RES_DIM));
+			}
 			
 			
 		}
