@@ -229,7 +229,8 @@ public class Grid
 				//loop through the HashMap that contains all the coordinates (e.g. key = E, value = 4).
 				for (HashMap.Entry<Integer, Integer> entry : yellowCoords.entrySet()) 
 				{
-					
+				  //System.out.println((char)(entry.getKey() + 64) + ":" + entry.getValue());
+
 					//For each grid which is identified as used (e.g. E4)
 					//check if in column E, if there is a row that is one above or one below 4. This is a potential option to place your next tile (i.e. adjacent to your tiles)
 					//check if in row 4, if there is a column = C or F, which is one above or below 4.This is a potential option to place your next tile (i.e. adjacent to your tiles)
@@ -311,9 +312,13 @@ public class Grid
 				//if it is a potential place to put the tile, color the box yellow
 				if(colorYellow == true)
 				{
-
+					//colours the box yellow
 					g.setColor(Color.yellow);
 					g.fillRect((game.TILE_DIM*j), (game.TILE_DIM*i), game.TILE_DIM, game.TILE_DIM);
+					
+					
+					//if it is yellow, check if there is already a tile on it or not. If there is, it is not a valid tile location.
+					
 
 					//if it is the worker turn, state which worker tiles could be used
 					if(game.typeState == Game.TYPESTATE.Worker)
@@ -387,11 +392,14 @@ public class Grid
 						}
 						//System.out.print(String.valueOf((char)(i + 65)));
 						//System.out.println(String.valueOf(j + 1));
+						
+
 					}
-					
-					
 
 				}
+				
+				//System.out.println(validJungleTileLoc.size());
+				
 				//if it is a potential place to put the tile, color the box black
 				else
 				{
@@ -401,17 +409,21 @@ public class Grid
 			}
 		}
 		
-		//if there are no valid jungle tiles, set boolean to skip the jungle tile phase
-		if(validJungleTileLoc.size() == 0)
+		if(game.typeState == Game.TYPESTATE.Jungle)
 		{
-			validJungleTile = false;
+			//if there are no valid jungle tiles, set boolean to skip the jungle tile phase
+			if(validJungleTileLoc.size() == 0)
+			{
+				validJungleTile = false;
+				//System.out.println("amount of valid jungle tile locations: " + validJungleTileLoc.size());
+			}
+			else
+			{
+				validJungleTile = true;
+				//System.out.println("amount of valid jungle tile locations: " + validJungleTileLoc.size());
+			}
 		}
-		else
-		{
-			validJungleTile = true;
-		}
-		
-		//System.out.println(validJungleTileLoc.size());
+
 	}
 
 }

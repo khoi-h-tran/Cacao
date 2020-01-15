@@ -178,7 +178,7 @@ public class Handler extends MouseAdapter
 			}
 			
 			//check if worker tiles are left clicked and move to follow cursor if it is held
-			if(select.worker1Hold == true)
+			if(select.worker1Hold == true && game.drawWorker1 == false)
 			{
 				if(game.gameState == Game.STATE.Player1)
 				{
@@ -202,7 +202,7 @@ public class Handler extends MouseAdapter
 				}
 
 			}
-			else if(select.worker2Hold == true)
+			else if(select.worker2Hold == true && game.drawWorker2 == false)
 			{
 				if(game.gameState == Game.STATE.Player1)
 				{
@@ -225,7 +225,7 @@ public class Handler extends MouseAdapter
 					objectWorkerP4.get(drawLocWorker4.get(2)).setY(select.myH - game.TILE_DIM/2);
 				}
 			}
-			else if(select.worker3Hold == true )
+			else if(select.worker3Hold == true  && game.drawWorker3 == false)
 			{
 				if(game.gameState == Game.STATE.Player1)
 				{
@@ -284,7 +284,7 @@ public class Handler extends MouseAdapter
 							
 							//create a string to store the new coordinate/grid location that is used
 							String newGridUsed = String.valueOf((char)((int)(coordinate.charAt(0)))) + String.valueOf(((int)(coordinate.charAt(1)) - 48));
-							
+							//System.out.println(newGridUsed);
 							//update the grid used hash map
 							grid.gridUsed.replace(newGridUsed, 2);
 							
@@ -575,7 +575,7 @@ public class Handler extends MouseAdapter
 								int yStart = ((int)(coordinate.charAt(1)) - 48 - 1) * game.TILE_DIM;
 								
 								String newGridUsed = String.valueOf((char)((int)(coordinate.charAt(0)))) + String.valueOf(((int)(coordinate.charAt(1)) - 48));
-								
+								//System.out.println(newGridUsed);
 								grid.gridUsed.replace(newGridUsed, 1);
 								
 								//if it is an acceptable square, place the correct object at the new location
@@ -599,7 +599,7 @@ public class Handler extends MouseAdapter
 					  			placedJungle2 = true;
 									game.drawJungle2 = true;
 						    }
-						    break;//break out if we have found the correct row and column that is acceptable
+						    //break;//break out if we have found the correct row and column that is acceptable
 						  }
 						}
 						
@@ -607,13 +607,13 @@ public class Handler extends MouseAdapter
 			
 			    if(placedJungle1 == false && select.mouseJungle1Released == true)
 			    {
-						System.out.println("jungle 1 returned");
+						//System.out.println("jungle 1 returned");
 		  			objectJungle.get(drawLocJungle.get(1)).setX(game.draw1LocX);
 		  			objectJungle.get(drawLocJungle.get(1)).setY(game.draw1LocY);
 			    }
 			    if(placedJungle2 == false && select.mouseJungle2Released == true)
 			    {
-						System.out.println("jungle 2 returned");
+						//System.out.println("jungle 2 returned");
 		  			objectJungle.get(drawLocJungle.get(2)).setX(game.draw2LocX);
 		  			objectJungle.get(drawLocJungle.get(2)).setY(game.draw2LocY);
 			    }
@@ -1053,20 +1053,20 @@ public class Handler extends MouseAdapter
 			//System.out.println("game.turnEnd == true");
 			if(game.gameState == Game.STATE.Play && game.typeState == Game.TYPESTATE.Jungle && game.turnState == Game.TURNSTATE.Draw)
 			{
-				System.out.println("proper game state, type, and turn");
+				//System.out.println("proper game state, type, and turn");
 				if(game.drawJungle1 == true)
 				{
 					drawFromDeck(deckKeysJungle, objectJungle, drawLocJungle, null, game.draw1LocX, game.draw1LocY, game);
 					removeFromDeck(deckKeysJungle);
 					game.drawJungle1 = false;
-					System.out.println("tried to draw to location 1");
+					//System.out.println("tried to draw to location 1");
 				}
 				if(game.drawJungle2 == true)
 				{
 					drawFromDeck(deckKeysJungle, objectJungle, drawLocJungle, null,  game.draw2LocX, game.draw2LocY, game);
 					removeFromDeck(deckKeysJungle);
 					game.drawJungle2 = false;
-					System.out.println("tried to draw to location 2");
+					//System.out.println("tried to draw to location 2");
 				}
 			}
 			

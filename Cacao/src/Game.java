@@ -196,6 +196,12 @@ public class Game extends Canvas implements Runnable
 		{
 			if(handler.placedWorker1 != true && handler.placedWorker2 != true && handler.placedWorker3 != true )
 			{
+				/*
+				for(String key: grid.listOfKeys)
+				{
+					System.out.println("jungle key: " + key);
+				}
+				*/
 				nextPlayer = false;
 				gameState = STATE.Player1;
 				typeState = TYPESTATE.Worker;
@@ -208,15 +214,23 @@ public class Game extends Canvas implements Runnable
 			}
 			else if((handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true) && turnState != TURNSTATE.Draw && jungleValidChecked == true)
 			{
-
-				
-				if(grid.validJungleTile == true)
+				/*
+				for(String key: grid.listOfKeys)
+				{
+					System.out.println("worker key: " + key);
+				}
+				*/
+				//grid.validJungleTile == true && 
+				if(grid.validJungleTileLoc.size() != 0)
 				{
 					//System.out.println("jungle tile valid");
 					turnState = TURNSTATE.Move;
+					
 				}
-				else if(grid.validJungleTile == false)
+				//grid.validJungleTile == false  && 
+				else if(grid.validJungleTileLoc.size() == 0)
 				{
+					//System.out.println("Change state to draw");
 					turnState = TURNSTATE.Draw;
 					jungleValidChecked = false;
 				}
@@ -235,7 +249,7 @@ public class Game extends Canvas implements Runnable
 				
 				turnState = TURNSTATE.End;
 				nextPlayer = true;
-				System.out.println("Player 1 draw sequence");
+				//System.out.println("Player 1 draw sequence");
 			}
 			else if(turnState == TURNSTATE.End || nextPlayer == true)
 			{
@@ -249,7 +263,7 @@ public class Game extends Canvas implements Runnable
 				typeState = TYPESTATE.Worker;
 				turnState = TURNSTATE.Move;
 				incrementTurn();
-				System.out.println("Player 1 end sequence");
+				//System.out.println("Player 1 end sequence");
 			}
 		}
 		
@@ -257,7 +271,13 @@ public class Game extends Canvas implements Runnable
 		{
 			if(handler.placedWorker1 != true && handler.placedWorker2 != true && handler.placedWorker3 != true )
 			{
-				//System.out.println("placing worker tile plyaer 2");
+				/*
+				for(String key: grid.listOfKeys)
+				{
+					System.out.println("jungle key: " + key);
+				}
+				*/
+				//System.out.println("placing worker tile player 2");
 				nextPlayer = false;
 			}
 			else if((handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true) && turnState != TURNSTATE.Draw && jungleValidChecked == false)
@@ -267,15 +287,26 @@ public class Game extends Canvas implements Runnable
 			}
 			else if((handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true) && turnState != TURNSTATE.Draw && jungleValidChecked == true)
 			{
-				if(grid.validJungleTile == true)
+				//System.out.println(grid.yellowCoords.size());
+				/*
+				for(String key: grid.listOfKeys)
+				{
+					System.out.println("worker key: " + key);
+				}
+				*/
+				//grid.validJungleTile == true && 
+				if(grid.validJungleTileLoc.size() != 0)
 				{
 					//System.out.println("jungle tile valid");
 					turnState = TURNSTATE.Move;
 				}
-				else if(grid.validJungleTile == false)
+				//grid.validJungleTile == false  && 
+				else if(grid.validJungleTileLoc.size() == 0)
 				{
+					//System.out.println("Change state to draw" + grid.validJungleTileLoc.size());
 					turnState = TURNSTATE.Draw;
 					jungleValidChecked = false;
+
 				}
 			}
 			else if(turnState == TURNSTATE.Draw && nextPlayer == false)
@@ -286,6 +317,7 @@ public class Game extends Canvas implements Runnable
 				handler.endTurnTrue(this);
 				handler.drawCard(this);
 
+				gameState = STATE.Player2;
 				turnState = TURNSTATE.Draw;
 				typeState = TYPESTATE.Worker;
 				handler.endTurnTrue(this);
@@ -293,7 +325,7 @@ public class Game extends Canvas implements Runnable
 				
 				turnState = TURNSTATE.End;
 				nextPlayer = true;
-				System.out.println("Player 2 draw sequence");
+				//System.out.println("Player 2 draw sequence");
 			}
 			else if(turnState == TURNSTATE.End || nextPlayer == true)
 			{
@@ -317,7 +349,7 @@ public class Game extends Canvas implements Runnable
 					incrementTurn();
 				}
 				
-				System.out.println("Player 2 end sequence");
+				//System.out.println("Player 2 end sequence");
 			}
 		}
 
@@ -357,6 +389,7 @@ public class Game extends Canvas implements Runnable
 				handler.endTurnTrue(this);
 				handler.drawCard(this);
 
+				gameState = STATE.Player3;
 				turnState = TURNSTATE.Draw;
 				typeState = TYPESTATE.Worker;
 				handler.endTurnTrue(this);
@@ -426,6 +459,7 @@ public class Game extends Canvas implements Runnable
 				handler.endTurnTrue(this);
 				handler.drawCard(this);
 
+				gameState = STATE.Player4;
 				turnState = TURNSTATE.Draw;
 				typeState = TYPESTATE.Worker;
 				handler.endTurnTrue(this);
