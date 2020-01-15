@@ -41,6 +41,9 @@ public class Grid
 	//if there are no valid jungle tiles, set boolean to skip the jungle tile phase
 	public boolean validJungleTile = true;
 	
+	//variable used in debugging to only output values once per turn
+	int tempTurnCounter = 0;
+	
 	//populate the coordinates of the grid
 	public void popGridCoord(Game game)
 	{
@@ -129,7 +132,7 @@ public class Grid
 		//split up the column and row  value and store it in a hash map
 		for(String key: listOfKeys)
 		{
-			yellowCoords.put(((int)(key.charAt(0))-64), Character.getNumericValue(key.charAt(1)));
+			yellowCoords.put( ( (int)(key.charAt(0))-64), Character.getNumericValue(key.charAt(1) ) );
 		}
 
 		//prints out grid usage
@@ -178,6 +181,29 @@ public class Grid
 			
 			//get the hash map of all keys with column and row indicator separated
 			yellowCoords = tileUsedCoordSplit(listOfKeys, yellowCoords);
+			
+			/*
+			for (HashMap.Entry<String, Integer> entry : gridUsed.entrySet()) 
+			{
+				System.out.println(entry.getKey() + ":" + entry.getValue());
+			}
+			*/
+			
+			/*
+			for(String key: listOfKeys)
+			{
+				System.out.print(key + ", ");
+			}
+			System.out.println();
+			*/
+			
+			
+			for (HashMap.Entry<Integer, Integer> entry : yellowCoords.entrySet()) 
+			{
+				System.out.println((char)(entry.getKey() + 64) + ":" + entry.getValue());
+			}
+			
+
 		}
 		
 		if(game.typeState == Game.TYPESTATE.Jungle)
@@ -195,6 +221,8 @@ public class Grid
 			
 			//get the hash map of all keys with column and row indicator separated
 			yellowCoords = tileUsedCoordSplit(listOfKeys, yellowCoords);
+			
+
 		}
 	}
 
@@ -213,8 +241,26 @@ public class Grid
 		/*
 		for (HashMap.Entry<Integer, Integer> entry : yellowCoords.entrySet()) 
 		{
-			System.out.print(entry.getKey());
-			System.out.println(entry.getValue());
+			System.out.println((char)(entry.getKey() + 64) + ":" + entry.getValue());
+		}
+		 */
+		
+		/*
+		if(tempTurnCounter == game.turnCounter)
+		{
+			tempTurnCounter++;
+			
+			for (HashMap.Entry<Integer, Integer> entry : yellowCoords.entrySet()) 
+			{
+				if(game.typeState == Game.TYPESTATE.Worker)
+				{
+					System.out.println("worker tiles " + (char)(entry.getKey() + 64) + ":" + entry.getValue());
+				}
+				else if(game.typeState == Game.TYPESTATE.Jungle)
+				{
+					System.out.println("jungle tiles " + (char)(entry.getKey() + 64) + ":" + entry.getValue());
+				}
+			}
 		}
 		*/
 		
