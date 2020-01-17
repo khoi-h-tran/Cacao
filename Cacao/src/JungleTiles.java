@@ -54,17 +54,17 @@ public class JungleTiles extends GameObject
 			//total 2
 			case Plantationx2:
 				tile_image = ss.grabImage(1, 2, TILE_DIM, TILE_DIM, TILE_DIM);
-				scoreKey = "Gold";
+				scoreKey = "Cacao";
 				scoreValue = 2;
 				break;
 			case SellingPricex2:
 				tile_image = ss.grabImage(2, 2, TILE_DIM, TILE_DIM, TILE_DIM);
-				scoreKey = "Gold";
+				scoreKey = "Sell";
 				scoreValue = 2;
 				break;
 			case SunWorshippingSite:
 				tile_image = ss.grabImage(3, 2, TILE_DIM, TILE_DIM, TILE_DIM);
-				scoreKey = "Sun Token";
+				scoreKey = "SunToken";
 				scoreValue = 2;
 				break;
 			case GoldMinex1:
@@ -75,7 +75,7 @@ public class JungleTiles extends GameObject
 			//total 3
 			case SellingPricex3:
 				tile_image = ss.grabImage(1, 3, TILE_DIM, TILE_DIM, TILE_DIM);
-				scoreKey = "Gold";
+				scoreKey = "Sell";
 				scoreValue = 3;
 				break;
 			case Water:
@@ -86,7 +86,7 @@ public class JungleTiles extends GameObject
 			//total 4
 			case SellingPricex4:
 				tile_image = ss.grabImage(1, 4, TILE_DIM, TILE_DIM, TILE_DIM);
-				scoreKey = "Gold";
+				scoreKey = "Sell";
 				scoreValue = 4;
 				break;
 			//total 5
@@ -98,11 +98,13 @@ public class JungleTiles extends GameObject
 			//total 6
 			case Plantationx1:
 				tile_image = ss.grabImage(1, 6, TILE_DIM, TILE_DIM, TILE_DIM);
-				scoreKey = "Gold";
+				scoreKey = "Cacao";
 				scoreValue = 1;
 				break;
 		}
 		
+		setScoreKey(scoreKey);
+		setScoreValue(scoreValue);
 	}
 	
 	//code for how jungle tiles move
@@ -124,4 +126,6 @@ public class JungleTiles extends GameObject
 		//g.setColor(Color.green);
 		//g.fillRect(x, y, TILE_DIM, TILE_DIM);
 	}
+
+
 }

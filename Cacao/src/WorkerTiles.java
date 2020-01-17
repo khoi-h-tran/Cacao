@@ -15,6 +15,8 @@ public class WorkerTiles extends GameObject
 	private final int TILE_DIM;
 	private IDWorker idworker;
 	protected int [] scoreScheme = new int [4];
+	//boolean to tell if something is being rotated to zero from 3, so that it does not constantly rotate the scheme at 0
+	private boolean previously3 = false;
 	
 	BufferedImage tile_image0; //0 rotation
 	BufferedImage tile_image1; //90 deg rotation
@@ -69,6 +71,7 @@ public class WorkerTiles extends GameObject
 				scoreScheme[1] = 1;
 				scoreScheme[2] = 1;
 				scoreScheme[3] = 1;
+				setScoreScheme(scoreScheme[0], scoreScheme[1], scoreScheme[2], scoreScheme[3]);
 				break;
 			//total 2
 			case TwoOneZeroOne:
@@ -80,6 +83,7 @@ public class WorkerTiles extends GameObject
 				scoreScheme[1] = 2;
 				scoreScheme[2] = 1;
 				scoreScheme[3] = 0;
+				setScoreScheme(scoreScheme[0], scoreScheme[1], scoreScheme[2], scoreScheme[3]);
 				break;
 			case ThreeZeroZeroOne:
 				tile_image0 = ss.grabImage(3, rowNum, TILE_DIM, TILE_DIM, TILE_DIM);
@@ -90,6 +94,7 @@ public class WorkerTiles extends GameObject
 				scoreScheme[1] = 3;
 				scoreScheme[2] = 0;
 				scoreScheme[3] = 0;
+				setScoreScheme(scoreScheme[0], scoreScheme[1], scoreScheme[2], scoreScheme[3]);
 				break;
 			case ThreeOneZeroZero:
 				tile_image0 = ss.grabImage(4, rowNum, TILE_DIM, TILE_DIM, TILE_DIM);
@@ -100,6 +105,7 @@ public class WorkerTiles extends GameObject
 				scoreScheme[1] = 3;
 				scoreScheme[2] = 1;
 				scoreScheme[3] = 0;
+				setScoreScheme(scoreScheme[0], scoreScheme[1], scoreScheme[2], scoreScheme[3]);
 				break;
 		}
 		
@@ -120,10 +126,11 @@ public class WorkerTiles extends GameObject
 	{
 		if(changed == true)
 		{
-			if(rotation == 0)
+			if(rotation == 0 && previously3 == true)
 			{
 				rotateScoreScheme(scoreScheme);
 				setScoreScheme(scoreScheme[0], scoreScheme[1], scoreScheme[2], scoreScheme[3]);
+				previously3 = false;
 			}
 			else if(rotation == 1)
 			{
@@ -139,6 +146,7 @@ public class WorkerTiles extends GameObject
 			{
 				rotateScoreScheme(scoreScheme);
 				setScoreScheme(scoreScheme[0], scoreScheme[1], scoreScheme[2], scoreScheme[3]);
+				previously3 = true;
 			}
 			changed = false;
 		}

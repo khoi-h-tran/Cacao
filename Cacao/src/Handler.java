@@ -7,8 +7,10 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.SwingUtilities;
+
 
 /* 
 	File Name: handler.java
@@ -92,8 +94,11 @@ public class Handler extends MouseAdapter
 	HashMap<String, GameObject>  ressourceP3 = new HashMap<String, GameObject>();
 	HashMap<String, GameObject>  ressourceP4 = new HashMap<String, GameObject>();
 
-	//create a hash map for all the worker tiles in play (so that it renders regardsless of which player's turn it is)
+	//create an arraylist for all the worker tiles in play (so that it renders regardless of which player's turn it is)
 	ArrayList<GameObject> workerTilesInPlay = new ArrayList<GameObject>();
+	
+	//create a hash map to store which jungle tiles are placed in which coordinate (used in countscore method)
+	HashMap<String, String> jungleTileInPlay = new HashMap<String, String>();
 	
 	/*
 	Cacao(),//total: 20
@@ -298,6 +303,10 @@ public class Handler extends MouseAdapter
 					  			objectWorkerP1.get(drawLocWorker1.get(1)).setX(xStart);
 					  			objectWorkerP1.get(drawLocWorker1.get(1)).setY(yStart);
 					  			workerTilesInPlay.add(objectWorkerP1.get(drawLocWorker1.get(1)));
+					  			
+					  			//calculate score in here
+					  			calcScore(scoreCountP1, newGridUsed, grid.gridUsed, game, objectWorkerP1.get(drawLocWorker1.get(1)));
+
 					  			drawLocWorker1.remove(1);
 					  			drawLocWorker1.remove(1);
 
@@ -311,6 +320,10 @@ public class Handler extends MouseAdapter
 					  			objectWorkerP2.get(drawLocWorker2.get(1)).setX(xStart);
 					  			objectWorkerP2.get(drawLocWorker2.get(1)).setY(yStart);
 					  			workerTilesInPlay.add(objectWorkerP2.get(drawLocWorker2.get(1)));
+					  			
+					  			//calculate score in here
+					  			calcScore(scoreCountP2, newGridUsed, grid.gridUsed, game, objectWorkerP2.get(drawLocWorker2.get(1)));
+
 					  			drawLocWorker2.remove(1);
 					  			drawLocWorker2.remove(1);
 
@@ -324,6 +337,10 @@ public class Handler extends MouseAdapter
 					  			objectWorkerP3.get(drawLocWorker3.get(1)).setX(xStart);
 					  			objectWorkerP3.get(drawLocWorker3.get(1)).setY(yStart);
 					  			workerTilesInPlay.add(objectWorkerP3.get(drawLocWorker3.get(1)));
+					  			
+					  			//calculate score in here
+					  			calcScore(scoreCountP3, newGridUsed, grid.gridUsed, game, objectWorkerP3.get(drawLocWorker3.get(1)));
+
 					  			drawLocWorker3.remove(1);
 					  			drawLocWorker3.remove(1);
 
@@ -337,6 +354,10 @@ public class Handler extends MouseAdapter
 					  			objectWorkerP4.get(drawLocWorker4.get(1)).setX(xStart);
 					  			objectWorkerP4.get(drawLocWorker4.get(1)).setY(yStart);
 					  			workerTilesInPlay.add(objectWorkerP4.get(drawLocWorker4.get(1)));
+					  			
+					  			//calculate score in here
+					  			calcScore(scoreCountP4, newGridUsed, grid.gridUsed, game, objectWorkerP4.get(drawLocWorker4.get(1)));
+
 					  			drawLocWorker4.remove(1);
 					  			drawLocWorker4.remove(1);
 
@@ -354,6 +375,10 @@ public class Handler extends MouseAdapter
 					  			objectWorkerP1.get(drawLocWorker1.get(2)).setX(xStart);
 					  			objectWorkerP1.get(drawLocWorker1.get(2)).setY(yStart);
 					  			workerTilesInPlay.add(objectWorkerP1.get(drawLocWorker1.get(2)));
+					  			
+					  			//calculate score in here
+					  			calcScore(scoreCountP1, newGridUsed, grid.gridUsed, game, objectWorkerP1.get(drawLocWorker1.get(2)));
+
 					  			drawLocWorker1.remove(2);
 					  			drawLocWorker1.remove(2);
 
@@ -367,6 +392,10 @@ public class Handler extends MouseAdapter
 					  			objectWorkerP2.get(drawLocWorker2.get(2)).setX(xStart);
 					  			objectWorkerP2.get(drawLocWorker2.get(2)).setY(yStart);
 					  			workerTilesInPlay.add(objectWorkerP2.get(drawLocWorker2.get(2)));
+					  			
+					  			//calculate score in here
+					  			calcScore(scoreCountP2, newGridUsed, grid.gridUsed, game, objectWorkerP2.get(drawLocWorker2.get(2)));
+
 					  			drawLocWorker2.remove(2);
 					  			drawLocWorker2.remove(2);
 
@@ -380,6 +409,10 @@ public class Handler extends MouseAdapter
 					  			objectWorkerP3.get(drawLocWorker3.get(2)).setX(xStart);
 					  			objectWorkerP3.get(drawLocWorker3.get(2)).setY(yStart);
 					  			workerTilesInPlay.add(objectWorkerP3.get(drawLocWorker3.get(2)));
+					  			
+					  			//calculate score in here
+					  			calcScore(scoreCountP3, newGridUsed, grid.gridUsed, game, objectWorkerP3.get(drawLocWorker3.get(2)));
+
 					  			drawLocWorker3.remove(2);
 					  			drawLocWorker3.remove(2);
 
@@ -393,6 +426,10 @@ public class Handler extends MouseAdapter
 					  			objectWorkerP4.get(drawLocWorker4.get(2)).setX(xStart);
 					  			objectWorkerP4.get(drawLocWorker4.get(2)).setY(yStart);
 					  			workerTilesInPlay.add(objectWorkerP4.get(drawLocWorker4.get(2)));
+					  			
+					  			//calculate score in here
+					  			calcScore(scoreCountP4, newGridUsed, grid.gridUsed, game, objectWorkerP4.get(drawLocWorker4.get(2)));
+
 					  			drawLocWorker4.remove(2);
 					  			drawLocWorker4.remove(2);
 
@@ -411,6 +448,10 @@ public class Handler extends MouseAdapter
 					  			objectWorkerP1.get(drawLocWorker1.get(3)).setX(xStart);
 					  			objectWorkerP1.get(drawLocWorker1.get(3)).setY(yStart);
 					  			workerTilesInPlay.add(objectWorkerP1.get(drawLocWorker1.get(3)));
+					  			
+					  			//calculate score in here
+					  			calcScore(scoreCountP1, newGridUsed, grid.gridUsed, game, objectWorkerP1.get(drawLocWorker1.get(3)));
+
 					  			drawLocWorker1.remove(3);
 					  			drawLocWorker1.remove(3);
 
@@ -424,6 +465,10 @@ public class Handler extends MouseAdapter
 					  			objectWorkerP2.get(drawLocWorker2.get(3)).setX(xStart);
 					  			objectWorkerP2.get(drawLocWorker2.get(3)).setY(yStart);
 					  			workerTilesInPlay.add(objectWorkerP2.get(drawLocWorker2.get(3)));
+					  			
+					  			//calculate score in here
+					  			calcScore(scoreCountP2, newGridUsed, grid.gridUsed, game, objectWorkerP2.get(drawLocWorker2.get(3)));
+
 					  			drawLocWorker2.remove(3);
 					  			drawLocWorker2.remove(3);
 
@@ -437,6 +482,10 @@ public class Handler extends MouseAdapter
 					  			objectWorkerP3.get(drawLocWorker3.get(3)).setX(xStart);
 					  			objectWorkerP3.get(drawLocWorker3.get(3)).setY(yStart);
 					  			workerTilesInPlay.add(objectWorkerP3.get(drawLocWorker3.get(3)));
+					  			
+					  			//calculate score in here
+					  			calcScore(scoreCountP3, newGridUsed, grid.gridUsed, game, objectWorkerP3.get(drawLocWorker3.get(3)));
+
 					  			drawLocWorker3.remove(3);
 					  			drawLocWorker3.remove(3);
 
@@ -450,6 +499,10 @@ public class Handler extends MouseAdapter
 					  			objectWorkerP4.get(drawLocWorker4.get(3)).setX(xStart);
 					  			objectWorkerP4.get(drawLocWorker4.get(3)).setY(yStart);
 					  			workerTilesInPlay.add(objectWorkerP4.get(drawLocWorker4.get(3)));
+					  			
+					  			//calculate score in here
+					  			calcScore(scoreCountP4, newGridUsed, grid.gridUsed, game, objectWorkerP4.get(drawLocWorker4.get(3)));
+
 					  			drawLocWorker4.remove(3);
 					  			drawLocWorker4.remove(3);
 
@@ -585,6 +638,11 @@ public class Handler extends MouseAdapter
 									//System.out.println("worker 1 returned");
 					  			objectJungle.get(drawLocJungle.get(1)).setX(xStart);
 					  			objectJungle.get(drawLocJungle.get(1)).setY(yStart);
+					  			
+					  			//store which jungle tile was stored in the newGridUsed location (to be used for score counting to id which tiles are adjacent)
+					  			jungleTileInPlay.put(newGridUsed, drawLocJungle.get(1));
+					  			
+					  			//remove from the draw deck so that it doesn't get it's position reset to the draw pile anymore
 					  			drawLocJungle.remove(1);
 					  			drawLocJungle.remove(1);
 					  			placedJungle1 = true;
@@ -595,6 +653,11 @@ public class Handler extends MouseAdapter
 									//System.out.println("worker 2 returned");
 									objectJungle.get(drawLocJungle.get(2)).setX(xStart);
 									objectJungle.get(drawLocJungle.get(2)).setY(yStart);
+									
+					  			//store which jungle tile was stored in the newGridUsed location (to be used for score counting to id which tiles are adjacent)
+					  			jungleTileInPlay.put(newGridUsed, drawLocJungle.get(2));
+					  			
+					  			//remove from the draw deck so that it doesn't get it's position reset to the draw pile anymore
 					  			drawLocJungle.remove(2);
 					  			drawLocJungle.remove(2);
 					  			placedJungle2 = true;
@@ -779,6 +842,203 @@ public class Handler extends MouseAdapter
 		score.put("Sun Tokens", 0);
 		score.put("Water", 0);
 		score.put("Temple", 0);
+	}
+	
+	//calculates and increments scores
+	//GameObject tile is whatevr the last tile placed is
+	public void calcScore(HashMap<String,Integer> scoreCount, String newGridUsed, HashMap<String,Integer> gridUsed, Game game, GameObject tile)
+	{
+		/*
+	  	objectWorkerP1.get(drawLocWorker1.get(1)).setX(xStart);
+			objectWorkerP1.get(drawLocWorker1.get(1)).setY(yStart);
+			workerTilesInPlay.add(objectWorkerP1.get(drawLocWorker1.get(1)));
+			drawLocWorker1.remove(1);
+			drawLocWorker1.remove(1);
+		*/
+		
+		int [] pos = {0,0,0,0};//initialize & declare an array to be used to determine where the scoring should take place (1's indicate scoring should take place there)
+		//note: the array is denoted as [top, right, bottom, left]. i.e. [1,0,0,0] means only the top position has a valid tile that needs scoring applied.
+		
+		String [] tiles = {null, null, null, null}; //stores the id/key of the tile that is adjacent to the tile that was just placed
+		//note: the array is denoted as [top, right, bottom, left].
+		
+		//these variables are used to pull in and store the values in the tiles
+		int scoreScheme[] = {0, 0, 0, 0};
+		int scoreValue = 0;
+		String scoreKey = " ";
+		
+		//int col = ( (int)(newGridUsed.charAt(0))-64 );
+		//int row = Character.getNumericValue(newGridUsed.charAt(1));
+		String coord = String.valueOf(newGridUsed.charAt(0)) + String.valueOf(newGridUsed.charAt(1));
+		String coordTop = String.valueOf(newGridUsed.charAt(0)) + String.valueOf( Character.getNumericValue( newGridUsed.charAt(1) ) - 1 );
+		String coordRight = (char)((int)(newGridUsed.charAt(0)) + 1) + String.valueOf(newGridUsed.charAt(1));
+		String coordBottom = String.valueOf(newGridUsed.charAt(0)) + String.valueOf(Character.getNumericValue( newGridUsed.charAt(1) ) + 1 );
+		String coordLeft = (char)((int)(newGridUsed.charAt(0)) - 1) + String.valueOf(newGridUsed.charAt(1));
+		
+		if(game.typeState == Game.TYPESTATE.Worker)
+		{
+			// Check if any jungle tile matches the coordinate around the worker tile that was just placed
+			if (jungleTileInPlay.containsKey(coordTop))
+			{
+				pos[0] = 1;
+				tiles[0] = jungleTileInPlay.get(coordTop);
+			}
+			if (jungleTileInPlay.containsKey(coordRight))
+			{
+				pos[1] = 1;
+				tiles[1] = jungleTileInPlay.get(coordRight);
+			}
+			if (jungleTileInPlay.containsKey(coordBottom))
+			{
+				pos[2] = 1;
+				tiles[2] = jungleTileInPlay.get(coordBottom);
+			}
+			if (jungleTileInPlay.containsKey(coordLeft))
+			{
+				pos[3] = 1;
+				tiles[3] = jungleTileInPlay.get(coordLeft);
+			}
+			
+			/*
+			for(int position: pos)
+			{
+				System.out.println(position);
+			}
+
+			for(String type: tiles)
+			{
+				System.out.println(type);
+			}
+			*/
+			
+			//based on which value of i, we will know which position we are calculating for (top = 0, right = 1, bottom = 2, left = 3)
+			//populates the arrays so that if there is a marketplace selling tile, it can look ahead to determine if there is a cacao tile that must be processed first
+			for(int i = 0; i < pos.length; i++)
+			{
+				//find tile reward type (cacao, temple, water, gold, sunworship token etc.)
+  			scoreKey = objectJungle.get(tiles[i]).getScoreKey();
+  			scoreValue = objectJungle.get(tiles[i]).getScoreValue();
+  			scoreScheme = tile.getScoreScheme();
+  			/*
+  			for(int position: scoreScheme)
+  			{
+  				System.out.println(position);
+  			}
+  			 */
+			}
+			
+			for(int i = 0; i < pos.length; i++)
+			{
+				//checks if the current position has a 1 stored (meaning that position needs the score changed)
+				//i is rotating clockwise between the top, right, bottom, left positions
+				if(pos[i] == 1)
+				{
+	  			//order of score count is 0 = Gold, 1 = Cacao,  2= SunToken, 3 = Water, 4 = Temple
+	  			//scorekeys are: Gold, Cacao, Sell, Water, Temple, SunToken
+	  			switch(scoreKey)
+	  			{
+		  			case "Gold":
+		  			{
+		  				scoreCount.put("Gold", scoreCount.get("Gold") + scoreValue * scoreScheme[i]);
+		  				break;
+		  			}
+		  			case "Cacao":
+		  			{
+		  				scoreCount.put("Cacao", scoreCount.get("Cacao") + scoreValue * scoreScheme[i]);
+		  				//System.out.println(scoreKey + " " + scoreValue + " " + scoreScheme[i]);
+		  				break;
+		  			}
+		  			case "Sell":
+		  			{
+		  				//check if there is a cacao plantation after the market sell price (because you have to collect your cacao beans first before selling)
+		  				for(int j = i; j < pos.length; j++)
+		  				{
+		  					if(objectJungle.get(tiles[j]).getScoreKey().equals("Cacao"))
+		  					{
+		  						//perform Cacao turn first
+				  				scoreCount.put("Cacao", scoreCount.get("Cacao") + scoreValue * scoreScheme[i]);
+				  				//set the position array location to 0 to say that it is already done
+				  				pos[j] = 0;
+		  					}
+		  				}
+		  				if(scoreCount.get("Cacao") >= scoreValue * scoreScheme[i])
+		  				{
+			  				scoreCount.put("Cacao", scoreCount.get("Cacao") - scoreScheme[i]);
+			  				scoreCount.put("Gold", scoreCount.get("Gold") + scoreValue * scoreScheme[i]);
+		  				}
+		  				else
+		  				{
+		  					scoreValue = scoreCount.get("Cacao");
+		  					scoreCount.replace("Cacao", 0);
+			  				scoreCount.put("Gold", scoreCount.get("Gold") + scoreValue * scoreScheme[i]);
+		  				}
+		  				break;
+		  			}
+		  			case "Water":
+		  			{
+		  				scoreCount.put("Water", scoreCount.get("Water") + scoreValue * scoreScheme[i]);
+		  				break;
+		  			}
+		  			case "Temple":
+		  			{
+		  				scoreCount.put("Temple", scoreCount.get("Temple") + scoreValue * scoreScheme[i]);
+		  				break;
+		  			}
+		  			case "SunToken":
+		  			{
+		  				scoreCount.put("SunToken", scoreCount.get("SunToken") + scoreValue * scoreScheme[i]);
+		  				break;
+		  			}
+	  			}
+	  			
+					/*
+					//based on which value of i, we will know which position we are calculating for (top = 0, right = 1, bottom = 2, left = 3)
+					switch(i)
+					{
+						case 0:
+						{
+							//find tile reward type (cacao, temple, water, etc.)
+			  			scoreKey = objectJungle.get(tiles[i]).getScoreKey();
+			  			scoreValue = objectJungle.get(tiles[i]).getScoreValue();
+							//get score scheme from worker tile
+							//get score value and key from jungle tile
+							//use these to populate and update teh score
+							
+							//multiply worker tile scorer by tile reward
+							//add to score
+							break;
+						}
+						case 1:
+						{
+							//find tile reward type (cacao, temple, water, etc.)
+			  			scoreKey = objectJungle.get(tiles[i]).getScoreKey();
+			  			scoreValue = objectJungle.get(tiles[i]).getScoreValue();
+							break;
+						}
+						case 2:
+						{
+							//find tile reward type (cacao, temple, water, etc.)
+			  			scoreKey = objectJungle.get(tiles[i]).getScoreKey();
+			  			scoreValue = objectJungle.get(tiles[i]).getScoreValue();
+							break;
+						}
+						case 3:
+						{
+							//find tile reward type (cacao, temple, water, etc.)
+			  			scoreKey = objectJungle.get(tiles[i]).getScoreKey();
+			  			scoreValue = objectJungle.get(tiles[i]).getScoreValue();
+							break;
+						}
+					}//end switch statement
+					*/
+				}// end if statement
+			}//end for loop
+		}
+		else if(game.typeState == Game.TYPESTATE.Jungle)
+		{
+			
+		}
+		
 	}
 	
 	//create method to add objects such as the tiles (worker and jungle)

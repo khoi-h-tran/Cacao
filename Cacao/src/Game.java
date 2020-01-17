@@ -505,7 +505,7 @@ public class Game extends Canvas implements Runnable
 	public void initGame()
 	{
 		//populate the coordinate of the game grid
-		grid.popGridCoord(this);
+		grid.popGridCoord(this, handler);
 		
 		//populate score cards for all players
 		for(int i = 1; i <= numPlayers; i++)
@@ -640,6 +640,7 @@ public class Game extends Canvas implements Runnable
 				handler.addObject(IDJungle.SellingPricex2 + String.valueOf(i),new JungleTiles(grid.gridCoord.get("E"), grid.gridCoord.get("5"), ID.JungleTile, IDJungle.SellingPricex2, TILE_DIM, sst), ID.JungleTile, null);
 				handler.addKey(IDJungle.SellingPricex2 + String.valueOf(i), ID.JungleTile, null);
 				remove1 = IDJungle.SellingPricex2 + String.valueOf(i);
+				handler.jungleTileInPlay.put("E5", remove1);//add the key for the removed tile to the tiles in play at the coorect coordinate
 			}
 			
 			else
@@ -790,6 +791,7 @@ public class Game extends Canvas implements Runnable
 					handler.addObject(IDJungle.Plantationx1 + String.valueOf(i),new JungleTiles(grid.gridCoord.get("D"), grid.gridCoord.get("4"), ID.JungleTile, IDJungle.Plantationx1, TILE_DIM, sst), ID.JungleTile, null);
 					handler.addKey(IDJungle.Plantationx1 + String.valueOf(i), ID.JungleTile, null);
 					remove2 = IDJungle.Plantationx1 + String.valueOf(i);
+					handler.jungleTileInPlay.put("D4", remove2);//add the key for the removed tile to the tiles in play at the coorect coordinate
 				}
 				
 				else

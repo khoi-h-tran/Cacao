@@ -30,7 +30,9 @@ public abstract class GameObject
 	
 	protected int velX, velY;
 	
-	protected int [] scoreScheme = new int [4];
+	public int [] scoreScheme = new int [4];//stores score scheme if it is a worker tile
+	private String scoreKey = " ";//stores what kind of jungle tile (e.g. temple, cacao, etc.)
+	private int scoreValue = 0;//stores the value (e.g. 2 cacao or 1)
 	
 	//to store and get the tile image stored in the subclass of worker tiles
 	//we need this to be able to rotate properly in the select class
@@ -233,4 +235,26 @@ public abstract class GameObject
 		this.scoreScheme[2] = c;
 		this.scoreScheme[3] = d;
 	}
+	
+	public String getScoreKey()
+	{
+		return scoreKey;
+	}
+
+	public int getScoreValue()
+	{
+		return scoreValue;
+	}
+
+	public void setScoreKey(String scoreKey)
+	{
+		this.scoreKey = scoreKey;
+	}
+
+	public void setScoreValue(int scoreValue)
+	{
+		this.scoreValue = scoreValue;
+	}
+	
+	
 }

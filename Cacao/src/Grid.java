@@ -46,7 +46,7 @@ public class Grid
 	int tempTurnCounter = 0;
 	
 	//populate the coordinates of the grid
-	public void popGridCoord(Game game)
+	public void popGridCoord(Game game, Handler handler)
 	{
 		//populates the rows (numerical)
 		for(int i = 0; i < Game.HEIGHT/game.TILE_DIM; i++)
@@ -133,10 +133,13 @@ public class Grid
 		yellowCoordsCol.clear();
 		yellowCoordsRow.clear();
 		//split up the column and row  value and store it in a hash map
-		for(String key: listOfKeys)
+		if(listOfKeys.size() > 0)
 		{
-			yellowCoordsCol.add( (int)(key.charAt(0))-64 );
-			yellowCoordsRow.add( Character.getNumericValue(key.charAt(1)) );
+			for(String key: listOfKeys)
+			{
+				yellowCoordsCol.add( (int)(key.charAt(0))-64 );
+				yellowCoordsRow.add( Character.getNumericValue(key.charAt(1)) );
+			}
 		}
 	}
 
