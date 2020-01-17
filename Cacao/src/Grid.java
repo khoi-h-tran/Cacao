@@ -45,6 +45,9 @@ public class Grid
 	//variable used in debugging to only output values once per turn
 	int tempTurnCounter = 0;
 	
+	//boolean variable to determine if a box is to be colored yellow or not
+	protected boolean colorYellow = false;
+	
 	//populate the coordinates of the grid
 	public void popGridCoord(Game game, Handler handler)
 	{
@@ -163,12 +166,15 @@ public class Grid
 		if(game.typeState == Game.TYPESTATE.Worker)
 		{
 			//clear the list if it was previously used to keep track of worker tiles
+			listOfKeys.clear();
+			/*
 			if(game.tileState == 2)
 			{
 				listOfKeys.clear();
 			}
+			*/
 			//indicate that the jungle tiles were used at least once
-			game.tileState = 1;
+			//game.tileState = 1;
 			//Get the list of keys whose value indicates the grid is being used (indicated by value = 1), 1 meaning jungle tile
 			listOfKeys = getAllKeysForValue(gridUsed, 1);
 			
@@ -194,15 +200,17 @@ public class Grid
 		if(game.typeState == Game.TYPESTATE.Jungle)
 		{
 		//clear the list if it was previously used to keep track of jungle tiles
+			listOfKeys.clear();
+			/*
 			if(game.tileState == 1)
 			{
 				listOfKeys.clear();
 			}
+			*/
 			//indicate that the worker tiles were used at least once
-			game.tileState = 2;
+			//game.tileState = 2;
 			//Get the list of keys whose value indicates the grid is being used (indicated by value = 2), 2 meaning worker tiles
 			listOfKeys = getAllKeysForValue(gridUsed, 2);
-			
 			//get the hash map of all keys with column and row indicator separated
 			tileUsedCoordSplit(listOfKeys, yellowCoordsCol, yellowCoordsRow);
 		}
@@ -212,7 +220,7 @@ public class Grid
 	//method to sort through grids and compare them to worker tiles or jungle tiles
 	public void checkBoxIsYellow(Graphics g, Game game)
 	{
-		boolean colorYellow = false;
+		colorYellow = false;
 		
 		//empty the list so it can be populated each time as the game ticks
 		//or else we will jus tkeep adding inifinite values
@@ -281,55 +289,30 @@ public class Grid
 		    	//vice versa for the columns
 			    if( ( ((i+1) == yellowCoordsRow.get(c)) && ((j+1) == yellowCoordsCol.get(c) - 1 || (j+1) == yellowCoordsCol.get(c) +1) ) || ((j+1) == yellowCoordsCol.get(c) && ((i+1) == yellowCoordsRow.get(c) - 1 || (i+1) == yellowCoordsRow.get(c) +1)) )
 			    {
+			    	
 			    	if(game.typeState == Game.TYPESTATE.Worker)
 			    	{
 				    	colorYellow = true;
 			    	}
 			    	else if(game.typeState == Game.TYPESTATE.Jungle)
-			    	{
-
-							for (int k = 0; k < yellowCoordsCol.size(); k++) 
+			    	{			    		
+							for (int k = 0; k < yellowCoordsCol.size(); k++)
 							{
-								if(yellowCoordsRow.get(c) != yellowCoordsRow.get(k) && yellowCoordsCol.get(c) != yellowCoordsCol.get(k))
+								if(yellowCoordsRow.get(c) != yellowCoordsRow.get(k) && yellowCoordsCol.get(c) != yellowCoordsCol.get(k) )
 								{
+					    		//System.out.print(yellowCoordsCol.get(c));
+					    		//System.out.println(yellowCoordsRow.get(c));
+					    		
+					    		//System.out.print(yellowCoordsCol.get(k));
+					    		//System.out.println(yellowCoordsRow.get(k));
 									if( ( ((i+1) == yellowCoordsRow.get(k)) && ((j+1) == yellowCoordsCol.get(k) - 1 || (j+1) == yellowCoordsCol.get(k) +1) ) || ((j+1) == yellowCoordsCol.get(k) && ((i+1) == yellowCoordsRow.get(k) - 1 || (i+1) == yellowCoordsRow.get(k) +1)) )
 							    {
 							    	colorYellow = true;
 							    	//System.out.println("yellow jungle true");
-							    	
-							    	//System.out.print((char)(entry.getKey() + 64));
-							    	//System.out.println(entry.getValue());
-							    	
-							    	//System.out.print((char)((i+1) + 64));
-							    	//System.out.println(j+1);
 							    }
 								}
 							}
 			    		
-		    			//count++;
-		    			/*
-			    		if((i+1) == entry.getValue() && (j+1) == entry.getKey() - 1)
-			    		{
-			    			count++;
-			    		}
-			    		if((i+1) == entry.getValue() && (j+1) == entry.getKey() + 1)
-			    		{
-			    			count++;
-			    		}
-			    		if((j+1) == entry.getKey() && (i+1) == entry.getValue() - 1 )
-			    		{
-			    			count++;
-			    		}
-			    		if((j+1) == entry.getKey() && (i+1) == entry.getValue() + 1)
-			    		{
-			    			count++;
-			    		}
-			    		
-			    		if(count > 1)
-			    		{
-					    	colorYellow = true;
-			    		}
-			    		*/
 			    	}
 			    }
 				}
@@ -393,10 +376,10 @@ public class Grid
 						//find all jungle tiles used
 						ArrayList<String> listOfKeysJungle = getAllKeysForValue(gridUsed, 1);
 						//find all worker tiles used
-						ArrayList<String> listOfKeysWorker = getAllKeysForValue(gridUsed, 2);
+						//ArrayList<String> listOfKeysWorker = getAllKeysForValue(gridUsed, 2);
 						
 						//combine the lists for all tiles
-						listOfKeysJungle.addAll(listOfKeysWorker);
+						//listOfKeysJungle.addAll(listOfKeysWorker);
 						
 						//check all keys used (see above line, it is for both workers and jungle combined into one list)
 						for ( String key : listOfKeysJungle ) 
@@ -414,6 +397,7 @@ public class Grid
 						if(notUsed == true)
 						{
 							validJungleTileLoc.add(String.valueOf((char)(j+65)) + String.valueOf(i + 1));
+							//System.out.println(String.valueOf((char)(j+65)) + String.valueOf(i + 1));
 						}
 						//System.out.print(String.valueOf((char)(i + 65)));
 						//System.out.println(String.valueOf(j + 1));

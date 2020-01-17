@@ -221,14 +221,14 @@ public class Game extends Canvas implements Runnable
 				}
 				*/
 				//grid.validJungleTile == true && 
-				if(grid.validJungleTileLoc.size() != 0)
+				//System.out.println(grid.validJungleTileLoc.size());
+				if(grid.validJungleTileLoc.size() != 0 && grid.colorYellow)
 				{
-					//System.out.println("jungle tile valid");
+					System.out.println("jungle tile valid");
 					turnState = TURNSTATE.Move;
-					
 				}
 				//grid.validJungleTile == false  && 
-				else if(grid.validJungleTileLoc.size() == 0)
+				else if(grid.validJungleTileLoc.size() == 0 && !grid.colorYellow)
 				{
 					//System.out.println("Change state to draw");
 					turnState = TURNSTATE.Draw;
@@ -279,6 +279,9 @@ public class Game extends Canvas implements Runnable
 				*/
 				//System.out.println("placing worker tile player 2");
 				nextPlayer = false;
+				gameState = STATE.Player2;
+				typeState = TYPESTATE.Worker;
+				turnState = TURNSTATE.Move;
 			}
 			else if((handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true) && turnState != TURNSTATE.Draw && jungleValidChecked == false)
 			{
@@ -295,6 +298,7 @@ public class Game extends Canvas implements Runnable
 				}
 				*/
 				//grid.validJungleTile == true && 
+				//System.out.println(grid.validJungleTileLoc.size());
 				if(grid.validJungleTileLoc.size() != 0)
 				{
 					//System.out.println("jungle tile valid");
@@ -306,7 +310,6 @@ public class Game extends Canvas implements Runnable
 					//System.out.println("Change state to draw" + grid.validJungleTileLoc.size());
 					turnState = TURNSTATE.Draw;
 					jungleValidChecked = false;
-
 				}
 			}
 			else if(turnState == TURNSTATE.Draw && nextPlayer == false)
@@ -358,6 +361,9 @@ public class Game extends Canvas implements Runnable
 			if(handler.placedWorker1 != true && handler.placedWorker2 != true && handler.placedWorker3 != true )
 			{
 				nextPlayer = false;
+				gameState = STATE.Player3;
+				typeState = TYPESTATE.Worker;
+				turnState = TURNSTATE.Move;
 				//System.out.println("placing worker tile plyaer 2");
 			}
 			else if((handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true) && turnState != TURNSTATE.Draw && jungleValidChecked == false)
@@ -428,6 +434,9 @@ public class Game extends Canvas implements Runnable
 			if(handler.placedWorker1 != true && handler.placedWorker2 != true && handler.placedWorker3 != true )
 			{
 				nextPlayer = false;
+				gameState = STATE.Player4;
+				typeState = TYPESTATE.Worker;
+				turnState = TURNSTATE.Move;
 				//System.out.println("placing worker tile plyaer 2");
 			}
 			else if((handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true) && turnState != TURNSTATE.Draw && jungleValidChecked == false)
