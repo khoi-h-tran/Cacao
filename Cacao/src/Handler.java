@@ -25,6 +25,7 @@ public class Handler extends MouseAdapter
 	private WorkerTiles workertiles;
 	private MouseEvent e;
 	private Grid grid;
+	private IDPlayer idplayer;
 	
 	//create a hash map for all jungle tiles
 	HashMap<String, GameObject> objectJungle = new HashMap<String, GameObject>();
@@ -99,7 +100,9 @@ public class Handler extends MouseAdapter
 	
 	//create a hash map to store which worker tiles are placed in which coordinate (used in countscore method)
 	HashMap<String, String> workerLocInPlay = new HashMap<String, String>();
-	
+	//create a hash map to distinguish which player the worker tile belongs to (or else you will search a worker tile and not know which player it matches to)
+	HashMap<String, IDPlayer> playerTileInPlay = new HashMap<String, IDPlayer>();
+
 	//create a hash map to store which jungle tiles are placed in which coordinate (used in countscore method)
 	HashMap<String, String> jungleTileInPlay = new HashMap<String, String>();
 	
@@ -311,6 +314,8 @@ public class Handler extends MouseAdapter
 									
 					  			//store which worker tile was stored in the newGridUsed location (to be used for score counting to id which tiles are adjacent)
 					  			workerLocInPlay.put(newGridUsed, drawLocWorker1.get(1));
+					  			//store which player the worker tile belongs to (need it for the score calculation)
+					  			playerTileInPlay.put(newGridUsed, IDPlayer.Player1);
 					  			
 					  			//calculate score in here
 					  			calcScore(scoreCountP1, newGridUsed, grid.gridUsed, game, objectWorkerP1.get(drawLocWorker1.get(1)));
@@ -333,6 +338,8 @@ public class Handler extends MouseAdapter
 					  			
 					  			//store which worker tile was stored in the newGridUsed location (to be used for score counting to id which tiles are adjacent)
 					  			workerLocInPlay.put(newGridUsed, drawLocWorker2.get(1));
+					  			//store which player the worker tile belongs to (need it for the score calculation)
+					  			playerTileInPlay.put(newGridUsed, IDPlayer.Player2);
 					  			
 					  			//calculate score in here
 					  			calcScore(scoreCountP2, newGridUsed, grid.gridUsed, game, objectWorkerP2.get(drawLocWorker2.get(1)));
@@ -355,6 +362,8 @@ public class Handler extends MouseAdapter
 
 					  			//store which worker tile was stored in the newGridUsed location (to be used for score counting to id which tiles are adjacent)
 					  			workerLocInPlay.put(newGridUsed, drawLocWorker3.get(1));
+					  			//store which player the worker tile belongs to (need it for the score calculation)
+					  			playerTileInPlay.put(newGridUsed, IDPlayer.Player3);
 					  			
 					  			//calculate score in here
 					  			calcScore(scoreCountP3, newGridUsed, grid.gridUsed, game, objectWorkerP3.get(drawLocWorker3.get(1)));
@@ -377,6 +386,8 @@ public class Handler extends MouseAdapter
 					  			
 					  			//store which worker tile was stored in the newGridUsed location (to be used for score counting to id which tiles are adjacent)
 					  			workerLocInPlay.put(newGridUsed, drawLocWorker4.get(1));
+					  			//store which player the worker tile belongs to (need it for the score calculation)
+					  			playerTileInPlay.put(newGridUsed, IDPlayer.Player4);
 					  			
 					  			//calculate score in here
 					  			calcScore(scoreCountP4, newGridUsed, grid.gridUsed, game, objectWorkerP4.get(drawLocWorker4.get(1)));
@@ -403,6 +414,8 @@ public class Handler extends MouseAdapter
 					  			
 					  			//store which worker tile was stored in the newGridUsed location (to be used for score counting to id which tiles are adjacent)
 					  			workerLocInPlay.put(newGridUsed, drawLocWorker1.get(2));
+					  			//store which player the worker tile belongs to (need it for the score calculation)
+					  			playerTileInPlay.put(newGridUsed, IDPlayer.Player1);
 					  			
 					  			//calculate score in here
 					  			calcScore(scoreCountP1, newGridUsed, grid.gridUsed, game, objectWorkerP1.get(drawLocWorker1.get(2)));
@@ -425,6 +438,8 @@ public class Handler extends MouseAdapter
 					  			
 					  			//store which worker tile was stored in the newGridUsed location (to be used for score counting to id which tiles are adjacent)
 					  			workerLocInPlay.put(newGridUsed, drawLocWorker2.get(2));
+					  			//store which player the worker tile belongs to (need it for the score calculation)
+					  			playerTileInPlay.put(newGridUsed, IDPlayer.Player2);
 					  			
 					  			//calculate score in here
 					  			calcScore(scoreCountP2, newGridUsed, grid.gridUsed, game, objectWorkerP2.get(drawLocWorker2.get(2)));
@@ -447,6 +462,8 @@ public class Handler extends MouseAdapter
 					  			
 					  			//store which worker tile was stored in the newGridUsed location (to be used for score counting to id which tiles are adjacent)
 					  			workerLocInPlay.put(newGridUsed, drawLocWorker3.get(2));
+					  			//store which player the worker tile belongs to (need it for the score calculation)
+					  			playerTileInPlay.put(newGridUsed, IDPlayer.Player3);
 					  			
 					  			//calculate score in here
 					  			calcScore(scoreCountP3, newGridUsed, grid.gridUsed, game, objectWorkerP3.get(drawLocWorker3.get(2)));
@@ -469,6 +486,8 @@ public class Handler extends MouseAdapter
 					  			
 					  			//store which worker tile was stored in the newGridUsed location (to be used for score counting to id which tiles are adjacent)
 					  			workerLocInPlay.put(newGridUsed, drawLocWorker4.get(2));
+					  			//store which player the worker tile belongs to (need it for the score calculation)
+					  			playerTileInPlay.put(newGridUsed, IDPlayer.Player4);
 					  			
 					  			//calculate score in here
 					  			calcScore(scoreCountP4, newGridUsed, grid.gridUsed, game, objectWorkerP4.get(drawLocWorker4.get(2)));
@@ -496,6 +515,8 @@ public class Handler extends MouseAdapter
 					  			
 					  			//store which worker tile was stored in the newGridUsed location (to be used for score counting to id which tiles are adjacent)
 					  			workerLocInPlay.put(newGridUsed, drawLocWorker1.get(3));
+					  			//store which player the worker tile belongs to (need it for the score calculation)
+					  			playerTileInPlay.put(newGridUsed, IDPlayer.Player1);
 					  			
 					  			//calculate score in here
 					  			calcScore(scoreCountP1, newGridUsed, grid.gridUsed, game, objectWorkerP1.get(drawLocWorker1.get(3)));
@@ -518,6 +539,8 @@ public class Handler extends MouseAdapter
 					  			
 					  			//store which worker tile was stored in the newGridUsed location (to be used for score counting to id which tiles are adjacent)
 					  			workerLocInPlay.put(newGridUsed, drawLocWorker2.get(3));
+					  			//store which player the worker tile belongs to (need it for the score calculation)
+					  			playerTileInPlay.put(newGridUsed, IDPlayer.Player2);
 					  			
 					  			//calculate score in here
 					  			calcScore(scoreCountP2, newGridUsed, grid.gridUsed, game, objectWorkerP2.get(drawLocWorker2.get(3)));
@@ -540,6 +563,8 @@ public class Handler extends MouseAdapter
 					  			
 					  			//store which worker tile was stored in the newGridUsed location (to be used for score counting to id which tiles are adjacent)
 					  			workerLocInPlay.put(newGridUsed, drawLocWorker3.get(3));
+					  			//store which player the worker tile belongs to (need it for the score calculation)
+					  			playerTileInPlay.put(newGridUsed, IDPlayer.Player3);
 					  			
 					  			//calculate score in here
 					  			calcScore(scoreCountP3, newGridUsed, grid.gridUsed, game, objectWorkerP3.get(drawLocWorker3.get(3)));
@@ -562,6 +587,8 @@ public class Handler extends MouseAdapter
 					  			
 					  			//store which worker tile was stored in the newGridUsed location (to be used for score counting to id which tiles are adjacent)
 					  			workerLocInPlay.put(newGridUsed, drawLocWorker4.get(3));
+					  			//store which player the worker tile belongs to (need it for the score calculation)
+					  			playerTileInPlay.put(newGridUsed, IDPlayer.Player4);
 					  			
 					  			//calculate score in here
 					  			calcScore(scoreCountP4, newGridUsed, grid.gridUsed, game, objectWorkerP4.get(drawLocWorker4.get(3)));
@@ -931,6 +958,8 @@ public class Handler extends MouseAdapter
 		String [] tiles = {null, null, null, null}; //stores the id/key of the tile that is adjacent to the tile that was just placed
 		//note: the array is denoted as [top, right, bottom, left].
 		
+		IDPlayer [] player = {null, null, null, null}; //Stores which players surround the jungle tile being scored (e.g. which player does each worker tile belong to)
+		
 		//these variables are used to pull in and store the values in the tiles
 		int scoreScheme[] = {0, 0, 0, 0};
 		int scoreValue = 0;
@@ -1036,16 +1065,147 @@ public class Handler extends MouseAdapter
 			  					{
 			  		  			scoreValue = objectJungle.get(tiles[j]).getScoreValue();
 			  						//perform Cacao turn first
-					  				scoreCount.put("Cacao", scoreCount.get("Cacao") + scoreValue * scoreScheme[i]);
+					  				scoreCount.put("Cacao", scoreCount.get("Cacao") + scoreValue * scoreScheme[j]);
 					  				//System.out.println("Cacao Added Before Selling Tile" + scoreValue*scoreScheme[i]);
 					  				//set the position array location to 0 to say that it is already done
 					  				pos[j] = 0;
 			  					}
 		  					}
 		  				}
-		  				if(scoreCount.get("Cacao") >= scoreScheme[i])
+		  				if(scoreCount.get("Cacao") > scoreScheme[i])
 		  				{
 	  		  			scoreValue = objectJungle.get(tiles[i]).getScoreValue();
+			  				scoreCount.put("Cacao", scoreCount.get("Cacao") - scoreScheme[i]);
+			  				scoreCount.put("Gold", scoreCount.get("Gold") + scoreValue * scoreScheme[i]);
+			  				//System.out.println("Enough Beans, subtract cacao" + " -" + scoreScheme[i]);
+			  				//System.out.println("Enough Beans, add gold" + scoreValue * scoreScheme[i]);
+		  				}
+		  				else if (scoreCount.get("Cacao") < scoreScheme[i])
+		  				{
+		  					scoreScheme[i] = scoreCount.get("Cacao");
+		  					scoreCount.replace("Cacao", 0);
+			  				scoreCount.put("Gold", scoreCount.get("Gold") + scoreValue * scoreScheme[i]);
+			  				//System.out.println("Not enough Beans, add gold" + scoreValue * scoreScheme[i] + " by selling cacao" + scoreValue);
+		  				}
+		  				else if(scoreCount.get("Cacao") == 0)
+		  				{
+		  					
+		  				}
+		  				break;
+		  			}
+		  			case "Water":
+		  			{
+		  				scoreCount.put("Water", scoreCount.get("Water") + scoreValue * scoreScheme[i]);
+		  				break;
+		  			}
+		  			case "Temple":
+		  			{
+		  				scoreCount.put("Temple", scoreCount.get("Temple") + scoreValue * scoreScheme[i]);
+		  				break;
+		  			}
+		  			case "SunToken":
+		  			{
+		  				scoreCount.put("Sun Tokens", scoreCount.get("Sun Tokens") + scoreValue * scoreScheme[i]);
+		  				break;
+		  			}
+	  			}
+				}// end if statement
+			}//end for loop
+		}
+		else if(game.typeState == Game.TYPESTATE.Jungle)
+		{
+			// Check if any jungle tile matches the coordinate around the worker tile that was just placed
+			if (workerLocInPlay.containsKey(coordTop))
+			{
+				pos[0] = 1; //verifies if something is in the position at the top of the jungle tile played
+				tiles[0] = workerLocInPlay.get(coordTop);//checks which worker type it is
+				player[0] = playerTileInPlay.get(coordTop);// checks which playe rthe tile belongs to
+			}
+			if (workerLocInPlay.containsKey(coordRight))
+			{
+				pos[1] = 1;
+				tiles[1] = workerLocInPlay.get(coordRight);
+				player[1] = playerTileInPlay.get(coordRight);
+			}
+			if (workerLocInPlay.containsKey(coordBottom))
+			{
+				pos[2] = 1;
+				tiles[2] = workerLocInPlay.get(coordBottom);
+				player[2] = playerTileInPlay.get(coordBottom);
+			}
+			if (workerLocInPlay.containsKey(coordLeft))
+			{
+				pos[3] = 1;
+				tiles[3] = workerLocInPlay.get(coordLeft);
+				player[3] = playerTileInPlay.get(coordLeft);
+			}
+			
+			for(int i = 0; i < pos.length; i++)
+			{
+				//checks if the current position has a 1 stored (meaning that position needs the score changed)
+				//i is rotating clockwise between the top, right, bottom, left positions
+				if(pos[i] == 1)
+				{
+					//store score key and value of the jungle tile (e.g. cacao and 2x)
+	  			scoreKey = tile.getScoreKey();
+	  			scoreValue = tile.getScoreValue();
+	  			
+	  			//figure out which player each tile belongs to and assign the correct score count hash map to updat ethe score and pull the score scheme
+	  			switch(player[i])
+	  			{
+		  			case Player1:
+		  			{
+		  				scoreCount = scoreCountP1;
+		  				scoreScheme = objectWorkerP1.get(tiles[i]).getScoreScheme();
+		  				break;
+		  			}
+		  			case Player2:
+		  			{
+		  				scoreCount = scoreCountP2;
+		  				scoreScheme = objectWorkerP2.get(tiles[i]).getScoreScheme();
+		  				break;
+		  			}
+		  			case Player3:
+		  			{
+		  				scoreCount = scoreCountP3;
+		  				scoreScheme = objectWorkerP3.get(tiles[i]).getScoreScheme();
+		  				break;
+		  			}
+		  			case Player4:
+		  			{
+		  				scoreCount = scoreCountP4;
+		  				scoreScheme = objectWorkerP4.get(tiles[i]).getScoreScheme();
+		  				break;
+		  			}
+	  			}
+	  			
+	  			//swap the score scheme around (i.e. if the jungle tile has the score scheme on the left (meaning 0,0,1,0) positon, then we want the score scheme for the worker tile that is 180 on the other side)
+	  			int tempScore = scoreScheme[0];
+	  			scoreScheme[0] = scoreScheme[2];
+	  			scoreScheme[2] = tempScore;
+	  			tempScore = scoreScheme[1];
+	  			scoreScheme[1] = scoreScheme[3];
+	  			scoreScheme[3] = tempScore;
+	  			
+	  			//order of score count is 0 = Gold, 1 = Cacao,  2= SunToken, 3 = Water, 4 = Temple
+	  			//scorekeys are: Gold, Cacao, Sell, Water, Temple, SunToken
+	  			switch(scoreKey)
+	  			{
+		  			case "Gold":
+		  			{
+		  				scoreCount.put("Gold", scoreCount.get("Gold") + scoreValue * scoreScheme[i]);
+		  				break;
+		  			}
+		  			case "Cacao":
+		  			{
+		  				scoreCount.put("Cacao", scoreCount.get("Cacao") + scoreValue * scoreScheme[i]);
+		  				//System.out.println("Cacao Added to Score Tile" + scoreValue*scoreScheme[i]);
+		  				break;
+		  			}
+		  			case "Sell":
+		  			{
+		  				if(scoreCount.get("Cacao") >= scoreScheme[i])
+		  				{
 			  				scoreCount.put("Cacao", scoreCount.get("Cacao") - scoreScheme[i]);
 			  				scoreCount.put("Gold", scoreCount.get("Gold") + scoreValue * scoreScheme[i]);
 			  				//System.out.println("Enough Beans, subtract cacao" + " -" + scoreScheme[i]);
@@ -1076,73 +1236,9 @@ public class Handler extends MouseAdapter
 		  				break;
 		  			}
 	  			}
-	  			
-					/*
-					//based on which value of i, we will know which position we are calculating for (top = 0, right = 1, bottom = 2, left = 3)
-					switch(i)
-					{
-						case 0:
-						{
-							//find tile reward type (cacao, temple, water, etc.)
-			  			scoreKey = objectJungle.get(tiles[i]).getScoreKey();
-			  			scoreValue = objectJungle.get(tiles[i]).getScoreValue();
-							//get score scheme from worker tile
-							//get score value and key from jungle tile
-							//use these to populate and update teh score
-							
-							//multiply worker tile scorer by tile reward
-							//add to score
-							break;
-						}
-						case 1:
-						{
-							//find tile reward type (cacao, temple, water, etc.)
-			  			scoreKey = objectJungle.get(tiles[i]).getScoreKey();
-			  			scoreValue = objectJungle.get(tiles[i]).getScoreValue();
-							break;
-						}
-						case 2:
-						{
-							//find tile reward type (cacao, temple, water, etc.)
-			  			scoreKey = objectJungle.get(tiles[i]).getScoreKey();
-			  			scoreValue = objectJungle.get(tiles[i]).getScoreValue();
-							break;
-						}
-						case 3:
-						{
-							//find tile reward type (cacao, temple, water, etc.)
-			  			scoreKey = objectJungle.get(tiles[i]).getScoreKey();
-			  			scoreValue = objectJungle.get(tiles[i]).getScoreValue();
-							break;
-						}
-					}//end switch statement
-					*/
 				}// end if statement
 			}//end for loop
-		}
-		else if(game.typeState == Game.TYPESTATE.Jungle)
-		{
-			// Check if any jungle tile matches the coordinate around the worker tile that was just placed
-			if (workerLocInPlay.containsKey(coordTop))
-			{
-				pos[0] = 1;
-				tiles[0] = workerLocInPlay.get(coordTop);
-			}
-			if (workerLocInPlay.containsKey(coordRight))
-			{
-				pos[1] = 1;
-				tiles[1] = workerLocInPlay.get(coordRight);
-			}
-			if (workerLocInPlay.containsKey(coordBottom))
-			{
-				pos[2] = 1;
-				tiles[2] = workerLocInPlay.get(coordBottom);
-			}
-			if (workerLocInPlay.containsKey(coordLeft))
-			{
-				pos[3] = 1;
-				tiles[3] = workerLocInPlay.get(coordLeft);
-			}
+			
 		}
 		
 	}

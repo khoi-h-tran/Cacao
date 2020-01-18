@@ -59,6 +59,8 @@ public class WorkerTiles extends GameObject
 				break;
 		}
 		
+		setiDPlayer(idplayer);
+		
 		switch(idworker)
 		{
 			//total 1

@@ -21,6 +21,9 @@ public abstract class GameObject
 	protected ID id;
 	protected IDJungle idjungle;
 	
+	//create a variable to get which player the tile belongs to
+	protected IDPlayer iDPlayer;
+	
 	//rotation variable for worker tile
 	//0 = none, 1 = 90 deg, 2 = 90deg x2, 3 = 90 deg x 3, reset to 0 after 3
 	protected int rotation = 0;
@@ -255,6 +258,16 @@ public abstract class GameObject
 	{
 		this.scoreValue = scoreValue;
 	}
-	
-	
+
+	public IDPlayer getiDPlayer()
+	{
+
+		return iDPlayer;
+	}
+
+	public void setiDPlayer(IDPlayer idplayer)
+	{
+		this.iDPlayer = idplayer;
+	}
+		
 }
