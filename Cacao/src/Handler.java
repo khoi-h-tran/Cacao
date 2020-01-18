@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -122,6 +124,9 @@ public class Handler extends MouseAdapter
 	public boolean placedWorker3 = false;
 	public boolean placedJungle1 = false;
 	public boolean placedJungle2 = false;
+	//create boolean variable to let turn rotation know if a player has an empty deck
+	//True = empty.
+	public boolean deckKeysEmpty = false;
 	
 	//create game loop for objects
 	
@@ -194,23 +199,35 @@ public class Handler extends MouseAdapter
 			{
 				if(game.gameState == Game.STATE.Player1)
 				{
-					objectWorkerP1.get(drawLocWorker1.get(1)).setX(select.mxH - game.TILE_DIM/2);
-					objectWorkerP1.get(drawLocWorker1.get(1)).setY(select.myH - game.TILE_DIM/2);
+					if(!drawLocWorker1.isEmpty())
+					{
+						objectWorkerP1.get(drawLocWorker1.get(1)).setX(select.mxH - game.TILE_DIM/2);
+						objectWorkerP1.get(drawLocWorker1.get(1)).setY(select.myH - game.TILE_DIM/2);
+					}
 				}
 				else if(game.gameState == Game.STATE.Player2)
 				{
-					objectWorkerP2.get(drawLocWorker2.get(1)).setX(select.mxH - game.TILE_DIM/2);
-					objectWorkerP2.get(drawLocWorker2.get(1)).setY(select.myH - game.TILE_DIM/2);
+					if(!drawLocWorker2.isEmpty())
+					{
+						objectWorkerP2.get(drawLocWorker2.get(1)).setX(select.mxH - game.TILE_DIM/2);
+						objectWorkerP2.get(drawLocWorker2.get(1)).setY(select.myH - game.TILE_DIM/2);
+					}
 				}
 				else if(game.gameState == Game.STATE.Player3)
 				{
-					objectWorkerP3.get(drawLocWorker3.get(1)).setX(select.mxH - game.TILE_DIM/2);
-					objectWorkerP3.get(drawLocWorker3.get(1)).setY(select.myH - game.TILE_DIM/2);
+					if(!drawLocWorker3.isEmpty())
+					{
+						objectWorkerP3.get(drawLocWorker3.get(1)).setX(select.mxH - game.TILE_DIM/2);
+						objectWorkerP3.get(drawLocWorker3.get(1)).setY(select.myH - game.TILE_DIM/2);
+					}
 				}
 				else if(game.gameState == Game.STATE.Player4)
 				{
-					objectWorkerP4.get(drawLocWorker4.get(1)).setX(select.mxH - game.TILE_DIM/2);
-					objectWorkerP4.get(drawLocWorker4.get(1)).setY(select.myH - game.TILE_DIM/2);
+					if(!drawLocWorker4.isEmpty())
+					{
+						objectWorkerP4.get(drawLocWorker4.get(1)).setX(select.mxH - game.TILE_DIM/2);
+						objectWorkerP4.get(drawLocWorker4.get(1)).setY(select.myH - game.TILE_DIM/2);
+					}
 				}
 
 			}
@@ -218,46 +235,70 @@ public class Handler extends MouseAdapter
 			{
 				if(game.gameState == Game.STATE.Player1)
 				{
-					objectWorkerP1.get(drawLocWorker1.get(2)).setX(select.mxH - game.TILE_DIM/2);
-					objectWorkerP1.get(drawLocWorker1.get(2)).setY(select.myH - game.TILE_DIM/2);
+					if(!drawLocWorker1.isEmpty())
+					{
+						objectWorkerP1.get(drawLocWorker1.get(2)).setX(select.mxH - game.TILE_DIM/2);
+						objectWorkerP1.get(drawLocWorker1.get(2)).setY(select.myH - game.TILE_DIM/2);
+					}
 				}
 				else if(game.gameState == Game.STATE.Player2)
 				{
-					objectWorkerP2.get(drawLocWorker2.get(2)).setX(select.mxH - game.TILE_DIM/2);
-					objectWorkerP2.get(drawLocWorker2.get(2)).setY(select.myH - game.TILE_DIM/2);
+					if(!drawLocWorker2.isEmpty())
+					{
+						objectWorkerP2.get(drawLocWorker2.get(2)).setX(select.mxH - game.TILE_DIM/2);
+						objectWorkerP2.get(drawLocWorker2.get(2)).setY(select.myH - game.TILE_DIM/2);
+					}
 				}
 				else if(game.gameState == Game.STATE.Player3)
 				{
-					objectWorkerP3.get(drawLocWorker3.get(2)).setX(select.mxH - game.TILE_DIM/2);
-					objectWorkerP3.get(drawLocWorker3.get(2)).setY(select.myH - game.TILE_DIM/2);
+					if(!drawLocWorker3.isEmpty())
+					{
+						objectWorkerP3.get(drawLocWorker3.get(2)).setX(select.mxH - game.TILE_DIM/2);
+						objectWorkerP3.get(drawLocWorker3.get(2)).setY(select.myH - game.TILE_DIM/2);
+					}
 				}
 				else if(game.gameState == Game.STATE.Player4)
 				{
-					objectWorkerP4.get(drawLocWorker4.get(2)).setX(select.mxH - game.TILE_DIM/2);
-					objectWorkerP4.get(drawLocWorker4.get(2)).setY(select.myH - game.TILE_DIM/2);
+					if(!drawLocWorker4.isEmpty())
+					{
+						objectWorkerP4.get(drawLocWorker4.get(2)).setX(select.mxH - game.TILE_DIM/2);
+						objectWorkerP4.get(drawLocWorker4.get(2)).setY(select.myH - game.TILE_DIM/2);
+					}
 				}
 			}
 			else if(select.worker3Hold == true  && game.drawWorker3 == false)
 			{
 				if(game.gameState == Game.STATE.Player1)
 				{
-					objectWorkerP1.get(drawLocWorker1.get(3)).setX(select.mxH - game.TILE_DIM/2);
-					objectWorkerP1.get(drawLocWorker1.get(3)).setY(select.myH - game.TILE_DIM/2);
+					if(!drawLocWorker1.isEmpty())
+					{
+						objectWorkerP1.get(drawLocWorker1.get(3)).setX(select.mxH - game.TILE_DIM/2);
+						objectWorkerP1.get(drawLocWorker1.get(3)).setY(select.myH - game.TILE_DIM/2);
+					}
 				}
 				else if(game.gameState == Game.STATE.Player2)
 				{
-					objectWorkerP2.get(drawLocWorker2.get(3)).setX(select.mxH - game.TILE_DIM/2);
-					objectWorkerP2.get(drawLocWorker2.get(3)).setY(select.myH - game.TILE_DIM/2);
+					if(!drawLocWorker2.isEmpty())
+					{
+						objectWorkerP2.get(drawLocWorker2.get(3)).setX(select.mxH - game.TILE_DIM/2);
+						objectWorkerP2.get(drawLocWorker2.get(3)).setY(select.myH - game.TILE_DIM/2);
+					}
 				}
 				else if(game.gameState == Game.STATE.Player3)
 				{
-					objectWorkerP3.get(drawLocWorker3.get(3)).setX(select.mxH - game.TILE_DIM/2);
-					objectWorkerP3.get(drawLocWorker3.get(3)).setY(select.myH - game.TILE_DIM/2);
+					if(!drawLocWorker3.isEmpty())
+					{
+						objectWorkerP3.get(drawLocWorker3.get(3)).setX(select.mxH - game.TILE_DIM/2);
+						objectWorkerP3.get(drawLocWorker3.get(3)).setY(select.myH - game.TILE_DIM/2);
+					}
 				}
 				else if(game.gameState == Game.STATE.Player4)
 				{
-					objectWorkerP4.get(drawLocWorker4.get(3)).setX(select.mxH - game.TILE_DIM/2);
-					objectWorkerP4.get(drawLocWorker4.get(3)).setY(select.myH - game.TILE_DIM/2);
+					if(!drawLocWorker4.isEmpty())
+					{
+						objectWorkerP4.get(drawLocWorker4.get(3)).setX(select.mxH - game.TILE_DIM/2);
+						objectWorkerP4.get(drawLocWorker4.get(3)).setY(select.myH - game.TILE_DIM/2);
+					}
 				}
 			}
 		}
@@ -267,13 +308,19 @@ public class Handler extends MouseAdapter
 			//check if jungle tiles are left clicked and move to follow cursor if it is held
 			if(select.jungle1Hold == true)
 			{
-				objectJungle.get(drawLocJungle.get(1)).setX(select.mxH - game.TILE_DIM/2);
-				objectJungle.get(drawLocJungle.get(1)).setY(select.myH - game.TILE_DIM/2);
+				if(!drawLocJungle.isEmpty())
+				{
+					objectJungle.get(drawLocJungle.get(1)).setX(select.mxH - game.TILE_DIM/2);
+					objectJungle.get(drawLocJungle.get(1)).setY(select.myH - game.TILE_DIM/2);
+				}
 			}
 			else if(select.jungle2Hold == true)
 			{
-				objectJungle.get(drawLocJungle.get(2)).setX(select.mxH - game.TILE_DIM/2);
-				objectJungle.get(drawLocJungle.get(2)).setY(select.myH - game.TILE_DIM/2);
+				if(!drawLocJungle.isEmpty())
+				{
+					objectJungle.get(drawLocJungle.get(2)).setX(select.mxH - game.TILE_DIM/2);
+					objectJungle.get(drawLocJungle.get(2)).setY(select.myH - game.TILE_DIM/2);
+				}
 			}
 		}
 
@@ -301,7 +348,7 @@ public class Handler extends MouseAdapter
 							grid.gridUsed.replace(newGridUsed, 2);
 							
 							//if it is an acceptable square, place the correct object at the new location
-					    if(select.mouse1Released == true)
+					    if(select.mouse1Released == true && drawLocWorker1.containsKey(1))
 					    {
 								//System.out.println("worker 1 returned");
 								if(game.gameState == Game.STATE.Player1)
@@ -401,7 +448,7 @@ public class Handler extends MouseAdapter
 									game.drawWorker1 = true;
 								}
 					    }
-					    if(select.mouse2Released == true)
+					    if(select.mouse2Released == true && drawLocWorker2.containsKey(2))
 					    {
 								//System.out.println("worker 2 returned");
 								if(game.gameState == Game.STATE.Player1)
@@ -502,7 +549,7 @@ public class Handler extends MouseAdapter
 								}
 
 					    }
-					    if(select.mouse3Released == true)
+					    if(select.mouse3Released == true && drawLocWorker3.containsKey(3))
 					    {
 								//System.out.println("worker 3 returned");
 								if(game.gameState == Game.STATE.Player1)
@@ -618,23 +665,36 @@ public class Handler extends MouseAdapter
 					//System.out.println("worker 1 returned");
 					if(game.gameState == Game.STATE.Player1)
 					{
-		  			objectWorkerP1.get(drawLocWorker1.get(1)).setX(game.draw1WorkerLocX);
-		  			objectWorkerP1.get(drawLocWorker1.get(1)).setY(game.draw1WorkerLocY);
+						if(drawLocWorker1.containsKey(1))
+						{
+			  			objectWorkerP1.get(drawLocWorker1.get(1)).setX(game.draw1WorkerLocX);
+			  			objectWorkerP1.get(drawLocWorker1.get(1)).setY(game.draw1WorkerLocY);
+						}
 					}
 					else if(game.gameState == Game.STATE.Player2)
 					{
-		  			objectWorkerP2.get(drawLocWorker2.get(1)).setX(game.draw1WorkerLocX);
-		  			objectWorkerP2.get(drawLocWorker2.get(1)).setY(game.draw1WorkerLocY);
+						if(drawLocWorker2.containsKey(1))
+						{
+			  			objectWorkerP2.get(drawLocWorker2.get(1)).setX(game.draw1WorkerLocX);
+			  			objectWorkerP2.get(drawLocWorker2.get(1)).setY(game.draw1WorkerLocY);
+						}
+
 					}
 					else if(game.gameState == Game.STATE.Player3)
 					{
-		  			objectWorkerP3.get(drawLocWorker3.get(1)).setX(game.draw1WorkerLocX);
-		  			objectWorkerP3.get(drawLocWorker3.get(1)).setY(game.draw1WorkerLocY);
+						if(drawLocWorker3.containsKey(1))
+						{
+			  			objectWorkerP3.get(drawLocWorker3.get(1)).setX(game.draw1WorkerLocX);
+			  			objectWorkerP3.get(drawLocWorker3.get(1)).setY(game.draw1WorkerLocY);
+						}
 					}
 					else if(game.gameState == Game.STATE.Player4)
 					{
-		  			objectWorkerP4.get(drawLocWorker4.get(1)).setX(game.draw1WorkerLocX);
-		  			objectWorkerP4.get(drawLocWorker4.get(1)).setY(game.draw1WorkerLocY);
+						if(drawLocWorker4.containsKey(1))
+						{
+			  			objectWorkerP4.get(drawLocWorker4.get(1)).setX(game.draw1WorkerLocX);
+			  			objectWorkerP4.get(drawLocWorker4.get(1)).setY(game.draw1WorkerLocY);
+						}
 					}
 		    }
 		    if(placedWorker2 == false)
@@ -642,23 +702,35 @@ public class Handler extends MouseAdapter
 					//System.out.println("worker 2 returned");
 					if(game.gameState == Game.STATE.Player1)
 					{
-		  			objectWorkerP1.get(drawLocWorker1.get(2)).setX(game.draw2WorkerLocX);
-		  			objectWorkerP1.get(drawLocWorker1.get(2)).setY(game.draw2WorkerLocY);
+						if(drawLocWorker1.containsKey(2))
+						{
+			  			objectWorkerP1.get(drawLocWorker1.get(2)).setX(game.draw2WorkerLocX);
+			  			objectWorkerP1.get(drawLocWorker1.get(2)).setY(game.draw2WorkerLocY);
+						}
 					}
 					else if(game.gameState == Game.STATE.Player2)
 					{
-		  			objectWorkerP2.get(drawLocWorker2.get(2)).setX(game.draw2WorkerLocX);
-		  			objectWorkerP2.get(drawLocWorker2.get(2)).setY(game.draw2WorkerLocY);
+						if(drawLocWorker2.containsKey(2))
+						{
+			  			objectWorkerP2.get(drawLocWorker2.get(2)).setX(game.draw2WorkerLocX);
+			  			objectWorkerP2.get(drawLocWorker2.get(2)).setY(game.draw2WorkerLocY);
+						}
 					}
 					else if(game.gameState == Game.STATE.Player3)
 					{
-		  			objectWorkerP3.get(drawLocWorker3.get(2)).setX(game.draw2WorkerLocX);
-		  			objectWorkerP3.get(drawLocWorker3.get(2)).setY(game.draw2WorkerLocY);
+						if(drawLocWorker3.containsKey(2))
+						{
+			  			objectWorkerP3.get(drawLocWorker3.get(2)).setX(game.draw2WorkerLocX);
+			  			objectWorkerP3.get(drawLocWorker3.get(2)).setY(game.draw2WorkerLocY);
+						}
 					}
 					else if(game.gameState == Game.STATE.Player4)
 					{
-		  			objectWorkerP4.get(drawLocWorker4.get(2)).setX(game.draw2WorkerLocX);
-		  			objectWorkerP4.get(drawLocWorker4.get(2)).setY(game.draw2WorkerLocY);
+						if(drawLocWorker4.containsKey(2))
+						{
+			  			objectWorkerP4.get(drawLocWorker4.get(2)).setX(game.draw2WorkerLocX);
+			  			objectWorkerP4.get(drawLocWorker4.get(2)).setY(game.draw2WorkerLocY);
+						}
 					}
 
 		    }
@@ -667,23 +739,35 @@ public class Handler extends MouseAdapter
 					//System.out.println("worker 3 returned");
 					if(game.gameState == Game.STATE.Player1)
 					{
-		  			objectWorkerP1.get(drawLocWorker1.get(3)).setX(game.draw3WorkerLocX);
-		  			objectWorkerP1.get(drawLocWorker1.get(3)).setY(game.draw3WorkerLocY);
+						if(drawLocWorker1.containsKey(3))
+						{
+			  			objectWorkerP1.get(drawLocWorker1.get(3)).setX(game.draw3WorkerLocX);
+			  			objectWorkerP1.get(drawLocWorker1.get(3)).setY(game.draw3WorkerLocY);
+						}
 					}
 					else if(game.gameState == Game.STATE.Player2)
 					{
-		  			objectWorkerP2.get(drawLocWorker2.get(3)).setX(game.draw3WorkerLocX);
-		  			objectWorkerP2.get(drawLocWorker2.get(3)).setY(game.draw3WorkerLocY);
+						if(drawLocWorker2.containsKey(3))
+						{
+			  			objectWorkerP2.get(drawLocWorker2.get(3)).setX(game.draw3WorkerLocX);
+			  			objectWorkerP2.get(drawLocWorker2.get(3)).setY(game.draw3WorkerLocY);
+						}
 					}
 					else if(game.gameState == Game.STATE.Player3)
 					{
-		  			objectWorkerP3.get(drawLocWorker3.get(3)).setX(game.draw3WorkerLocX);
-		  			objectWorkerP3.get(drawLocWorker3.get(3)).setY(game.draw3WorkerLocY);
+						if(drawLocWorker3.containsKey(3))
+						{
+			  			objectWorkerP3.get(drawLocWorker3.get(3)).setX(game.draw3WorkerLocX);
+			  			objectWorkerP3.get(drawLocWorker3.get(3)).setY(game.draw3WorkerLocY);
+						}
 					}
 					else if(game.gameState == Game.STATE.Player4)
 					{
-		  			objectWorkerP4.get(drawLocWorker4.get(3)).setX(game.draw3WorkerLocX);
-		  			objectWorkerP4.get(drawLocWorker4.get(3)).setY(game.draw3WorkerLocY);
+						if(drawLocWorker4.containsKey(3))
+						{
+			  			objectWorkerP4.get(drawLocWorker4.get(3)).setX(game.draw3WorkerLocX);
+			  			objectWorkerP4.get(drawLocWorker4.get(3)).setY(game.draw3WorkerLocY);
+						}
 					}
 
 		    }
@@ -723,11 +807,14 @@ public class Handler extends MouseAdapter
 								grid.gridUsed.replace(newGridUsed, 1);
 								
 								//if it is an acceptable square, place the correct object at the new location
-						    if(select.mouseJungle1Released == true)
+						    if(select.mouseJungle1Released == true && !drawLocJungle.isEmpty())
 						    {
 									//System.out.println("worker 1 returned");
-					  			objectJungle.get(drawLocJungle.get(1)).setX(xStart);
-					  			objectJungle.get(drawLocJungle.get(1)).setY(yStart);
+									if(drawLocJungle.containsKey(1))
+									{
+						  			objectJungle.get(drawLocJungle.get(1)).setX(xStart);
+						  			objectJungle.get(drawLocJungle.get(1)).setY(yStart);
+									}
 					  			
 					  			//store which jungle tile was stored in the newGridUsed location (to be used for score counting to id which tiles are adjacent)
 					  			jungleTileInPlay.put(newGridUsed, drawLocJungle.get(1));
@@ -736,16 +823,23 @@ public class Handler extends MouseAdapter
 					  			calcScore(null, newGridUsed, grid.gridUsed, game, objectJungle.get(drawLocJungle.get(1)));
 					  			
 					  			//remove from the draw deck so that it doesn't get it's position reset to the draw pile anymore
-					  			drawLocJungle.remove(1);
-					  			drawLocJungle.remove(1);
+
+									if(drawLocJungle.containsKey(1))
+									{
+							  		drawLocJungle.remove(1);
+							  		drawLocJungle.remove(1);
+									}
 					  			placedJungle1 = true;
 									game.drawJungle1 = true;
 						    }
-						    if(select.mouseJungle2Released == true)
+						    if(select.mouseJungle2Released == true && !drawLocJungle.isEmpty())
 						    {
 									//System.out.println("worker 2 returned");
-									objectJungle.get(drawLocJungle.get(2)).setX(xStart);
-									objectJungle.get(drawLocJungle.get(2)).setY(yStart);
+									if(drawLocJungle.containsKey(2))
+									{
+										objectJungle.get(drawLocJungle.get(2)).setX(xStart);
+										objectJungle.get(drawLocJungle.get(2)).setY(yStart);
+									}
 									
 					  			//store which jungle tile was stored in the newGridUsed location (to be used for score counting to id which tiles are adjacent)
 					  			jungleTileInPlay.put(newGridUsed, drawLocJungle.get(2));
@@ -754,8 +848,11 @@ public class Handler extends MouseAdapter
 					  			calcScore(null, newGridUsed, grid.gridUsed, game, objectJungle.get(drawLocJungle.get(2)));
 					  			
 					  			//remove from the draw deck so that it doesn't get it's position reset to the draw pile anymore
-					  			drawLocJungle.remove(2);
-					  			drawLocJungle.remove(2);
+									if(drawLocJungle.containsKey(2))
+									{
+						  			drawLocJungle.remove(2);
+						  			drawLocJungle.remove(2);
+									}
 					  			placedJungle2 = true;
 									game.drawJungle2 = true;
 						    }
@@ -768,14 +865,20 @@ public class Handler extends MouseAdapter
 			    if(placedJungle1 == false && select.mouseJungle1Released == true)
 			    {
 						//System.out.println("jungle 1 returned");
-		  			objectJungle.get(drawLocJungle.get(1)).setX(game.draw1LocX);
-		  			objectJungle.get(drawLocJungle.get(1)).setY(game.draw1LocY);
+						if(drawLocJungle.containsKey(1))
+						{
+			  			objectJungle.get(drawLocJungle.get(1)).setX(game.draw1LocX);
+			  			objectJungle.get(drawLocJungle.get(1)).setY(game.draw1LocY);
+						}
 			    }
 			    if(placedJungle2 == false && select.mouseJungle2Released == true)
 			    {
 						//System.out.println("jungle 2 returned");
-		  			objectJungle.get(drawLocJungle.get(2)).setX(game.draw2LocX);
-		  			objectJungle.get(drawLocJungle.get(2)).setY(game.draw2LocY);
+						if(drawLocJungle.containsKey(2))
+						{
+			  			objectJungle.get(drawLocJungle.get(2)).setX(game.draw2LocX);
+			  			objectJungle.get(drawLocJungle.get(2)).setY(game.draw2LocY);
+						}
 			    }
 				}
 				
@@ -798,6 +901,15 @@ public class Handler extends MouseAdapter
 	{
 		if(game.gameState != Game.STATE.Select)
 		{
+			if(deckKeysEmpty == true)
+			{
+				Font f1 = new Font(Font.SERIF, Font.PLAIN, 30);
+				g.setColor(Color.black);
+				g.drawRect((Game.HEIGHT/2 - game.TILE_DIM*2), (Game.HEIGHT/2 - game.TILE_DIM), game.TILE_DIM*2, game.TILE_DIM);
+				g.setFont(f1);
+				g.drawString("Player out of Cards", (Game.HEIGHT/2 - game.TILE_DIM*2), (Game.HEIGHT/2 - game.TILE_DIM));
+			}
+			
 			for(int i = 0; i < objectJungle.size(); i++)
 			{
 				GameObject tempObject = objectJungle.get(hashMapKeysJungle.get(i));
@@ -812,8 +924,6 @@ public class Handler extends MouseAdapter
 			
 			if(game.gameState == Game.STATE.Player1)
 			{
-				if(game.gameState == Game.STATE.Player1)
-				{
 					//loops through each object in worker tile hash map
 					for(int i = 0; i < objectWorkerP1.size(); i++) 
 					{
@@ -822,13 +932,10 @@ public class Handler extends MouseAdapter
 						//this is an abstract class that is called in the player or tile classes
 						tempObject.render(g);
 					}
-				}
 			}
 			
 			else if(game.gameState == Game.STATE.Player2)
 			{
-				if(game.gameState == Game.STATE.Player2)
-				{
 					for(int i = 0; i < objectWorkerP2.size(); i++) 
 					{
 						GameObject tempObject = objectWorkerP2.get(hashMapKeysWorkerP2.get(i));
@@ -836,13 +943,10 @@ public class Handler extends MouseAdapter
 						//this is an abstract class that is called in the player or tile classes
 						tempObject.render(g);
 					}
-				}
 			}
 			
 			else if(game.gameState == Game.STATE.Player3)
 			{
-				if(game.gameState == Game.STATE.Player3)
-				{
 					for(int i = 0; i < objectWorkerP3.size(); i++) 
 					{
 						GameObject tempObject = objectWorkerP3.get(hashMapKeysWorkerP3.get(i));
@@ -850,13 +954,10 @@ public class Handler extends MouseAdapter
 						//this is an abstract class that is called in the player or tile classes
 						tempObject.render(g);
 					}
-				}
 			}
 			
 			else if(game.gameState == Game.STATE.Player4)
 			{
-				if(game.gameState == Game.STATE.Player4)
-				{
 					for(int i = 0; i < objectWorkerP4.size(); i++) 
 					{
 						GameObject tempObject = objectWorkerP4.get(hashMapKeysWorkerP4.get(i));
@@ -864,7 +965,6 @@ public class Handler extends MouseAdapter
 						//this is an abstract class that is called in the player or tile classes
 						tempObject.render(g);
 					}
-				}
 			}
 			
 			//render all worker tiles in play regardless of player turn
@@ -1367,31 +1467,39 @@ public class Handler extends MouseAdapter
 	{
 		//pulls the object from the hash map because this is where the object is actually stored and moved around
 		//the deckKeys at 0 index is just the top most card in the deck
-		GameObject tempObject = object.get(deckKeys.get(0));
-		//sets the tile's location to the draw location
-		tempObject.setX(x);
-		tempObject.setY(y);
-		
-		//storing which tile was put in which draw location
-		if(x == game.draw1LocX && y == game.draw1LocY)
+		if(deckKeys.isEmpty())
 		{
-			drawLocJungle.put(1, deckKeys.get(0));
+			deckKeysEmpty = true;
+			System.out.println("GameOver Deck is empty");
 		}
-		else if(x == game.draw2LocX && y == game.draw2LocY)
+		else
 		{
-			drawLocJungle.put(2, deckKeys.get(0));
-		}
-		else if(x == game.draw1WorkerLocX && y == game.draw1WorkerLocY)
-		{
-			drawLocWorker.put(1, deckKeys.get(0));
-		}
-		else if(x == game.draw2WorkerLocX && y == game.draw2WorkerLocY)
-		{
-			drawLocWorker.put(2, deckKeys.get(0));
-		}
-		else if(x == game.draw3WorkerLocX && y == game.draw3WorkerLocY)
-		{
-			drawLocWorker.put(3, deckKeys.get(0));
+			GameObject tempObject = object.get(deckKeys.get(0));
+			//sets the tile's location to the draw location
+			tempObject.setX(x);
+			tempObject.setY(y);
+			
+			//storing which tile was put in which draw location
+			if(x == game.draw1LocX && y == game.draw1LocY)
+			{
+				drawLocJungle.put(1, deckKeys.get(0));
+			}
+			else if(x == game.draw2LocX && y == game.draw2LocY)
+			{
+				drawLocJungle.put(2, deckKeys.get(0));
+			}
+			else if(x == game.draw1WorkerLocX && y == game.draw1WorkerLocY)
+			{
+				drawLocWorker.put(1, deckKeys.get(0));
+			}
+			else if(x == game.draw2WorkerLocX && y == game.draw2WorkerLocY)
+			{
+				drawLocWorker.put(2, deckKeys.get(0));
+			}
+			else if(x == game.draw3WorkerLocX && y == game.draw3WorkerLocY)
+			{
+				drawLocWorker.put(3, deckKeys.get(0));
+			}
 		}
 	}
 	
@@ -1519,15 +1627,21 @@ public class Handler extends MouseAdapter
 				//System.out.println("proper game state, type, and turn");
 				if(game.drawJungle1 == true)
 				{
-					drawFromDeck(deckKeysJungle, objectJungle, drawLocJungle, null, game.draw1LocX, game.draw1LocY, game);
-					removeFromDeck(deckKeysJungle);
+					if(!deckKeysJungle.isEmpty())
+					{
+						drawFromDeck(deckKeysJungle, objectJungle, drawLocJungle, null, game.draw1LocX, game.draw1LocY, game);
+						removeFromDeck(deckKeysJungle);
+					}
 					game.drawJungle1 = false;
 					//System.out.println("tried to draw to location 1");
 				}
 				if(game.drawJungle2 == true)
 				{
-					drawFromDeck(deckKeysJungle, objectJungle, drawLocJungle, null,  game.draw2LocX, game.draw2LocY, game);
-					removeFromDeck(deckKeysJungle);
+					if(!deckKeysJungle.isEmpty())
+					{
+						drawFromDeck(deckKeysJungle, objectJungle, drawLocJungle, null,  game.draw2LocX, game.draw2LocY, game);
+						removeFromDeck(deckKeysJungle);
+					}
 					game.drawJungle2 = false;
 					//System.out.println("tried to draw to location 2");
 				}
@@ -1537,23 +1651,35 @@ public class Handler extends MouseAdapter
 			{
 				if(game.gameState == Game.STATE.Player1)
 				{
-					drawFromDeck(deckKeysWorkerP1, objectWorkerP1, null, drawLocWorker1, game.draw1WorkerLocX, game.draw1WorkerLocY, game);
-					removeFromDeck(deckKeysWorkerP1);
+					if(!deckKeysWorkerP1.isEmpty())
+					{
+						drawFromDeck(deckKeysWorkerP1, objectWorkerP1, null, drawLocWorker1, game.draw1WorkerLocX, game.draw1WorkerLocY, game);
+						removeFromDeck(deckKeysWorkerP1);
+					}
 				}
 				else if(game.gameState == Game.STATE.Player2)
 				{
-					drawFromDeck(deckKeysWorkerP2, objectWorkerP2, null, drawLocWorker2, game.draw1WorkerLocX, game.draw1WorkerLocY, game);
-					removeFromDeck(deckKeysWorkerP2);
+					if(!deckKeysWorkerP2.isEmpty())
+					{
+						drawFromDeck(deckKeysWorkerP2, objectWorkerP2, null, drawLocWorker2, game.draw1WorkerLocX, game.draw1WorkerLocY, game);
+						removeFromDeck(deckKeysWorkerP2);
+					}
 				}
 				else if(game.gameState == Game.STATE.Player3)
 				{
-					drawFromDeck(deckKeysWorkerP3, objectWorkerP3, null, drawLocWorker3, game.draw1WorkerLocX, game.draw1WorkerLocY, game);
-					removeFromDeck(deckKeysWorkerP3);
+					if(!deckKeysWorkerP3.isEmpty())
+					{
+						drawFromDeck(deckKeysWorkerP3, objectWorkerP3, null, drawLocWorker3, game.draw1WorkerLocX, game.draw1WorkerLocY, game);
+						removeFromDeck(deckKeysWorkerP3);
+					}
 				}
 				else if(game.gameState == Game.STATE.Player4)
 				{
-					drawFromDeck(deckKeysWorkerP4, objectWorkerP4, null, drawLocWorker4, game.draw1WorkerLocX, game.draw1WorkerLocY, game);
-					removeFromDeck(deckKeysWorkerP4);
+					if(!deckKeysWorkerP4.isEmpty())
+					{
+						drawFromDeck(deckKeysWorkerP4, objectWorkerP4, null, drawLocWorker4, game.draw1WorkerLocX, game.draw1WorkerLocY, game);
+						removeFromDeck(deckKeysWorkerP4);
+					}
 				}
 
 				game.drawWorker1 = false;
@@ -1563,23 +1689,35 @@ public class Handler extends MouseAdapter
 			{
 				if(game.gameState == Game.STATE.Player1)
 				{
-					drawFromDeck(deckKeysWorkerP1, objectWorkerP1, null, drawLocWorker1, game.draw2WorkerLocX, game.draw2WorkerLocY, game);
-					removeFromDeck(deckKeysWorkerP1);
+					if(!deckKeysWorkerP1.isEmpty())
+					{
+						drawFromDeck(deckKeysWorkerP1, objectWorkerP1, null, drawLocWorker1, game.draw2WorkerLocX, game.draw2WorkerLocY, game);
+						removeFromDeck(deckKeysWorkerP1);
+					}
 				}
 				else if(game.gameState == Game.STATE.Player2)
 				{
-					drawFromDeck(deckKeysWorkerP2, objectWorkerP2, null, drawLocWorker2, game.draw2WorkerLocX, game.draw2WorkerLocY, game);
-					removeFromDeck(deckKeysWorkerP2);
+					if(!deckKeysWorkerP2.isEmpty())
+					{
+						drawFromDeck(deckKeysWorkerP2, objectWorkerP2, null, drawLocWorker2, game.draw2WorkerLocX, game.draw2WorkerLocY, game);
+						removeFromDeck(deckKeysWorkerP2);
+					}
 				}
 				else if(game.gameState == Game.STATE.Player3)
 				{
-					drawFromDeck(deckKeysWorkerP3, objectWorkerP3, null, drawLocWorker3, game.draw2WorkerLocX, game.draw2WorkerLocY, game);
-					removeFromDeck(deckKeysWorkerP3);
+					if(!deckKeysWorkerP3.isEmpty())
+					{
+						drawFromDeck(deckKeysWorkerP3, objectWorkerP3, null, drawLocWorker3, game.draw2WorkerLocX, game.draw2WorkerLocY, game);
+						removeFromDeck(deckKeysWorkerP3);
+					}
 				}
 				else if(game.gameState == Game.STATE.Player4)
 				{
-					drawFromDeck(deckKeysWorkerP4, objectWorkerP4, null, drawLocWorker4, game.draw2WorkerLocX, game.draw2WorkerLocY, game);
-					removeFromDeck(deckKeysWorkerP4);
+					if(!deckKeysWorkerP4.isEmpty())
+					{
+						drawFromDeck(deckKeysWorkerP4, objectWorkerP4, null, drawLocWorker4, game.draw2WorkerLocX, game.draw2WorkerLocY, game);
+						removeFromDeck(deckKeysWorkerP4);
+					}
 				}
 				
 				game.drawWorker2 = false;
@@ -1588,23 +1726,39 @@ public class Handler extends MouseAdapter
 			{
 				if(game.gameState == Game.STATE.Player1)
 				{
-					drawFromDeck(deckKeysWorkerP1, objectWorkerP1, null, drawLocWorker1, game.draw3WorkerLocX, game.draw3WorkerLocY, game);
-					removeFromDeck(deckKeysWorkerP1);
+					if(!deckKeysWorkerP1.isEmpty())
+					{
+						drawFromDeck(deckKeysWorkerP1, objectWorkerP1, null, drawLocWorker1, game.draw3WorkerLocX, game.draw3WorkerLocY, game);
+						removeFromDeck(deckKeysWorkerP1);
+					}
 				}
 				else if(game.gameState == Game.STATE.Player2)
 				{
-					drawFromDeck(deckKeysWorkerP2, objectWorkerP2, null, drawLocWorker2, game.draw3WorkerLocX, game.draw3WorkerLocY, game);
-					removeFromDeck(deckKeysWorkerP2);
+					if(!deckKeysWorkerP2.isEmpty())
+					{
+						drawFromDeck(deckKeysWorkerP2, objectWorkerP2, null, drawLocWorker2, game.draw3WorkerLocX, game.draw3WorkerLocY, game);
+						removeFromDeck(deckKeysWorkerP2);
+					}
 				}
 				else if(game.gameState == Game.STATE.Player3)
 				{
-					drawFromDeck(deckKeysWorkerP3, objectWorkerP3, null, drawLocWorker3, game.draw3WorkerLocX, game.draw3WorkerLocY, game);
-					removeFromDeck(deckKeysWorkerP3);
+					if(!deckKeysWorkerP3.isEmpty())
+					{
+						drawFromDeck(deckKeysWorkerP3, objectWorkerP3, null, drawLocWorker3, game.draw3WorkerLocX, game.draw3WorkerLocY, game);
+						removeFromDeck(deckKeysWorkerP3);
+					}
 				}
 				else if(game.gameState == Game.STATE.Player4)
 				{
-					drawFromDeck(deckKeysWorkerP4, objectWorkerP4, null, drawLocWorker4, game.draw3WorkerLocX, game.draw3WorkerLocY, game);
-					removeFromDeck(deckKeysWorkerP4);
+					if(!deckKeysWorkerP4.isEmpty())
+					{
+						if(!deckKeysWorkerP4.isEmpty())
+						{
+							drawFromDeck(deckKeysWorkerP4, objectWorkerP4, null, drawLocWorker4, game.draw3WorkerLocX, game.draw3WorkerLocY, game);
+							removeFromDeck(deckKeysWorkerP4);	
+						}
+					}
+
 				}
 
 				game.drawWorker3 = false;

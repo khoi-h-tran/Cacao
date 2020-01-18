@@ -98,8 +98,9 @@ public class Grid
 	//searches for all grid locations that have a tile on it
 	public static  ArrayList<String> getAllKeysForValue(HashMap<String, Integer> gridUsed, Integer value) 
 	{
+
 		ArrayList<String> listOfKeys = null;
-		 
+
 		//Check if Map contains the given value
 		if(gridUsed.containsValue(value))
 		{
@@ -126,8 +127,9 @@ public class Grid
 			System.out.println(key);
 		}
 		*/
-		
+
 		return listOfKeys;
+
 	}
 	
 	//splits up each coordinate that is occupied by a tile

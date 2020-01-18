@@ -77,6 +77,9 @@ public class Game extends Canvas implements Runnable
 	//create instance of select class
 	private Select select;
 	
+	//create instance of end class for game over
+	private End end = new End();
+	
 	//create instance of mouse event class
 	private MouseEvent e;
 	
@@ -187,6 +190,7 @@ public class Game extends Canvas implements Runnable
 	*/
 	public void turnRotation()
 	{
+
 		if(turnCounter == 0 && numPlayers > 0)
 		{
 			initGame();
@@ -194,7 +198,42 @@ public class Game extends Canvas implements Runnable
 		}
 		if(playerTracker == 1)
 		{
-			if(handler.placedWorker1 != true && handler.placedWorker2 != true && handler.placedWorker3 != true )
+			if(handler.drawLocWorker1.isEmpty())
+			{
+				int outOfCards = 1;
+				
+				nextPlayer = true;
+				turnState = TURNSTATE.End;
+				
+				if(numPlayers >= 2 && handler.drawLocWorker2.isEmpty())
+				{
+					outOfCards++;
+					if(outOfCards == 2 && numPlayers == 2)
+					{
+						gameState = STATE.End;
+					}
+				}
+				if(numPlayers >= 3 && handler.drawLocWorker3.isEmpty())
+				{
+					outOfCards++;
+					if(outOfCards == 3 && numPlayers == 3)
+					{
+						gameState = STATE.End;
+					}
+				}
+				if(numPlayers >= 4 && handler.drawLocWorker4.isEmpty())
+				{
+					outOfCards++;
+					if(outOfCards == 4 && numPlayers == 4)
+					{
+						gameState = STATE.End;
+					}
+				}
+				
+				outOfCards = 1;
+			}
+			
+			else if(handler.placedWorker1 != true && handler.placedWorker2 != true && handler.placedWorker3 != true && !handler.drawLocWorker1.isEmpty())
 			{
 				/*
 				for(String key: grid.listOfKeys)
@@ -207,12 +246,12 @@ public class Game extends Canvas implements Runnable
 				typeState = TYPESTATE.Worker;
 				turnState = TURNSTATE.Move;
 			}
-			else if((handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true) && turnState != TURNSTATE.Draw && jungleValidChecked == false)
+			else if(( handler.drawLocWorker1.isEmpty() || ((handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true)) ) && turnState != TURNSTATE.Draw && jungleValidChecked == false )
 			{
 				typeState = TYPESTATE.Jungle;
 				jungleValidChecked = true;
 			}
-			else if((handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true) && turnState != TURNSTATE.Draw && jungleValidChecked == true)
+			else if(( handler.drawLocWorker1.isEmpty() || ( (handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true)) ) && turnState != TURNSTATE.Draw && jungleValidChecked == true)
 			{
 				/*
 				for(String key: grid.listOfKeys)
@@ -222,20 +261,27 @@ public class Game extends Canvas implements Runnable
 				*/
 				//grid.validJungleTile == true && 
 				//System.out.println(grid.validJungleTileLoc.size());
-				if(grid.validJungleTileLoc.size() != 0 && grid.colorYellow)
+				if(grid.validJungleTileLoc.size() != 0 && grid.colorYellow && !handler.drawLocJungle.isEmpty())
 				{
-					System.out.println("jungle tile valid");
-					turnState = TURNSTATE.Move;
+					if(!handler.drawLocJungle.isEmpty())
+					{
+						turnState = TURNSTATE.Move;
+					}
 				}
 				//grid.validJungleTile == false  && 
-				else if(grid.validJungleTileLoc.size() == 0 && !grid.colorYellow)
+				else if( (grid.validJungleTileLoc.size() == 0 && !grid.colorYellow) || handler.drawLocJungle.isEmpty())
 				{
 					//System.out.println("Change state to draw");
 					turnState = TURNSTATE.Draw;
 					jungleValidChecked = false;
+					if(handler.drawLocWorker1.isEmpty())
+					{
+						nextPlayer = false;
+					}
 				}
 			}
-			else if(turnState == TURNSTATE.Draw && nextPlayer == false)
+			
+			if(turnState == TURNSTATE.Draw && nextPlayer == false)
 			{				
 				gameState = STATE.Play;
 				typeState = TYPESTATE.Jungle;
@@ -251,7 +297,8 @@ public class Game extends Canvas implements Runnable
 				nextPlayer = true;
 				//System.out.println("Player 1 draw sequence");
 			}
-			else if(turnState == TURNSTATE.End || nextPlayer == true)
+			
+			if(turnState == TURNSTATE.End || nextPlayer == true)
 			{
 				grid.validJungleTile = true;
 				handler.placedJungle1 = false;
@@ -264,12 +311,53 @@ public class Game extends Canvas implements Runnable
 				turnState = TURNSTATE.Move;
 				incrementTurn();
 				//System.out.println("Player 1 end sequence");
+				handler.deckKeysEmpty = false;
 			}
 		}
 		
 		if(playerTracker == 2)
 		{
-			if(handler.placedWorker1 != true && handler.placedWorker2 != true && handler.placedWorker3 != true )
+			if(handler.drawLocWorker2.isEmpty())
+			{
+				nextPlayer = true;
+				turnState = TURNSTATE.End;
+				
+				if(handler.drawLocWorker2.isEmpty())
+				{
+					int outOfCards = 1;
+					
+					nextPlayer = true;
+					turnState = TURNSTATE.End;
+					
+					if(numPlayers >= 2 && handler.drawLocWorker1.isEmpty())
+					{
+						outOfCards++;
+						if(outOfCards == 2 && numPlayers == 2)
+						{
+							gameState = STATE.End;
+						}
+					}
+					if(numPlayers >= 3 && handler.drawLocWorker3.isEmpty())
+					{
+						outOfCards++;
+						if(outOfCards == 3 && numPlayers == 3)
+						{
+							gameState = STATE.End;
+						}
+					}
+					if(numPlayers >= 4 && handler.drawLocWorker4.isEmpty())
+					{
+						outOfCards++;
+						if(outOfCards == 4 && numPlayers == 4)
+						{
+							gameState = STATE.End;
+						}
+					}
+					
+					outOfCards = 1;
+				}
+			}
+			if(handler.placedWorker1 != true && handler.placedWorker2 != true && handler.placedWorker3 != true && !handler.drawLocWorker2.isEmpty())
 			{
 				/*
 				for(String key: grid.listOfKeys)
@@ -283,12 +371,16 @@ public class Game extends Canvas implements Runnable
 				typeState = TYPESTATE.Worker;
 				turnState = TURNSTATE.Move;
 			}
-			else if((handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true) && turnState != TURNSTATE.Draw && jungleValidChecked == false)
+			else if(handler.drawLocWorker2.isEmpty() || ( (handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true)) && turnState != TURNSTATE.Draw && jungleValidChecked == false)
 			{
+				if(handler.drawLocWorker2.isEmpty())
+				{
+					System.out.println("stuck in jungle move for plyaer 2");
+				}
 				typeState = TYPESTATE.Jungle;
 				jungleValidChecked = true;
 			}
-			else if((handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true) && turnState != TURNSTATE.Draw && jungleValidChecked == true)
+			else if(handler.drawLocWorker2.isEmpty() || ( (handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true)) && turnState != TURNSTATE.Draw && jungleValidChecked == true)
 			{
 				//System.out.println(grid.yellowCoords.size());
 				/*
@@ -299,20 +391,24 @@ public class Game extends Canvas implements Runnable
 				*/
 				//grid.validJungleTile == true && 
 				//System.out.println(grid.validJungleTileLoc.size());
-				if(grid.validJungleTileLoc.size() != 0)
+				if(grid.validJungleTileLoc.size() != 0 && grid.colorYellow && !handler.drawLocJungle.isEmpty())
 				{
 					//System.out.println("jungle tile valid");
 					turnState = TURNSTATE.Move;
 				}
 				//grid.validJungleTile == false  && 
-				else if(grid.validJungleTileLoc.size() == 0)
+				else if( (grid.validJungleTileLoc.size() == 0 && !grid.colorYellow) || handler.drawLocJungle.isEmpty())
 				{
 					//System.out.println("Change state to draw" + grid.validJungleTileLoc.size());
 					turnState = TURNSTATE.Draw;
 					jungleValidChecked = false;
+					if(handler.drawLocWorker2.isEmpty())
+					{
+						nextPlayer = false;
+					}
 				}
 			}
-			else if(turnState == TURNSTATE.Draw && nextPlayer == false)
+			if(turnState == TURNSTATE.Draw && nextPlayer == false)
 			{				
 				gameState = STATE.Play;
 				typeState = TYPESTATE.Jungle;
@@ -330,7 +426,7 @@ public class Game extends Canvas implements Runnable
 				nextPlayer = true;
 				//System.out.println("Player 2 draw sequence");
 			}
-			else if(turnState == TURNSTATE.End || nextPlayer == true)
+			if(turnState == TURNSTATE.End || nextPlayer == true)
 			{
 				grid.validJungleTile = true;
 				handler.placedJungle1 = false;
@@ -351,7 +447,7 @@ public class Game extends Canvas implements Runnable
 					gameState = STATE.Player3;
 					incrementTurn();
 				}
-				
+				handler.deckKeysEmpty = false;
 				//System.out.println("Player 2 end sequence");
 			}
 		}
@@ -633,7 +729,7 @@ public class Game extends Canvas implements Runnable
 				
 		}
 		
-		max++;
+		//max++;
 		
 		//populating Plantationx2, SellingPricex2, SunWorshippingSite, GoldMinex1()
 		//tiles with 2 count
@@ -674,7 +770,7 @@ public class Game extends Canvas implements Runnable
 			
 		}
 		
-		max++;
+		//max++;
 		
 		//populating  Water() 
 		//tiles with 3 count
@@ -684,7 +780,7 @@ public class Game extends Canvas implements Runnable
 			handler.addKey(IDJungle.Water + String.valueOf(i), ID.JungleTile, null);
 		}
 		
-		max++;
+		//max++;
 		
 		//populating SellingPricex3
 		//tiles with 4 count
@@ -732,7 +828,7 @@ public class Game extends Canvas implements Runnable
 			}
 		}
 		
-		max++;
+		//max++;
 		
 		//populating Temple
 		//Populating TwoOneZeroOne Worker Tile
@@ -780,7 +876,8 @@ public class Game extends Canvas implements Runnable
 			}
 		}
 		
-		max++;
+		//max++;
+		max = 3;
 		
 		//populating Plantationx1
 		//tiles with 6 count
@@ -1072,7 +1169,7 @@ public class Game extends Canvas implements Runnable
 		g.setColor(Color.lightGray);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
-		if(gameState == STATE.Player1 || gameState == STATE.Player2 || gameState == STATE.Player3 || gameState == STATE.Player4)
+		if((gameState == STATE.Player1 || gameState == STATE.Player2 || gameState == STATE.Player3 || gameState == STATE.Player4) && gameState != STATE.End)
 		{
 			grid.render(g, this);
 		}
@@ -1080,10 +1177,17 @@ public class Game extends Canvas implements Runnable
 		{
 			select.render(g);
 		}
+		else if(gameState == STATE.End)
+		{
+			end.render(g);
+		}
 		
 		try
 		{
-			handler.render(g, this);
+			if(gameState != STATE.End)
+			{
+				handler.render(g, this);
+			}
 		}
 		catch(Exception e)
 		{
