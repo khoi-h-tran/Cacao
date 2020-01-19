@@ -38,7 +38,7 @@ public class Game extends Canvas implements Runnable
 	protected final int TITLE_BAR = 40;
 	
 	//offset for each ressource icon
-	protected final int iconOffset = 40;
+	protected final int iconOffset = 42;
 	
 	//total turn counter
 	protected int turnCounter = 0;
@@ -191,7 +191,6 @@ public class Game extends Canvas implements Runnable
 	*/
 	public void turnRotation()
 	{
-
 		if(turnCounter == 0 && numPlayers > 0)
 		{
 			initGame();
@@ -199,6 +198,7 @@ public class Game extends Canvas implements Runnable
 		}
 		if(playerTracker == 1)
 		{
+			
 			if(handler.drawLocWorker1.isEmpty())
 			{
 				int outOfCards = 1;
@@ -1214,7 +1214,7 @@ public class Game extends Canvas implements Runnable
 		}
 		else if(gameState == STATE.End)
 		{
-			end.render(g);
+			end.render(g, this, handler);
 		}
 		
 		try

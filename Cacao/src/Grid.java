@@ -69,7 +69,7 @@ public class Grid
 		{
 			for(int j = 0; j < Game.HEIGHT/game.TILE_DIM; j++)
 			{
-				gridUsed.put(String.valueOf((char)(i+65)) + String.valueOf(j), 0);
+				gridUsed.put(String.valueOf((char)(i+65 + 1)) + String.valueOf(j + 1), 0);
 			}
 		}
 		
@@ -138,7 +138,7 @@ public class Grid
 		yellowCoordsCol.clear();
 		yellowCoordsRow.clear();
 		//split up the column and row  value and store it in a hash map
-		if(listOfKeys.size() > 0)
+		if(!listOfKeys.isEmpty())
 		{
 			for(String key: listOfKeys)
 			{
@@ -178,7 +178,14 @@ public class Grid
 			//indicate that the jungle tiles were used at least once
 			//game.tileState = 1;
 			//Get the list of keys whose value indicates the grid is being used (indicated by value = 1), 1 meaning jungle tile
-			listOfKeys = getAllKeysForValue(gridUsed, 1);
+			if(game.turnCounter > 0)
+			{
+				listOfKeys = getAllKeysForValue(gridUsed, 1);
+			}
+			else
+			{
+				listOfKeys.add("J10");
+			}
 			
 			//get the hash map of all keys with column and row indicator separated
 			tileUsedCoordSplit(listOfKeys, yellowCoordsCol, yellowCoordsRow);
@@ -292,7 +299,12 @@ public class Grid
 		    	//if yes, check if it's value is either 1 above or below that used grid
 		    	//if yes, fill it in yellow
 		    	//vice versa for the columns
-			    if( ( ((i+1) == yellowCoordsRow.get(c)) && ((j+1) == yellowCoordsCol.get(c) - 1 || (j+1) == yellowCoordsCol.get(c) +1) ) || ((j+1) == yellowCoordsCol.get(c) && ((i+1) == yellowCoordsRow.get(c) - 1 || (i+1) == yellowCoordsRow.get(c) +1)) )
+					//if( (yellowCoordsRow.get(c) == 8 && (yellowCoordsCol.get(c) == 8 || yellowCoordsCol.get(c) == 1) ) || (yellowCoordsRow.get(c) == 1 && (yellowCoordsCol.get(c) == 8 || yellowCoordsCol.get(c) == 1) ) ) 
+					if( ( yellowCoordsRow.get(c) == 8 && yellowCoordsCol.get(c) != 7 && yellowCoordsCol.get(c) != 2) || ( yellowCoordsCol.get(c) == 8  && yellowCoordsRow.get(c) != 7 && yellowCoordsRow.get(c) != 2 ) ) 
+					{
+						
+					}
+					else if( ( ((i+1) == yellowCoordsRow.get(c)) && ((j+1) == yellowCoordsCol.get(c) - 1 || (j+1) == yellowCoordsCol.get(c) +1) ) || ((j+1) == yellowCoordsCol.get(c) && ((i+1) == yellowCoordsRow.get(c) - 1 || (i+1) == yellowCoordsRow.get(c) +1)) )
 			    {
 			    	
 			    	if(game.typeState == Game.TYPESTATE.Worker)

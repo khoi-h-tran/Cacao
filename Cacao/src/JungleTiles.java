@@ -81,7 +81,7 @@ public class JungleTiles extends GameObject
 			case Water:
 				tile_image = ss.grabImage(2, 3, TILE_DIM, TILE_DIM, TILE_DIM);
 				scoreKey = "Water";
-				scoreValue = 1;
+				scoreValue = 3;
 				break;
 			//total 4
 			case SellingPricex4:

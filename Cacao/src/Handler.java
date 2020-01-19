@@ -1036,7 +1036,7 @@ public class Handler extends MouseAdapter
 		score.put("Gold", 0);
 		score.put("Cacao", 0);
 		score.put("Sun Tokens", 0);
-		score.put("Water", 0);
+		score.put("Water", -10);
 		score.put("Temple", 0);
 	}
 	
