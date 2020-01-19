@@ -196,8 +196,15 @@ public class Game extends Canvas implements Runnable
 			initGame();
 			incrementTurn();
 		}
+		
 		if(playerTracker == 1)
 		{
+			//check if there are any playable grids left, if not, the game is over
+			if(!grid.gridUsed.containsValue(0))
+			{
+				gameState = STATE.End;
+				nextPlayer = true;
+			}
 			
 			if(handler.drawLocWorker1.isEmpty())
 			{
@@ -334,12 +341,14 @@ public class Game extends Canvas implements Runnable
 		
 		if(playerTracker == 2)
 		{
+			//check if there are any playable grids left, if not, the game is over
+			if(!grid.gridUsed.containsValue(0))
+			{
+				gameState = STATE.End;
+				nextPlayer = true;
+			}
 			if(handler.drawLocWorker2.isEmpty())
 			{
-				//nextPlayer = true;
-				//turnState = TURNSTATE.End;
-				
-
 				int outOfCards = 1;
 				
 				nextPlayer = true;
@@ -378,13 +387,6 @@ public class Game extends Canvas implements Runnable
 			}
 			if(gameState != STATE.End && ((handler.placedWorker1 != true && handler.placedWorker2 != true && handler.placedWorker3 != true) || (handler.drawLocWorker2.isEmpty() && placedWorkerSimulated == false)))
 			{
-				/*
-				for(String key: grid.listOfKeys)
-				{
-					System.out.println("jungle key: " + key);
-				}
-				*/
-				//System.out.println("placing worker tile player 2");
 				nextPlayer = false;
 				gameState = STATE.Player2;
 				typeState = TYPESTATE.Worker;
@@ -397,47 +399,23 @@ public class Game extends Canvas implements Runnable
 			}
 			else if((handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true || placedWorkerSimulated == true) && turnState != TURNSTATE.Draw && jungleValidChecked == false)
 			{
-				/*
-				if(handler.drawLocWorker2.isEmpty())
-				{
-					System.out.println("stuck in jungle move for player 2");
-					turnState = TURNSTATE.Move;
-				}
-				*/
 				typeState = TYPESTATE.Jungle;
 				jungleValidChecked = true;
 			}
 			else if((handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true || placedWorkerSimulated == true) && turnState != TURNSTATE.Draw && jungleValidChecked == true)
 			{
-				//System.out.println(grid.yellowCoords.size());
-				/*
-				for(String key: grid.listOfKeys)
-				{
-					System.out.println("worker key: " + key);
-				}
-				*/
-				//grid.validJungleTile == true && 
-				//System.out.println(grid.validJungleTileLoc.size());
 				if(grid.validJungleTileLoc.size() != 0 && grid.colorYellow && !handler.drawLocJungle.isEmpty())
 				{
-					//System.out.println("jungle tile valid");
+
 					if(!handler.drawLocJungle.isEmpty())
 					{
 						turnState = TURNSTATE.Move;
 					}
 				}
-				//grid.validJungleTile == false  && 
 				else if( (grid.validJungleTileLoc.size() == 0 && !grid.colorYellow) || handler.drawLocJungle.isEmpty())
 				{
-					//System.out.println("Change state to draw" + grid.validJungleTileLoc.size());
 					turnState = TURNSTATE.Draw;
 					jungleValidChecked = false;
-					/*
-					if(handler.drawLocWorker2.isEmpty())
-					{
-						nextPlayer = false;
-					}
-					*/
 				}
 			}
 			if(turnState == TURNSTATE.Draw && nextPlayer == false)
@@ -456,7 +434,6 @@ public class Game extends Canvas implements Runnable
 				
 				turnState = TURNSTATE.End;
 				nextPlayer = true;
-				//System.out.println("Player 2 draw sequence");
 			}
 			if(turnState == TURNSTATE.End || nextPlayer == true)
 			{
@@ -483,43 +460,90 @@ public class Game extends Canvas implements Runnable
 					}
 					handler.deckKeysEmpty = false;
 					placedWorkerSimulated = false;
-					//System.out.println("Player 2 end sequence");
 				}
 			}
 		}
 
 		if(playerTracker == 3)
 		{
-			if(handler.placedWorker1 != true && handler.placedWorker2 != true && handler.placedWorker3 != true )
+			//check if there are any playable grids left, if not, the game is over
+			if(!grid.gridUsed.containsValue(0))
+			{
+				gameState = STATE.End;
+				nextPlayer = true;
+			}
+			if(handler.drawLocWorker3.isEmpty())
+			{
+				int outOfCards = 1;
+				
+				nextPlayer = true;
+				turnState = TURNSTATE.End;
+				
+				if(numPlayers >= 2 && handler.drawLocWorker1.isEmpty())
+				{
+					outOfCards++;
+					if(outOfCards == 2 && numPlayers == 2)
+					{
+						gameState = STATE.End;
+						nextPlayer = true;
+					}
+				}
+				if(numPlayers >= 2 && handler.drawLocWorker1.isEmpty())
+				{
+					outOfCards++;
+					if(outOfCards == 3 && numPlayers == 3)
+					{
+						gameState = STATE.End;
+						nextPlayer = true;
+					}
+				}
+				if(numPlayers >= 4 && handler.drawLocWorker4.isEmpty())
+				{
+					outOfCards++;
+					if(outOfCards == 4 && numPlayers == 4)
+					{
+						gameState = STATE.End;
+						nextPlayer = true;
+					}
+				}
+				
+				outOfCards = 1;
+			
+			}
+			if(gameState != STATE.End && ((handler.placedWorker1 != true && handler.placedWorker2 != true && handler.placedWorker3 != true) || (handler.drawLocWorker3.isEmpty() && placedWorkerSimulated == false)))
 			{
 				nextPlayer = false;
 				gameState = STATE.Player3;
 				typeState = TYPESTATE.Worker;
 				turnState = TURNSTATE.Move;
-				//System.out.println("placing worker tile plyaer 2");
+				
+				if(handler.drawLocWorker3.isEmpty())
+				{
+					placedWorkerSimulated = true;
+				}
 			}
-			else if((handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true) && turnState != TURNSTATE.Draw && jungleValidChecked == false)
+			else if((handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true || placedWorkerSimulated == true) && turnState != TURNSTATE.Draw && jungleValidChecked == false)
 			{
 				typeState = TYPESTATE.Jungle;
 				jungleValidChecked = true;
 			}
-			else if((handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true) && turnState != TURNSTATE.Draw && jungleValidChecked == true)
+			else if((handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true || placedWorkerSimulated == true) && turnState != TURNSTATE.Draw && jungleValidChecked == true)
 			{
-
-				if(grid.validJungleTile == true)
+				if(grid.validJungleTileLoc.size() != 0 && grid.colorYellow && !handler.drawLocJungle.isEmpty())
 				{
-					//System.out.println("jungle tile valid");
-					turnState = TURNSTATE.Move;
+
+					if(!handler.drawLocJungle.isEmpty())
+					{
+						turnState = TURNSTATE.Move;
+					}
 				}
-				else if(grid.validJungleTile == false)
+				else if( (grid.validJungleTileLoc.size() == 0 && !grid.colorYellow) || handler.drawLocJungle.isEmpty())
 				{
 					turnState = TURNSTATE.Draw;
 					jungleValidChecked = false;
-					
 				}
-
 			}
-			else if(turnState == TURNSTATE.Draw && nextPlayer == false)
+			if(turnState == TURNSTATE.Draw && nextPlayer == false)
 			{				
 				gameState = STATE.Play;
 				typeState = TYPESTATE.Jungle;
@@ -535,64 +559,116 @@ public class Game extends Canvas implements Runnable
 				
 				turnState = TURNSTATE.End;
 				nextPlayer = true;
-
 			}
-			else if(turnState == TURNSTATE.End || nextPlayer == true)
+			if(turnState == TURNSTATE.End || nextPlayer == true)
 			{
-				grid.validJungleTile = true;
-				handler.placedJungle1 = false;
-				handler.placedJungle2 = false;
-				handler.placedWorker1 = false;
-				handler.placedWorker2 = false;
-				handler.placedWorker3 = false;
-				typeState = TYPESTATE.Worker;
-				turnState = TURNSTATE.Move;
-				if(numPlayers <= 3)
+				if(gameState != STATE.End)
 				{
-					gameState = STATE.Player1;
-					incrementTurn();
-					playerTracker = 1;
-				}
-				else
-				{
-					gameState = STATE.Player4;
-					incrementTurn();
+					grid.validJungleTile = true;
+					handler.placedJungle1 = false;
+					handler.placedJungle2 = false;
+					handler.placedWorker1 = false;
+					handler.placedWorker2 = false;
+					handler.placedWorker3 = false;
+					typeState = TYPESTATE.Worker;
+					turnState = TURNSTATE.Move;
+					if(numPlayers <= 3)
+					{
+						gameState = STATE.Player1;
+						incrementTurn();
+						playerTracker = 1;
+					}
+					else
+					{
+						gameState = STATE.Player4;
+						incrementTurn();
+					}
+					handler.deckKeysEmpty = false;
+					placedWorkerSimulated = false;
 				}
 			}
 		}
 
 		if(playerTracker == 4)
 		{
-			if(handler.placedWorker1 != true && handler.placedWorker2 != true && handler.placedWorker3 != true )
+			//check if there are any playable grids left, if not, the game is over
+			if(!grid.gridUsed.containsValue(0))
+			{
+				gameState = STATE.End;
+				nextPlayer = true;
+			}
+			if(handler.drawLocWorker4.isEmpty())
+			{
+				int outOfCards = 1;
+				
+				nextPlayer = true;
+				turnState = TURNSTATE.End;
+				
+				if(numPlayers >= 2 && handler.drawLocWorker1.isEmpty())
+				{
+					outOfCards++;
+					if(outOfCards == 2 && numPlayers == 2)
+					{
+						gameState = STATE.End;
+						nextPlayer = true;
+					}
+				}
+				if(numPlayers >= 2 && handler.drawLocWorker2.isEmpty())
+				{
+					outOfCards++;
+					if(outOfCards == 3 && numPlayers == 3)
+					{
+						gameState = STATE.End;
+						nextPlayer = true;
+					}
+				}
+				if(numPlayers >= 4 && handler.drawLocWorker4.isEmpty())
+				{
+					outOfCards++;
+					if(outOfCards == 4 && numPlayers == 4)
+					{
+						gameState = STATE.End;
+						nextPlayer = true;
+					}
+				}
+				
+				outOfCards = 1;
+			
+			}
+			if(gameState != STATE.End && ((handler.placedWorker1 != true && handler.placedWorker2 != true && handler.placedWorker3 != true) || (handler.drawLocWorker4.isEmpty() && placedWorkerSimulated == false)))
 			{
 				nextPlayer = false;
 				gameState = STATE.Player4;
 				typeState = TYPESTATE.Worker;
 				turnState = TURNSTATE.Move;
-				//System.out.println("placing worker tile plyaer 2");
+				
+				if(handler.drawLocWorker4.isEmpty())
+				{
+					placedWorkerSimulated = true;
+				}
 			}
-			else if((handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true) && turnState != TURNSTATE.Draw && jungleValidChecked == false)
+			else if((handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true || placedWorkerSimulated == true) && turnState != TURNSTATE.Draw && jungleValidChecked == false)
 			{
 				typeState = TYPESTATE.Jungle;
-
+				jungleValidChecked = true;
 			}
-			else if((handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true) && turnState != TURNSTATE.Draw && jungleValidChecked == true)
+			else if((handler.placedWorker1 == true || handler.placedWorker2 == true || handler.placedWorker3 == true || placedWorkerSimulated == true) && turnState != TURNSTATE.Draw && jungleValidChecked == true)
 			{
-				jungleValidChecked = false;
-				
-				if(grid.validJungleTile == true)
+				if(grid.validJungleTileLoc.size() != 0 && grid.colorYellow && !handler.drawLocJungle.isEmpty())
 				{
-					//System.out.println("jungle tile valid");
-					turnState = TURNSTATE.Move;
+
+					if(!handler.drawLocJungle.isEmpty())
+					{
+						turnState = TURNSTATE.Move;
+					}
 				}
-				else if(grid.validJungleTile == false)
+				else if( (grid.validJungleTileLoc.size() == 0 && !grid.colorYellow) || handler.drawLocJungle.isEmpty())
 				{
 					turnState = TURNSTATE.Draw;
-					jungleValidChecked = true;
+					jungleValidChecked = false;
 				}
-
 			}
-			else if(turnState == TURNSTATE.Draw && nextPlayer == false)
+			if(turnState == TURNSTATE.Draw && nextPlayer == false)
 			{				
 				gameState = STATE.Play;
 				typeState = TYPESTATE.Jungle;
@@ -609,21 +685,27 @@ public class Game extends Canvas implements Runnable
 				turnState = TURNSTATE.End;
 				nextPlayer = true;
 			}
-			else if(turnState == TURNSTATE.End || nextPlayer == true)
+			if(turnState == TURNSTATE.End || nextPlayer == true)
 			{
-				grid.validJungleTile = true;
-				handler.placedJungle1 = false;
-				handler.placedJungle2 = false;
-				handler.placedWorker1 = false;
-				handler.placedWorker2 = false;
-				handler.placedWorker3 = false;
-				typeState = TYPESTATE.Worker;
-				turnState = TURNSTATE.Move;
-
-				gameState = STATE.Player1;
-				incrementTurn();
-				playerTracker = 1;
-
+				if(gameState != STATE.End)
+				{
+					grid.validJungleTile = true;
+					handler.placedJungle1 = false;
+					handler.placedJungle2 = false;
+					handler.placedWorker1 = false;
+					handler.placedWorker2 = false;
+					handler.placedWorker3 = false;
+					typeState = TYPESTATE.Worker;
+					turnState = TURNSTATE.Move;
+					if(numPlayers <= 4)
+					{
+						gameState = STATE.Player1;
+						incrementTurn();
+						playerTracker = 1;
+					}
+					handler.deckKeysEmpty = false;
+					placedWorkerSimulated = false;
+				}
 			}
 		}
 		
@@ -632,11 +714,11 @@ public class Game extends Canvas implements Runnable
 	public void incrementTurn()
 	{
 		turnCounter++;
-		if(playerTracker <= 4)
+		if(playerTracker <= numPlayers)
 		{
 			playerTracker++;
 		}
-		else if(playerTracker == 5)
+		else if(playerTracker == (numPlayers + 1))
 		{
 			playerTracker = 1;
 		}

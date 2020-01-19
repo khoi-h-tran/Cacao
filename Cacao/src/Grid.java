@@ -304,6 +304,10 @@ public class Grid
 					{
 						
 					}
+					if( ( yellowCoordsRow.get(c) == 1 && yellowCoordsCol.get(c) != 7 && yellowCoordsCol.get(c) != 2) || ( yellowCoordsCol.get(c) == 1  && yellowCoordsRow.get(c) != 7 && yellowCoordsRow.get(c) != 2 ) ) 
+					{
+						
+					}
 					else if( ( ((i+1) == yellowCoordsRow.get(c)) && ((j+1) == yellowCoordsCol.get(c) - 1 || (j+1) == yellowCoordsCol.get(c) +1) ) || ((j+1) == yellowCoordsCol.get(c) && ((i+1) == yellowCoordsRow.get(c) - 1 || (i+1) == yellowCoordsRow.get(c) +1)) )
 			    {
 			    	
