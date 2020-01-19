@@ -348,10 +348,10 @@ public class Handler extends MouseAdapter
 							grid.gridUsed.replace(newGridUsed, 2);
 							
 							//if it is an acceptable square, place the correct object at the new location
-					    if(select.mouse1Released == true && drawLocWorker1.containsKey(1))
+					    if(select.mouse1Released == true)
 					    {
 								//System.out.println("worker 1 returned");
-								if(game.gameState == Game.STATE.Player1)
+								if(game.gameState == Game.STATE.Player1 && drawLocWorker1.containsKey(1))
 								{
 					  			objectWorkerP1.get(drawLocWorker1.get(1)).setX(xStart);
 					  			objectWorkerP1.get(drawLocWorker1.get(1)).setY(yStart);
@@ -375,7 +375,7 @@ public class Handler extends MouseAdapter
 					  			placedWorker1 = true;
 									game.drawWorker1 = true;
 								}
-								else if(game.gameState == Game.STATE.Player2)
+								else if(game.gameState == Game.STATE.Player2 && drawLocWorker2.containsKey(1))
 								{
 					  			objectWorkerP2.get(drawLocWorker2.get(1)).setX(xStart);
 					  			objectWorkerP2.get(drawLocWorker2.get(1)).setY(yStart);
@@ -399,7 +399,7 @@ public class Handler extends MouseAdapter
 					  			placedWorker1 = true;
 									game.drawWorker1 = true;
 								}
-								else if(game.gameState == Game.STATE.Player3)
+								else if(game.gameState == Game.STATE.Player3 && drawLocWorker3.containsKey(1))
 								{
 					  			objectWorkerP3.get(drawLocWorker3.get(1)).setX(xStart);
 					  			objectWorkerP3.get(drawLocWorker3.get(1)).setY(yStart);
@@ -423,7 +423,7 @@ public class Handler extends MouseAdapter
 					  			placedWorker1 = true;
 									game.drawWorker1 = true;
 								}
-								else if(game.gameState == Game.STATE.Player4)
+								else if(game.gameState == Game.STATE.Player4 && drawLocWorker4.containsKey(1))
 								{
 					  			objectWorkerP4.get(drawLocWorker4.get(1)).setX(xStart);
 					  			objectWorkerP4.get(drawLocWorker4.get(1)).setY(yStart);
@@ -448,10 +448,10 @@ public class Handler extends MouseAdapter
 									game.drawWorker1 = true;
 								}
 					    }
-					    if(select.mouse2Released == true && drawLocWorker2.containsKey(2))
+					    if(select.mouse2Released == true)
 					    {
 								//System.out.println("worker 2 returned");
-								if(game.gameState == Game.STATE.Player1)
+								if(game.gameState == Game.STATE.Player1 && drawLocWorker1.containsKey(2))
 								{
 					  			objectWorkerP1.get(drawLocWorker1.get(2)).setX(xStart);
 					  			objectWorkerP1.get(drawLocWorker1.get(2)).setY(yStart);
@@ -475,7 +475,7 @@ public class Handler extends MouseAdapter
 					  			placedWorker2 = true;
 									game.drawWorker2 = true;
 								}
-								else if(game.gameState == Game.STATE.Player2)
+								else if(game.gameState == Game.STATE.Player2 && drawLocWorker2.containsKey(2))
 								{
 					  			objectWorkerP2.get(drawLocWorker2.get(2)).setX(xStart);
 					  			objectWorkerP2.get(drawLocWorker2.get(2)).setY(yStart);
@@ -499,7 +499,7 @@ public class Handler extends MouseAdapter
 					  			placedWorker2 = true;
 									game.drawWorker2 = true;
 								}
-								else if(game.gameState == Game.STATE.Player3)
+								else if(game.gameState == Game.STATE.Player3  && drawLocWorker3.containsKey(2))
 								{
 					  			objectWorkerP3.get(drawLocWorker3.get(2)).setX(xStart);
 					  			objectWorkerP3.get(drawLocWorker3.get(2)).setY(yStart);
@@ -523,7 +523,7 @@ public class Handler extends MouseAdapter
 					  			placedWorker2 = true;
 									game.drawWorker2 = true;
 								}
-								else if(game.gameState == Game.STATE.Player4)
+								else if(game.gameState == Game.STATE.Player4 && drawLocWorker4.containsKey(2))
 								{
 					  			objectWorkerP4.get(drawLocWorker4.get(2)).setX(xStart);
 					  			objectWorkerP4.get(drawLocWorker4.get(2)).setY(yStart);
@@ -549,10 +549,10 @@ public class Handler extends MouseAdapter
 								}
 
 					    }
-					    if(select.mouse3Released == true && drawLocWorker3.containsKey(3))
+					    if(select.mouse3Released == true)
 					    {
 								//System.out.println("worker 3 returned");
-								if(game.gameState == Game.STATE.Player1)
+								if(game.gameState == Game.STATE.Player1 && drawLocWorker1.containsKey(3))
 								{
 					  			objectWorkerP1.get(drawLocWorker1.get(3)).setX(xStart);
 					  			objectWorkerP1.get(drawLocWorker1.get(3)).setY(yStart);
@@ -576,7 +576,7 @@ public class Handler extends MouseAdapter
 					  			placedWorker3 = true;
 									game.drawWorker3 = true;
 								}
-								else if(game.gameState == Game.STATE.Player2)
+								else if(game.gameState == Game.STATE.Player2 && drawLocWorker2.containsKey(3))
 								{
 					  			objectWorkerP2.get(drawLocWorker2.get(3)).setX(xStart);
 					  			objectWorkerP2.get(drawLocWorker2.get(3)).setY(yStart);
@@ -600,7 +600,7 @@ public class Handler extends MouseAdapter
 					  			placedWorker3 = true;
 									game.drawWorker3 = true;
 								}
-								else if(game.gameState == Game.STATE.Player3)
+								else if(game.gameState == Game.STATE.Player3 && drawLocWorker3.containsKey(3))
 								{
 					  			objectWorkerP3.get(drawLocWorker3.get(3)).setX(xStart);
 					  			objectWorkerP3.get(drawLocWorker3.get(3)).setY(yStart);
@@ -624,7 +624,7 @@ public class Handler extends MouseAdapter
 					  			placedWorker3 = true;
 									game.drawWorker3 = true;
 								}
-								else if(game.gameState == Game.STATE.Player4)
+								else if(game.gameState == Game.STATE.Player4 && drawLocWorker4.containsKey(3))
 								{
 					  			objectWorkerP4.get(drawLocWorker4.get(3)).setX(xStart);
 					  			objectWorkerP4.get(drawLocWorker4.get(3)).setY(yStart);
@@ -1125,9 +1125,10 @@ public class Handler extends MouseAdapter
 	  			/*
 	  			for(int position: scoreScheme)
 	  			{
-	  				System.out.println(position);
+	  				System.out.print(position + ", ");
 	  			}
-	  			 */
+	  			System.out.println();
+	  			*/
 				}
 			}
 			
@@ -1182,9 +1183,8 @@ public class Handler extends MouseAdapter
 		  				}
 		  				else if (scoreCount.get("Cacao") < scoreScheme[i])
 		  				{
-		  					scoreScheme[i] = scoreCount.get("Cacao");
+			  				scoreCount.put("Gold", scoreCount.get("Gold") + scoreValue * scoreCount.get("Cacao"));
 		  					scoreCount.replace("Cacao", 0);
-			  				scoreCount.put("Gold", scoreCount.get("Gold") + scoreValue * scoreScheme[i]);
 			  				//System.out.println("Not enough Beans, add gold" + scoreValue * scoreScheme[i] + " by selling cacao" + scoreValue);
 		  				}
 		  				else if(scoreCount.get("Cacao") == 0)
@@ -1239,13 +1239,29 @@ public class Handler extends MouseAdapter
 				tiles[3] = workerLocInPlay.get(coordLeft);
 				player[3] = playerTileInPlay.get(coordLeft);
 			}
-			
+			/*
+			for(int position: pos)
+			{
+				System.out.println(position);
+			}
+
+			for(String type: tiles)
+			{
+				System.out.println(type);
+			}
+
+			for(IDPlayer id: player)
+			{
+				System.out.println(id);
+			}
+			*/
 			for(int i = 0; i < pos.length; i++)
 			{
 				//checks if the current position has a 1 stored (meaning that position needs the score changed)
 				//i is rotating clockwise between the top, right, bottom, left positions
 				if(pos[i] == 1)
 				{
+					
 					//store score key and value of the jungle tile (e.g. cacao and 2x)
 	  			scoreKey = tile.getScoreKey();
 	  			scoreValue = tile.getScoreValue();
@@ -1257,82 +1273,155 @@ public class Handler extends MouseAdapter
 		  			{
 		  				scoreCount = scoreCountP1;
 		  				scoreScheme = objectWorkerP1.get(tiles[i]).getScoreScheme();
+		  				
+		  				/*
+		  				System.out.println(tiles[i]);
+			  			for(int score: scoreScheme)
+			  			{
+			  				System.out.print(score + ", ");
+			  			}
+			  			System.out.println();
+			  			*/
 		  				break;
 		  			}
 		  			case Player2:
 		  			{
 		  				scoreCount = scoreCountP2;
 		  				scoreScheme = objectWorkerP2.get(tiles[i]).getScoreScheme();
+		  				/*
+		  				System.out.println(tiles[i]);
+			  			for(int score: scoreScheme)
+			  			{
+			  				System.out.print(score + ", ");
+			  			}
+			  			System.out.println();
+			  			*/
 		  				break;
 		  			}
 		  			case Player3:
 		  			{
 		  				scoreCount = scoreCountP3;
 		  				scoreScheme = objectWorkerP3.get(tiles[i]).getScoreScheme();
+		  				/*
+		  				System.out.println(tiles[i]);
+			  			for(int score: scoreScheme)
+			  			{
+			  				System.out.print(score + ", ");
+			  			}
+			  			System.out.println();
+			  			*/
 		  				break;
 		  			}
 		  			case Player4:
 		  			{
 		  				scoreCount = scoreCountP4;
 		  				scoreScheme = objectWorkerP4.get(tiles[i]).getScoreScheme();
+		  				/*
+		  				System.out.println(tiles[i]);
+			  			for(int score: scoreScheme)
+			  			{
+			  				System.out.print(score + ", ");
+			  			}
+			  			System.out.println();
+			  			*/
 		  				break;
 		  			}
 	  			}
 	  			
 	  			//swap the score scheme around (i.e. if the jungle tile has the score scheme on the left (meaning 0,0,1,0) positon, then we want the score scheme for the worker tile that is 180 on the other side)
-	  			int tempScore = scoreScheme[0];
-	  			scoreScheme[0] = scoreScheme[2];
-	  			scoreScheme[2] = tempScore;
-	  			tempScore = scoreScheme[1];
-	  			scoreScheme[1] = scoreScheme[3];
-	  			scoreScheme[3] = tempScore;
+	  			/*
+	  			for(int score: scoreScheme)
+	  			{
+	  				System.out.print(score + ", ");
+	  			}
 	  			
+  				System.out.println();
+  				*/
+
+	  			/*
+	  			for(int score: scoreScheme)
+	  			{
+	  				System.out.print(score + ", ");
+	  			}
+  				System.out.println();
+  				System.out.println();
+  				*/
+
+  				int j = 0;
+  				//swaps teh value from teh frame of reference of the worker tile to the frame of reference of the jungle tile
+  				if(i == 0)
+  				{
+  					j = 2;
+  				}
+  				else if(i == 1)
+  				{
+  					j = 3;
+  				}
+  				else if(i == 2)
+  				{
+  					j = 0;
+  				}
+  				else if(i == 3)
+  				{
+  					j = 1;
+  				}
+  				
 	  			//order of score count is 0 = Gold, 1 = Cacao,  2= SunToken, 3 = Water, 4 = Temple
 	  			//scorekeys are: Gold, Cacao, Sell, Water, Temple, SunToken
 	  			switch(scoreKey)
 	  			{
 		  			case "Gold":
 		  			{
-		  				scoreCount.put("Gold", scoreCount.get("Gold") + scoreValue * scoreScheme[i]);
+		  				scoreCount.put("Gold", scoreCount.get("Gold") + scoreValue * scoreScheme[j]);
 		  				break;
 		  			}
 		  			case "Cacao":
 		  			{
-		  				scoreCount.put("Cacao", scoreCount.get("Cacao") + scoreValue * scoreScheme[i]);
+		  				scoreCount.put("Cacao", scoreCount.get("Cacao") + scoreValue * scoreScheme[j]);
 		  				//System.out.println("Cacao Added to Score Tile" + scoreValue*scoreScheme[i]);
+		  				//System.out.println("ScoreValue" + scoreValue);
+		  				//System.out.println("Score Scheme " + scoreScheme[i] + "at position " + i);
+		  				//System.out.println();
 		  				break;
 		  			}
 		  			case "Sell":
 		  			{
-		  				if(scoreCount.get("Cacao") >= scoreScheme[i])
+		  				if(scoreCount.get("Cacao") >= scoreScheme[j])
 		  				{
-			  				scoreCount.put("Cacao", scoreCount.get("Cacao") - scoreScheme[i]);
-			  				scoreCount.put("Gold", scoreCount.get("Gold") + scoreValue * scoreScheme[i]);
+			  				scoreCount.put("Cacao", scoreCount.get("Cacao") - scoreScheme[j]);
+			  				scoreCount.put("Gold", scoreCount.get("Gold") + scoreValue * scoreScheme[j]);
 			  				//System.out.println("Enough Beans, subtract cacao" + " -" + scoreScheme[i]);
 			  				//System.out.println("Enough Beans, add gold" + scoreValue * scoreScheme[i]);
+			  				//System.out.println("ScoreValue" + scoreValue);
+			  				//System.out.println("Score Scheme" + scoreScheme[i] + "at position " + i);
+			  				//System.out.println();
 		  				}
 		  				else
 		  				{
-		  					scoreScheme[i] = scoreCount.get("Cacao");
+			  				scoreCount.put("Gold", scoreCount.get("Gold") + scoreValue * scoreCount.get("Cacao"));
 		  					scoreCount.replace("Cacao", 0);
-			  				scoreCount.put("Gold", scoreCount.get("Gold") + scoreValue * scoreScheme[i]);
-			  				//System.out.println("Not enough Beans, add gold" + scoreValue * scoreScheme[i] + " by selling cacao" + scoreValue);
+			  				/*
+			  				System.out.println("Not enough Beans, add gold" + scoreValue * scoreScheme[i] + " by selling cacao" + scoreValue);
+			  				System.out.println("ScoreValue" + scoreValue);
+			  				System.out.println("Score Scheme" + scoreScheme[i] + "at position " + i);
+			  				System.out.println();
+			  				*/
 		  				}
 		  				break;
 		  			}
 		  			case "Water":
 		  			{
-		  				scoreCount.put("Water", scoreCount.get("Water") + scoreValue * scoreScheme[i]);
+		  				scoreCount.put("Water", scoreCount.get("Water") + scoreValue * scoreScheme[j]);
 		  				break;
 		  			}
 		  			case "Temple":
 		  			{
-		  				scoreCount.put("Temple", scoreCount.get("Temple") + scoreValue * scoreScheme[i]);
+		  				scoreCount.put("Temple", scoreCount.get("Temple") + scoreValue * scoreScheme[j]);
 		  				break;
 		  			}
 		  			case "SunToken":
 		  			{
-		  				scoreCount.put("Sun Tokens", scoreCount.get("Sun Tokens") + scoreValue * scoreScheme[i]);
+		  				scoreCount.put("Sun Tokens", scoreCount.get("Sun Tokens") + scoreValue * scoreScheme[j]);
 		  				break;
 		  			}
 	  			}

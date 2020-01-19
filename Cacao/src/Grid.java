@@ -261,6 +261,9 @@ public class Grid
 		{
 			for(int j = 0; j < Game.HEIGHT/game.TILE_DIM; j++)//populates columns
 			{
+				g.setColor(Color.black);
+				g.drawRect((game.TILE_DIM*i), (game.TILE_DIM*j), game.TILE_DIM, game.TILE_DIM);
+				
 				//set the default colour of the square to not yellow
 				colorYellow = false;
     		//int count = 0;
@@ -412,11 +415,13 @@ public class Grid
 				//System.out.println(validJungleTileLoc.size());
 				
 				//if it is a potential place to put the tile, color the box black
+				/*
 				else
 				{
 					g.setColor(Color.black);
 					g.drawRect((game.TILE_DIM*i), (game.TILE_DIM*j), game.TILE_DIM, game.TILE_DIM);
 				}
+				*/
 			}
 		}
 		
